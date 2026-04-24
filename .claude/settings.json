@@ -1,0 +1,12 @@
+{
+  "skills": {
+    "newdoc_feishu": {
+      "description": "创建飞书新文档并保存内容",
+      "command": "node \"${skillPath}/newdoc_feishu.skill\"",
+      "args": ["${title}", "${contentSource}"],
+      "env": {
+        "PATH": "${PATH}:${npmBinaries}"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(lark-cli doctor *)",
+      "Bash(playwright-cli *)",
+      "Bash(lark-cli auth *)"
+    ]
+  }
+}
