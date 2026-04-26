@@ -2,13 +2,14 @@
   <main class="workspace">
     <section class="hero-panel">
       <div>
-        <p class="eyebrow">AIpindou MVP</p>
+        <p class="eyebrow">AIpindou Algorithm Upgrade</p>
         <h1>拼豆图像转换器</h1>
-        <p class="hero-copy">导入图片后自动采样网格、匹配基础拼豆色卡，并生成可导出的拼豆预览和用色清单。</p>
+        <p class="hero-copy">使用开源拼豆算法：按原图比例分格、主色/平均色采样、近似色合并、背景擦除，并支持自定义 AI 图像模型。</p>
       </div>
       <div class="hero-actions">
         <label class="primary-upload" for="image-input">选择图片</label>
         <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif" @change="handleFileInput" />
+        <button class="ghost-button" @click="openProviderDialog">AI 设置</button>
         <button class="ghost-button" :disabled="!pattern" @click="resetPattern">清空结果</button>
       </div>
     </section>
@@ -23,18 +24,40 @@
           @drop.prevent="handleDrop"
         >
           <strong>{{ sourceName || '拖入图片开始转换' }}</strong>
-          <span>支持 JPG、PNG、WebP、GIF，MVP 在本地 Canvas 中完成处理。</span>
+          <span>新算法不强制裁方图，会按原始宽高比自动计算纵向颗数。</span>
         </div>
 
         <div class="setting-card">
           <div class="setting-head">
-            <span>网格大小</span>
-            <strong>{{ gridSize }} x {{ gridSize }}</strong>
+            <span>横向颗数</span>
+            <strong>{{ columns }} x {{ pattern?.height || '自动' }}</strong>
           </div>
-          <input v-model.number="gridSize" type="range" min="10" max="50" step="1" @input="rebuildFromSource" />
+          <input v-model.number="columns" type="range" min="10" max="200" step="1" @input="rebuildFromSource" />
+          <input v-model.number="columns" class="number-input" type="number" min="10" max="300" @change="rebuildFromSource" />
           <div class="quick-sizes">
-            <button v-for="size in [16, 24, 32, 40, 50]" :key="size" @click="setGridSize(size)">{{ size }}</button>
+            <button v-for="size in [24, 32, 50, 80, 120]" :key="size" @click="setColumns(size)">{{ size }}</button>
           </div>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-head">
+            <span>算法模式</span>
+            <strong>{{ pixelationMode === 'dominant' ? '主色' : '平均' }}</strong>
+          </div>
+          <div class="segmented">
+            <button :class="{ active: pixelationMode === 'dominant' }" @click="setPixelationMode('dominant')">主色模式</button>
+            <button :class="{ active: pixelationMode === 'average' }" @click="setPixelationMode('average')">平均模式</button>
+          </div>
+          <p class="setting-note">主色适合头像/卡通/像素风；平均适合照片和渐变。</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-head">
+            <span>近似色合并</span>
+            <strong>{{ similarityThreshold }}</strong>
+          </div>
+          <input v-model.number="similarityThreshold" type="range" min="0" max="90" step="1" @input="rebuildFromSource" />
+          <p class="setting-note">数值越大，越容易把低频近似色并入高频色；横向低于 80 时会自动保护边缘，避免线条被合并掉。</p>
         </div>
 
         <div class="setting-card">
@@ -43,16 +66,10 @@
             <strong>{{ activePalette.length }} 色</strong>
           </div>
           <div class="tier-grid">
-            <button
-              v-for="tier in MARD_TIER_OPTIONS"
-              :key="tier"
-              :class="{ active: selectedTier === tier }"
-              @click="setPaletteTier(tier)"
-            >
+            <button v-for="tier in MARD_TIER_OPTIONS" :key="tier" :class="{ active: selectedTier === tier }" @click="setPaletteTier(tier)">
               {{ tier }}色
             </button>
           </div>
-          <p class="setting-note">按百度分档表选择可用色号，221 色使用 peiseka MARD 全实色。</p>
         </div>
 
         <div class="setting-card">
@@ -68,12 +85,69 @@
 
         <div class="setting-card">
           <div class="setting-head">
-            <span>导出</span>
+            <span>微调工具</span>
+            <strong>{{ editMode === 'brush' ? '画笔' : '吸管' }}</strong>
+          </div>
+          <div class="segmented">
+            <button :class="{ active: editMode === 'brush' }" :disabled="!pattern" @click="editMode = 'brush'">画笔</button>
+            <button :class="{ active: editMode === 'eyedropper' }" :disabled="!pattern" @click="editMode = 'eyedropper'">吸管</button>
+          </div>
+          <div class="setting-head compact-head">
+            <span>预览缩放</span>
+            <strong>{{ zoomPercent }}%</strong>
+          </div>
+          <input v-model.number="zoomPercent" type="range" min="50" max="400" step="25" @input="renderPattern" />
+          <div v-if="brushColor" class="brush-preview">
+            <span class="swatch" :style="{ backgroundColor: brushColor.hex }"></span>
+            <div>
+              <strong>{{ brushColor.name }}</strong>
+              <small>{{ brushColor.key }} · {{ brushColor.hex }}</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-head">
+            <span>水印</span>
+            <strong>{{ watermarkLabel }}</strong>
+          </div>
+          <div class="segmented">
+            <button :class="{ active: watermarkMode === 'none' }" @click="setWatermarkMode('none')">关闭</button>
+            <button :class="{ active: watermarkMode === 'visible' }" @click="setWatermarkMode('visible')">明水印</button>
+            <button :class="{ active: watermarkMode === 'subtle' }" @click="setWatermarkMode('subtle')">暗水印</button>
+          </div>
+          <input v-model="watermarkText" class="text-input" maxlength="64" placeholder="水印文字" @input="renderPattern" />
+          <p class="setting-note">暗水印参考 DWT-DCT-SVD 盲水印思路，当前浏览器版使用 DCT 频域嵌入，优先保证导出图纸可读。</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-head">
+            <span>AI 优化</span>
+            <strong>{{ providers.length }} 个来源</strong>
+          </div>
+          <select v-model="selectedProviderId" class="select-input">
+            <option value="">选择 Provider</option>
+            <option v-for="provider in providers" :key="provider.id" :value="provider.id">{{ provider.name }}</option>
+          </select>
+          <select v-model="selectedAiStyleId" class="select-input">
+            <option v-for="style in AI_STYLE_PRESETS" :key="style.id" :value="style.id">{{ style.name }}</option>
+          </select>
+          <p class="prompt-preview">{{ selectedAiStyle?.description }}</p>
+          <button class="wide-button" :disabled="!sourceDataUrl || !selectedProviderId || isAiProcessing" @click="runAiOptimize">
+            {{ isAiProcessing ? 'AI 处理中...' : 'AI 优化当前图片' }}
+          </button>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-head">
+            <span>编辑与导出</span>
             <strong>{{ pattern ? `${pattern.colors.length} 色` : '待生成' }}</strong>
           </div>
           <div class="export-actions">
+            <button :disabled="!pattern" @click="eraseBackground">擦除边界背景</button>
             <button :disabled="!pattern" @click="downloadPng">导出 PNG</button>
             <button :disabled="!pattern" @click="downloadJson">导出 JSON</button>
+            <button :disabled="!pattern" @click="downloadCsv">导出 CSV</button>
           </div>
         </div>
 
@@ -89,91 +163,279 @@
           <div v-if="pattern" class="stats">
             <span>{{ pattern.width }} x {{ pattern.height }}</span>
             <span>{{ pattern.totalBeads }} 颗</span>
-            <span>MARD {{ pattern.paletteTier }} 色盘</span>
             <span>{{ pattern.colors.length }} 色</span>
+            <span>{{ pixelationMode === 'dominant' ? '主色' : '平均' }}</span>
           </div>
         </div>
 
-        <div class="canvas-wrap">
-          <canvas ref="previewCanvas" width="960" height="960" aria-label="拼豆图预览"></canvas>
+        <div class="canvas-wrap" @pointerup="stopPainting" @pointerleave="stopPainting">
+          <canvas
+            ref="previewCanvas"
+            width="960"
+            height="720"
+            aria-label="拼豆图预览"
+            :style="canvasDisplayStyle"
+            @pointerdown="handleCanvasPointerDown"
+            @pointermove="handleCanvasPointerMove"
+            @pointerup="stopPainting"
+          ></canvas>
           <div v-if="!pattern" class="empty-state">
             <span class="bead-dot"></span>
-            <p>选择一张图片，软件会自动生成第一版拼豆图。</p>
+            <p>选择图片后会按开源算法生成第一版拼豆图。</p>
           </div>
         </div>
       </section>
 
       <section class="palette-panel">
         <div class="panel-title">
-          <p class="eyebrow">Palette</p>
-          <h2>用色清单</h2>
+          <div>
+            <p class="eyebrow">Palette</p>
+            <h2>用色清单</h2>
+          </div>
+          <small v-if="excludedColorKeys.length">已排除 {{ excludedColorKeys.length }} 色</small>
+        </div>
+        <div v-if="pattern" class="edit-palette">
+          <div class="setting-head compact-head">
+            <span>编辑色卡</span>
+            <strong>{{ editPalette.length }} 色</strong>
+          </div>
+          <div class="tier-grid">
+            <button v-for="tier in MARD_TIER_OPTIONS" :key="tier" :class="{ active: editPaletteTier === tier }" @click="setEditPaletteTier(tier)">
+              {{ tier }}色
+            </button>
+          </div>
+          <div class="palette-groups">
+            <section v-for="group in groupedEditPalette" :key="group.letter" class="palette-group">
+              <strong>{{ group.letter }}</strong>
+              <div>
+                <button
+                  v-for="color in group.colors"
+                  :key="color.key"
+                  class="palette-swatch"
+                  :class="{ active: brushColor?.key === color.key }"
+                  :title="`${color.key} ${color.name}`"
+                  :style="{ backgroundColor: color.hex }"
+                  @click="selectBrushColor(color)"
+                >
+                  {{ color.key }}
+                </button>
+              </div>
+            </section>
+          </div>
         </div>
         <div v-if="pattern" class="color-list">
-          <article v-for="item in pattern.colors" :key="item.code" class="color-row">
+          <article v-for="item in pattern.colors" :key="item.key" class="color-row">
             <span class="swatch" :style="{ backgroundColor: item.hex }"></span>
             <div>
               <strong>{{ item.name }}</strong>
-              <small>{{ item.code }} · {{ item.hex }}</small>
+              <small>{{ item.key }} · {{ item.hex }}</small>
             </div>
             <b>{{ item.count }}</b>
+            <button class="mini-button" @click="excludeColor(item.key)">排除</button>
           </article>
         </div>
         <div v-else class="palette-empty">
           <p>转换后这里会显示每种颜色需要的拼豆数量。</p>
         </div>
+
+        <div v-if="excludedColorKeys.length" class="excluded-box">
+          <strong>已排除颜色</strong>
+          <button v-for="key in excludedColorKeys" :key="key" class="mini-button" @click="restoreColor(key)">恢复 {{ key }}</button>
+        </div>
       </section>
     </section>
+
+    <div v-if="providerDialogVisible" class="modal-backdrop" @click.self="providerDialogVisible = false">
+      <section class="modal-panel">
+        <div class="preview-head">
+          <div>
+            <p class="eyebrow">AI Provider</p>
+            <h2>自定义模型来源</h2>
+          </div>
+          <button class="ghost-button" @click="providerDialogVisible = false">关闭</button>
+        </div>
+        <div class="form-grid">
+          <label>名称<input v-model="providerDraft.name" class="text-input" /></label>
+          <label>Endpoint<input v-model="providerDraft.endpoint" class="text-input" placeholder="https://api.example.com/v1/images" /></label>
+          <label>Method
+            <select v-model="providerDraft.method" class="text-input"><option>POST</option><option>PUT</option></select>
+          </label>
+          <label>响应图片路径<input v-model="providerDraft.responseImagePath" class="text-input" placeholder="data[0].url" /></label>
+          <label>超时毫秒<input v-model.number="providerDraft.timeoutMs" class="text-input" type="number" /></label>
+          <label>变量 JSON<textarea v-model="variablesText" class="text-input mono" rows="5"></textarea></label>
+          <label>Headers JSON<textarea v-model="headersText" class="text-input mono" rows="5"></textarea></label>
+          <label>Body 模板<textarea v-model="providerDraft.bodyTemplate" class="text-input mono" rows="8"></textarea></label>
+        </div>
+        <p class="setting-note">支持变量：API_KEY、MODEL、IMAGE_DATA_URL、IMAGE_BASE64、PROMPT、IMAGE_MIME。模板中使用双花括号包裹变量名，配置保存到本机用户数据目录。</p>
+        <div class="export-actions">
+          <button @click="fillDashScopePreset">填入 DashScope Wan2.6 预设</button>
+          <button @click="saveProviderDraft">保存 Provider</button>
+          <button v-if="providerDraft.id" @click="removeProviderDraft">删除当前 Provider</button>
+        </div>
+      </section>
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import {
   MARD_TIER_OPTIONS,
   MARD_TIER_SOURCE_NOTE,
   getMardTierMissingCodes,
   getMardTierPalette
 } from '@/data/mard-palette'
-import type { MardColor, MardTier } from '@/data/mard-palette'
+import type { MardTier } from '@/data/mard-palette'
+import { eraseBorderBackground, remapExcludedColors, replaceCellColor, withUpdatedStats } from '@/utils/pixel-editing'
+import { createColorCsv, createPatternJsonPayload } from '@/utils/pattern-export'
+import { createPatternCanvas, hitTestPatternCell, renderPatternToCanvas } from '@/utils/pattern-render'
+import type { BeadStyle, PatternCellPosition } from '@/utils/pattern-render'
+import { buildPatternFromImage, toPaletteColor } from '@/utils/pixelation'
+import type { PaletteColor, PatternResult, PixelationMode } from '@/utils/pixelation'
+import type { WatermarkMode } from '@/utils/watermark'
 
-type BeadStyle = 'round' | 'square'
-type PaletteColor = MardColor
-
-type BeadCell = {
-  x: number
-  y: number
-  color: PaletteColor
-}
-
-type ColorUsage = PaletteColor & {
-  count: number
-}
-
-type Pattern = {
-  width: number
-  height: number
-  paletteTier: MardTier
-  totalBeads: number
-  cells: BeadCell[]
-  colors: ColorUsage[]
-}
-
-const gridSize = ref(32)
+const columns = ref(50)
+const similarityThreshold = ref(30)
+const pixelationMode = ref<PixelationMode>('dominant')
 const selectedTier = ref<MardTier>(221)
+const editPaletteTier = ref<MardTier>(221)
 const beadStyle = ref<BeadStyle>('round')
+const editMode = ref<'brush' | 'eyedropper'>('brush')
+const zoomPercent = ref(100)
+const brushColor = ref<PaletteColor | null>(null)
+const selectedCell = ref<PatternCellPosition | null>(null)
+const isPainting = ref(false)
+const lastPaintedCell = ref('')
+const watermarkMode = ref<WatermarkMode>('none')
+const watermarkText = ref('AIpindou')
 const isDragging = ref(false)
 const sourceName = ref('')
+const sourceDataUrl = ref('')
 const status = ref('')
 const sourceImage = ref<HTMLImageElement | null>(null)
-const pattern = ref<Pattern | null>(null)
+const pattern = ref<PatternResult | null>(null)
 const previewCanvas = ref<HTMLCanvasElement | null>(null)
+const excludedColorKeys = ref<string[]>([])
+const providers = ref<AiProviderConfig[]>([])
+const selectedProviderId = ref('')
+const providerDialogVisible = ref(false)
+const isAiProcessing = ref(false)
+const aiStartedAt = ref(0)
+const aiElapsedSeconds = ref(0)
+let aiTimer: number | undefined
+const AI_STYLE_PRESETS = [
+  {
+    id: 'chibi-pixel',
+    name: '彩蛋 01｜Chibi 像素白底',
+    description: 'Q版角色、白底、16-bit 像素游戏感。',
+    prompt: '图片修改为：chibi画风，白底背景。pixel art style, 16-bit, retro game aesthetic, sharp focus, high contrast, clean lines, detailed pixel art, masterpiece, best quality'
+  },
+  {
+    id: 'kawaii-sticker',
+    name: '彩蛋 02｜可爱贴纸白底',
+    description: '可爱贴纸、粗描边、适合拼豆轮廓。',
+    prompt: '图片修改为：kawaii sticker 可爱贴纸风格，白底背景，rounded shapes, thick clean outline, simple color blocks, minimal shadows, high contrast, centered composition, suitable for perler beads pattern, masterpiece, best quality'
+  },
+  {
+    id: 'nes-8bit',
+    name: '彩蛋 03｜8-bit 复古游戏',
+    description: 'FC/NES 低色数复古像素风。',
+    prompt: '图片修改为：8-bit retro video game sprite 风格，白底背景，limited color palette, blocky pixel art, crisp edges, no blur, front-facing centered subject, high contrast, clean silhouette, suitable for bead art, masterpiece, best quality'
+  },
+  {
+    id: 'snes-16bit',
+    name: '彩蛋 04｜16-bit 精细像素',
+    description: 'SFC/街机风，细节更丰富。',
+    prompt: '图片修改为：16-bit JRPG pixel art 风格，白底背景，detailed sprite, clean lines, vivid colors, sharp focus, high contrast, readable silhouette, retro game aesthetic, suitable for perler beads, masterpiece, best quality'
+  },
+  {
+    id: 'animal-crossing',
+    name: '彩蛋 05｜森系玩偶',
+    description: '软萌玩偶、低饱和自然色。',
+    prompt: '图片修改为：cozy cute toy character 风格，白底背景，soft rounded shapes, pastel natural colors, clean outline, simple flat shading, warm and friendly, centered composition, suitable for perler beads pattern, masterpiece, best quality'
+  },
+  {
+    id: 'sanrio-pop',
+    name: '彩蛋 06｜梦幻糖果',
+    description: '粉彩糖果色、甜美卡通。',
+    prompt: '图片修改为：pastel candy cartoon 风格，白底背景，cute mascot design, soft pink and blue colors, glossy simple highlights, thick clean outline, high contrast, clean lines, suitable for bead pattern, masterpiece, best quality'
+  },
+  {
+    id: 'flat-icon',
+    name: '彩蛋 07｜扁平图标',
+    description: '极简块面，最适合低颗数拼豆。',
+    prompt: '图片修改为：flat vector icon 风格，白底背景，simple geometric shapes, solid color blocks, minimal details, bold clean outline, high readability, centered object, no complex texture, suitable for perler beads, masterpiece, best quality'
+  },
+  {
+    id: 'anime-avatar',
+    name: '彩蛋 08｜动漫头像',
+    description: '动漫头像、干净线稿、适合人物图。',
+    prompt: '图片修改为：anime avatar illustration 风格，白底背景，clean lineart, simplified facial features, vibrant but limited colors, cel shading, sharp focus, high contrast, centered portrait, suitable for pixel art bead conversion, masterpiece, best quality'
+  },
+  {
+    id: 'mini-diorama',
+    name: '彩蛋 09｜迷你立体玩具',
+    description: '小模型质感，主体更圆润。',
+    prompt: '图片修改为：miniature toy diorama 风格，白底背景，cute 3D toy look, simplified shapes, soft lighting, clean silhouette, vivid color blocks, minimal background, centered composition, suitable for perler beads pattern, masterpiece, best quality'
+  },
+  {
+    id: 'outline-logo',
+    name: '彩蛋 10｜徽章 Logo',
+    description: '粗线徽章、色块明确、适合图标和宠物。',
+    prompt: '图片修改为：bold mascot logo badge 风格，白底背景, thick black outline, clean flat colors, strong silhouette, high contrast, simplified details, centered emblem composition, suitable for perler beads and pixel art conversion, masterpiece, best quality'
+  }
+] as const
+const selectedAiStyleId = ref<(typeof AI_STYLE_PRESETS)[number]['id']>('chibi-pixel')
+const variablesText = ref('{\n  "API_KEY": "",\n  "MODEL": ""\n}')
+const headersText = ref('{\n  "Authorization": "Bearer {{API_KEY}}",\n  "Content-Type": "application/json"\n}')
+const providerDraft = ref<AiProviderConfig>(createEmptyProvider())
 
-const canvasSize = computed(() => Math.min(960, Math.max(420, gridSize.value * 18)))
-const activePalette = computed(() => getMardTierPalette(selectedTier.value))
+const activePalette = computed(() => getMardTierPalette(selectedTier.value).map(toPaletteColor))
+const editPalette = computed(() => getMardTierPalette(editPaletteTier.value).map(toPaletteColor))
 const missingTierCodes = computed(() => getMardTierMissingCodes(selectedTier.value))
+const selectedAiStyle = computed(() => AI_STYLE_PRESETS.find((style) => style.id === selectedAiStyleId.value) ?? AI_STYLE_PRESETS[0])
+const aiPrompt = computed(() => selectedAiStyle.value.prompt)
+const watermarkLabel = computed(() => {
+  if (watermarkMode.value === 'visible') {
+    return '明水印'
+  }
+  if (watermarkMode.value === 'subtle') {
+    return '暗水印'
+  }
+  return '关闭'
+})
+const canvasSize = computed(() => {
+  const current = pattern.value
+  if (!current) {
+    return { width: 960, height: 720 }
+  }
+  const maxWidth = 980
+  const maxHeight = 720
+  const ratio = current.height / current.width
+  const widthByHeight = maxHeight / ratio
+  const width = Math.min(maxWidth, widthByHeight)
+  return { width, height: width * ratio }
+})
+const canvasDisplayStyle = computed(() => ({
+  width: `${Math.round(canvasSize.value.width * (zoomPercent.value / 100))}px`,
+  maxWidth: zoomPercent.value <= 100 ? '100%' : 'none',
+  cursor: pattern.value ? (editMode.value === 'eyedropper' ? 'copy' : 'crosshair') : 'default'
+}))
+const groupedEditPalette = computed(() => {
+  const groups = new Map<string, PaletteColor[]>()
+  for (const color of editPalette.value) {
+    const letter = color.key.match(/^[A-Z]+/)?.[0] ?? '#'
+    groups.set(letter, [...(groups.get(letter) ?? []), color])
+  }
+  return [...groups.entries()].map(([letter, colors]) => ({
+    letter,
+    colors: colors.sort((first, second) => first.key.localeCompare(second.key, undefined, { numeric: true }))
+  }))
+})
 
-watch(beadStyle, () => renderPattern())
-watch(selectedTier, () => rebuildFromSource())
+onMounted(() => {
+  loadProviders()
+})
 
 function handleFileInput(event: Event) {
   const input = event.target as HTMLInputElement
@@ -192,266 +454,452 @@ function handleDrop(event: DragEvent) {
   }
 }
 
-function setGridSize(size: number) {
-  gridSize.value = size
+function setColumns(size: number) {
+  columns.value = size
+  rebuildFromSource()
+}
+
+function setPixelationMode(mode: PixelationMode) {
+  pixelationMode.value = mode
   rebuildFromSource()
 }
 
 function setPaletteTier(tier: MardTier) {
   selectedTier.value = tier
+  editPaletteTier.value = tier
+  excludedColorKeys.value = []
+  rebuildFromSource()
+}
+
+function setEditPaletteTier(tier: MardTier) {
+  editPaletteTier.value = tier
+  brushColor.value = editPalette.value[0] ?? null
+}
+
+function setWatermarkMode(mode: WatermarkMode) {
+  watermarkMode.value = mode
+  renderPattern()
+}
+
+function selectBrushColor(color: PaletteColor) {
+  brushColor.value = color
+  editMode.value = 'brush'
 }
 
 function resetPattern() {
   sourceName.value = ''
+  sourceDataUrl.value = ''
   status.value = ''
   sourceImage.value = null
   pattern.value = null
+  excludedColorKeys.value = []
+  selectedCell.value = null
+  brushColor.value = null
   clearCanvas()
 }
 
-function rebuildFromSource() {
-  if (sourceImage.value) {
-    buildPattern(sourceImage.value)
-  }
-}
-
-function loadFile(file: File) {
+async function loadFile(file: File) {
   if (!file.type.startsWith('image/')) {
     status.value = '请选择图片文件。'
     return
   }
 
-  if (file.size > 10 * 1024 * 1024) {
-    status.value = '图片超过 10MB，MVP 暂不处理过大的文件。'
+  if (file.size > 12 * 1024 * 1024) {
+    status.value = '图片超过 12MB，请先压缩后再处理。'
     return
   }
 
-  const image = new Image()
-  const url = URL.createObjectURL(file)
-  image.onload = () => {
-    URL.revokeObjectURL(url)
-    sourceName.value = file.name
-    sourceImage.value = image
-    buildPattern(image)
-  }
-  image.onerror = () => {
-    URL.revokeObjectURL(url)
-    status.value = '图片读取失败，请换一张图片再试。'
-  }
-  image.src = url
+  sourceName.value = file.name
+  sourceDataUrl.value = await fileToDataUrl(file)
+  await loadImageFromDataUrl(sourceDataUrl.value)
 }
 
-function buildPattern(image: HTMLImageElement) {
-  const size = gridSize.value
-  const sampleCanvas = document.createElement('canvas')
-  const sampleContext = sampleCanvas.getContext('2d', { willReadFrequently: true })
+async function loadImageFromDataUrl(dataUrl: string) {
+  const image = new Image()
+  image.onload = () => {
+    sourceImage.value = image
+    rebuildFromSource()
+  }
+  image.onerror = () => {
+    status.value = '图片读取失败，请换一张图片再试。'
+  }
+  image.src = dataUrl
+}
 
-  if (!sampleContext) {
-    status.value = '当前环境无法创建 Canvas。'
+function rebuildFromSource() {
+  if (!sourceImage.value) {
     return
   }
 
-  sampleCanvas.width = size
-  sampleCanvas.height = size
-
-  const crop = getCenteredCrop(image.width, image.height)
-  sampleContext.imageSmoothingEnabled = true
-  sampleContext.drawImage(image, crop.x, crop.y, crop.size, crop.size, 0, 0, size, size)
-
-  const imageData = sampleContext.getImageData(0, 0, size, size).data
-  const cells: BeadCell[] = []
-  const usage = new Map<string, ColorUsage>()
-
-  for (let y = 0; y < size; y += 1) {
-    for (let x = 0; x < size; x += 1) {
-      const index = (y * size + x) * 4
-      const rgb: [number, number, number] = [imageData[index], imageData[index + 1], imageData[index + 2]]
-      const matched = findClosestColor(rgb)
-      cells.push({ x, y, color: matched })
-
-      const current = usage.get(matched.code)
-      if (current) {
-        current.count += 1
-      } else {
-        usage.set(matched.code, { ...matched, count: 1 })
-      }
-    }
+  try {
+    const nextPattern = buildPatternFromImage(sourceImage.value, activePalette.value, {
+      columns: Math.max(1, Math.round(columns.value)),
+      paletteTier: selectedTier.value,
+      pixelationMode: pixelationMode.value,
+      similarityThreshold: similarityThreshold.value,
+      excludedColorKeys: excludedColorKeys.value
+    })
+    pattern.value = nextPattern
+    selectedCell.value = null
+    brushColor.value = editPalette.value.find((color) => color.key === nextPattern.colors[0]?.key) ?? editPalette.value[0] ?? null
+    const missingText = missingTierCodes.value.length ? `；缺少 ${missingTierCodes.value.join(', ')} 的可验证色值` : ''
+    status.value = `已生成 ${nextPattern.width}x${nextPattern.height} 拼豆图，共 ${nextPattern.totalBeads} 颗，${nextPattern.colors.length} 色${missingText}。`
+    nextTick(renderPattern)
+  } catch (error) {
+    status.value = error instanceof Error ? error.message : '转换失败。'
   }
+}
 
+function eraseBackground() {
+  if (!pattern.value) {
+    return
+  }
+  const cells = eraseBorderBackground(pattern.value.cells)
+  const stats = withUpdatedStats(cells)
   pattern.value = {
-    width: size,
-    height: size,
-    paletteTier: selectedTier.value,
-    totalBeads: size * size,
-    cells,
-    colors: [...usage.values()].sort((a, b) => b.count - a.count)
+    ...pattern.value,
+    cells: stats.cells,
+    colors: stats.colors,
+    totalBeads: stats.totalBeads
   }
-
-  const missingText = missingTierCodes.value.length ? `；缺少 ${missingTierCodes.value.join(', ')} 的可验证色值` : ''
-  status.value = `已用 MARD ${selectedTier.value} 色盘生成 ${size}x${size} 拼豆图，共 ${size * size} 颗${missingText}。`
+  selectedCell.value = null
+  status.value = `已擦除边界背景，当前共 ${stats.totalBeads} 颗。`
   nextTick(renderPattern)
 }
 
-function getCenteredCrop(width: number, height: number) {
-  const size = Math.min(width, height)
-  return {
-    x: Math.floor((width - size) / 2),
-    y: Math.floor((height - size) / 2),
-    size
+function excludeColor(key: string) {
+  if (!excludedColorKeys.value.includes(key)) {
+    excludedColorKeys.value = [...excludedColorKeys.value, key]
+  }
+  if (pattern.value) {
+    const cells = remapExcludedColors(pattern.value.cells, activePalette.value, excludedColorKeys.value)
+    const stats = withUpdatedStats(cells)
+    pattern.value = { ...pattern.value, cells: stats.cells, colors: stats.colors, totalBeads: stats.totalBeads }
+    nextTick(renderPattern)
   }
 }
 
-function findClosestColor(rgb: [number, number, number]) {
-  const palette = activePalette.value
-  let best = palette[0]
-  let bestDistance = Number.POSITIVE_INFINITY
+function restoreColor(key: string) {
+  excludedColorKeys.value = excludedColorKeys.value.filter((item) => item !== key)
+  rebuildFromSource()
+}
 
-  for (const color of palette) {
-    const distance = colorDistance(rgb, color.rgb)
-    if (distance < bestDistance) {
-      best = color
-      bestDistance = distance
+function handleCanvasPointerDown(event: PointerEvent) {
+  if (!pattern.value) {
+    return
+  }
+  isPainting.value = true
+  lastPaintedCell.value = ''
+  ;(event.currentTarget as HTMLCanvasElement).setPointerCapture(event.pointerId)
+  applyCanvasEdit(event)
+}
+
+function handleCanvasPointerMove(event: PointerEvent) {
+  if (!isPainting.value || editMode.value !== 'brush') {
+    return
+  }
+  applyCanvasEdit(event)
+}
+
+function stopPainting() {
+  isPainting.value = false
+  lastPaintedCell.value = ''
+}
+
+function applyCanvasEdit(event: PointerEvent) {
+  const canvas = previewCanvas.value
+  const currentPattern = pattern.value
+  if (!canvas || !currentPattern) {
+    return
+  }
+
+  const rect = canvas.getBoundingClientRect()
+  const scaleX = canvas.width / rect.width
+  const scaleY = canvas.height / rect.height
+  const position = hitTestPatternCell(currentPattern, canvas.width, canvas.height, (event.clientX - rect.left) * scaleX, (event.clientY - rect.top) * scaleY)
+  if (!position) {
+    return
+  }
+
+  selectedCell.value = position
+  const cellKey = `${position.row}:${position.col}`
+  if (editMode.value === 'eyedropper') {
+    const cell = currentPattern.cells[position.row]?.[position.col]
+    if (cell && !cell.isExternal) {
+      brushColor.value = {
+        key: cell.key,
+        name: cell.name,
+        hex: cell.color,
+        rgb: { ...cell.rgb }
+      }
+      editMode.value = 'brush'
+      status.value = `已吸取 ${cell.key}。`
     }
+    renderPattern()
+    return
   }
 
-  return best
-}
-
-function colorDistance(a: [number, number, number], b: [number, number, number]) {
-  const redMean = (a[0] + b[0]) / 2
-  const red = a[0] - b[0]
-  const green = a[1] - b[1]
-  const blue = a[2] - b[2]
-  return Math.sqrt((2 + redMean / 256) * red * red + 4 * green * green + (2 + (255 - redMean) / 256) * blue * blue)
+  if (!brushColor.value || lastPaintedCell.value === cellKey) {
+    renderPattern()
+    return
+  }
+  lastPaintedCell.value = cellKey
+  const stats = withUpdatedStats(replaceCellColor(currentPattern.cells, position.row, position.col, brushColor.value))
+  pattern.value = { ...currentPattern, cells: stats.cells, colors: stats.colors, totalBeads: stats.totalBeads }
+  status.value = `已将第 ${position.row + 1} 行、第 ${position.col + 1} 列改为 ${brushColor.value.key}。`
+  nextTick(renderPattern)
 }
 
 function renderPattern() {
-  if (!previewCanvas.value) {
-    return
-  }
-
   const canvas = previewCanvas.value
-  const context = canvas.getContext('2d')
-  if (!context) {
-    return
-  }
-
   const currentPattern = pattern.value
-  const size = canvasSize.value
-  canvas.width = size
-  canvas.height = size
-  context.clearRect(0, 0, size, size)
-
-  if (!currentPattern) {
+  if (!canvas || !currentPattern) {
     clearCanvas()
     return
   }
 
-  const cellSize = size / currentPattern.width
-  context.fillStyle = '#ede2cc'
-  context.fillRect(0, 0, size, size)
-
-  for (const cell of currentPattern.cells) {
-    const px = cell.x * cellSize
-    const py = cell.y * cellSize
-    context.fillStyle = cell.color.hex
-
-    if (beadStyle.value === 'round') {
-      const center = cellSize / 2
-      const radius = Math.max(1.2, cellSize * 0.42)
-      const gradient = context.createRadialGradient(px + center * 0.72, py + center * 0.68, radius * 0.1, px + center, py + center, radius)
-      gradient.addColorStop(0, lighten(cell.color.rgb, 34))
-      gradient.addColorStop(0.72, cell.color.hex)
-      gradient.addColorStop(1, darken(cell.color.rgb, 16))
-      context.fillStyle = gradient
-      context.beginPath()
-      context.arc(px + center, py + center, radius, 0, Math.PI * 2)
-      context.fill()
-    } else {
-      context.fillRect(px + 0.5, py + 0.5, Math.max(1, cellSize - 1), Math.max(1, cellSize - 1))
-    }
-  }
-
-  if (cellSize >= 10) {
-    context.strokeStyle = 'rgba(39,49,45,0.12)'
-    context.lineWidth = 1
-    for (let i = 0; i <= currentPattern.width; i += 1) {
-      const pos = Math.round(i * cellSize) + 0.5
-      context.beginPath()
-      context.moveTo(pos, 0)
-      context.lineTo(pos, size)
-      context.stroke()
-      context.beginPath()
-      context.moveTo(0, pos)
-      context.lineTo(size, pos)
-      context.stroke()
-    }
-  }
+  renderPatternToCanvas(canvas, currentPattern, {
+    beadStyle: beadStyle.value,
+    width: canvasSize.value.width,
+    height: canvasSize.value.height,
+    selectedCell: selectedCell.value,
+    watermark: { mode: watermarkMode.value, text: watermarkText.value },
+    showGrid: true
+  })
 }
 
 function clearCanvas() {
-  if (!previewCanvas.value) {
-    return
+  const canvas = previewCanvas.value
+  const context = canvas?.getContext('2d')
+  if (canvas && context) {
+    context.clearRect(0, 0, canvas.width, canvas.height)
   }
-  const context = previewCanvas.value.getContext('2d')
-  if (!context) {
-    return
-  }
-  context.clearRect(0, 0, previewCanvas.value.width, previewCanvas.value.height)
-}
-
-function lighten(rgb: [number, number, number], amount: number) {
-  return `rgb(${rgb.map((value) => Math.min(255, value + amount)).join(',')})`
-}
-
-function darken(rgb: [number, number, number], amount: number) {
-  return `rgb(${rgb.map((value) => Math.max(0, value - amount)).join(',')})`
 }
 
 function downloadPng() {
-  if (!previewCanvas.value || !pattern.value) {
+  if (!pattern.value) {
     return
   }
-  const link = document.createElement('a')
-  link.href = previewCanvas.value.toDataURL('image/png')
-  link.download = makeExportName('png')
-  link.click()
+  const canvas = createPatternCanvas(pattern.value, {
+    beadStyle: beadStyle.value,
+    width: canvasSize.value.width,
+    height: canvasSize.value.height,
+    watermark: { mode: watermarkMode.value, text: watermarkText.value },
+    showGrid: true
+  })
+  downloadUrl(canvas.toDataURL('image/png'), makeExportName('png'))
 }
 
 function downloadJson() {
   if (!pattern.value) {
     return
   }
-
-  const payload = {
-    app: 'AIpindou',
-    version: '1.0.0',
-    source: sourceName.value,
-    gridSize: gridSize.value,
-    paletteTier: pattern.value.paletteTier,
-    paletteSource: MARD_TIER_SOURCE_NOTE,
-    totalBeads: pattern.value.totalBeads,
-    colors: pattern.value.colors.map(({ code, name, hex, count }) => ({ code, name, hex, count })),
-    cells: pattern.value.cells.map((cell) => ({ x: cell.x, y: cell.y, code: cell.color.code, hex: cell.color.hex }))
-  }
-
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' })
-  const link = document.createElement('a')
-  link.href = URL.createObjectURL(blob)
-  link.download = makeExportName('json')
-  link.click()
-  URL.revokeObjectURL(link.href)
+  const payload = createPatternJsonPayload(pattern.value, sourceName.value, MARD_TIER_SOURCE_NOTE, selectedProviderId.value ? { providerId: selectedProviderId.value, prompt: aiPrompt.value } : undefined)
+  downloadBlob(JSON.stringify(payload, null, 2), 'application/json;charset=utf-8', makeExportName('json'))
 }
 
-function makeExportName(extension: 'png' | 'json') {
+function downloadCsv() {
+  if (!pattern.value) {
+    return
+  }
+  downloadBlob(createColorCsv(pattern.value), 'text/csv;charset=utf-8', makeExportName('csv'))
+}
+
+async function loadProviders() {
+  providers.value = (await window.aipindou?.providers.list()) ?? []
+  if (!selectedProviderId.value && providers.value[0]) {
+    selectedProviderId.value = providers.value[0].id
+  }
+}
+
+function openProviderDialog() {
+  const current = providers.value.find((provider) => provider.id === selectedProviderId.value)
+  providerDraft.value = current ? { ...current } : createEmptyProvider()
+  variablesText.value = JSON.stringify(providerDraft.value.variables ?? { API_KEY: '', MODEL: '' }, null, 2)
+  headersText.value = JSON.stringify(providerDraft.value.headersTemplate, null, 2)
+  providerDialogVisible.value = true
+}
+
+function fillDashScopePreset() {
+  providerDraft.value = createDashScopeProvider(providerDraft.value.id)
+  variablesText.value = JSON.stringify(providerDraft.value.variables, null, 2)
+  headersText.value = JSON.stringify(providerDraft.value.headersTemplate, null, 2)
+}
+
+async function saveProviderDraft() {
+  try {
+    const provider = {
+      ...providerDraft.value,
+      variables: JSON.parse(variablesText.value || '{}'),
+      headersTemplate: JSON.parse(headersText.value || '{}')
+    }
+    providers.value = (await window.aipindou?.providers.save(provider)) ?? providers.value
+    selectedProviderId.value = provider.id || providers.value[providers.value.length - 1]?.id || ''
+    providerDialogVisible.value = false
+    status.value = 'AI Provider 已保存。'
+  } catch (error) {
+    status.value = error instanceof Error ? error.message : 'Provider 保存失败。'
+  }
+}
+
+async function removeProviderDraft() {
+  if (!providerDraft.value.id) {
+    return
+  }
+  providers.value = (await window.aipindou?.providers.remove(providerDraft.value.id)) ?? providers.value
+  selectedProviderId.value = providers.value[0]?.id ?? ''
+  providerDialogVisible.value = false
+}
+
+async function runAiOptimize() {
+  if (!sourceDataUrl.value || !selectedProviderId.value) {
+    return
+  }
+  isAiProcessing.value = true
+  startAiTimer()
+  status.value = 'AI 正在优化图片，Wan2.6 通常需要 1-5 分钟，请等待...'
+  try {
+    const result = await window.aipindou?.ai.optimizeImage({
+      providerId: selectedProviderId.value,
+      variables: {
+        IMAGE_DATA_URL: sourceDataUrl.value,
+        IMAGE_BASE64: sourceDataUrl.value.split(',')[1] ?? sourceDataUrl.value,
+        IMAGE_MIME: sourceDataUrl.value.match(/^data:(.*?);/)?.[1] ?? 'image/png',
+        PROMPT: aiPrompt.value
+      }
+    })
+    if (!result?.image) {
+      throw new Error('AI 未返回图片。')
+    }
+    sourceName.value = `${sourceName.value || 'image'}-ai`
+    sourceDataUrl.value = normalizeImageData(result.image)
+    await loadImageFromDataUrl(sourceDataUrl.value)
+    status.value = 'AI 优化完成，已用新图片重新生成。'
+  } catch (error) {
+    status.value = error instanceof Error ? error.message : 'AI 优化失败。'
+  } finally {
+    isAiProcessing.value = false
+    stopAiTimer()
+  }
+}
+
+function startAiTimer() {
+  stopAiTimer()
+  aiStartedAt.value = Date.now()
+  aiElapsedSeconds.value = 0
+  aiTimer = window.setInterval(() => {
+    aiElapsedSeconds.value = Math.round((Date.now() - aiStartedAt.value) / 1000)
+    status.value = `AI 正在优化图片，已等待 ${aiElapsedSeconds.value} 秒；Wan2.6 通常需要 1-5 分钟。`
+  }, 1000)
+}
+
+function stopAiTimer() {
+  if (aiTimer) {
+    window.clearInterval(aiTimer)
+    aiTimer = undefined
+  }
+}
+
+function normalizeImageData(image: string) {
+  if (image.startsWith('data:image/')) {
+    return image
+  }
+  return `data:image/png;base64,${image}`
+}
+
+function fileToDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result))
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
+function downloadBlob(content: string, type: string, name: string) {
+  const blob = new Blob([content], { type })
+  const url = URL.createObjectURL(blob)
+  downloadUrl(url, name)
+  URL.revokeObjectURL(url)
+}
+
+function downloadUrl(url: string, name: string) {
+  const link = document.createElement('a')
+  link.href = url
+  link.download = name
+  link.click()
+}
+
+function makeExportName(extension: 'png' | 'json' | 'csv') {
   const base = sourceName.value ? sourceName.value.replace(/\.[^.]+$/, '') : 'aipindou-pattern'
-  return `${base}-${gridSize.value}x${gridSize.value}.${extension}`
+  const current = pattern.value
+  return `${base}-${current?.width ?? columns.value}x${current?.height ?? 'auto'}.${extension}`
+}
+
+function createEmptyProvider(): AiProviderConfig {
+  return {
+    id: '',
+    name: '自定义图像模型',
+    endpoint: '',
+    method: 'POST',
+    headersTemplate: {
+      Authorization: 'Bearer {{API_KEY}}',
+      'Content-Type': 'application/json'
+    },
+    bodyTemplate: '{\n  "model": "{{MODEL}}",\n  "prompt": "{{PROMPT}}",\n  "image": "{{IMAGE_BASE64}}"\n}',
+    responseImagePath: 'image',
+    timeoutMs: 120000,
+    variables: {
+      API_KEY: '',
+      MODEL: ''
+    }
+  }
+}
+
+function createDashScopeProvider(id = ''): AiProviderConfig {
+  return {
+    id,
+    name: 'DashScope Wan2.6 Image',
+    endpoint: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation',
+    method: 'POST',
+    headersTemplate: {
+      Authorization: 'Bearer {{API_KEY}}',
+      'Content-Type': 'application/json'
+    },
+    bodyTemplate:
+      '{\n' +
+      '  "model": "{{MODEL}}",\n' +
+      '  "input": {\n' +
+      '    "messages": [\n' +
+      '      {\n' +
+      '        "role": "user",\n' +
+      '        "content": [\n' +
+      '          { "text": "{{PROMPT}}" },\n' +
+      '          { "image": "{{IMAGE_DATA_URL}}" }\n' +
+      '        ]\n' +
+      '      }\n' +
+      '    ]\n' +
+      '  },\n' +
+      '  "parameters": {\n' +
+      '    "prompt_extend": true,\n' +
+      '    "watermark": false,\n' +
+      '    "n": 1,\n' +
+      '    "size": "1K"\n' +
+      '  }\n' +
+      '}',
+    responseImagePath: 'output.choices[0].message.content[0].image',
+    timeoutMs: 300000,
+    variables: {
+      API_KEY: '',
+      MODEL: 'wan2.6-image'
+    }
+  }
 }
 </script>
 
 <style scoped>
 .workspace {
-  width: min(1440px, calc(100vw - 40px));
+  width: min(1500px, calc(100vw - 40px));
   margin: 0 auto;
   padding: 28px 0 40px;
 }
@@ -459,7 +907,8 @@ function makeExportName(extension: 'png' | 'json') {
 .hero-panel,
 .control-panel,
 .preview-panel,
-.palette-panel {
+.palette-panel,
+.modal-panel {
   border: 1px solid rgba(64, 70, 58, 0.13);
   box-shadow: 0 24px 70px rgba(61, 45, 25, 0.12);
   backdrop-filter: blur(18px);
@@ -502,7 +951,7 @@ h2 {
 }
 
 .hero-copy {
-  max-width: 720px;
+  max-width: 760px;
   margin: 14px 0 0;
   color: #59645a;
   font-size: 17px;
@@ -528,7 +977,8 @@ button {
 }
 
 .primary-upload,
-.export-actions button:first-child {
+.export-actions button:first-child,
+.wide-button {
   color: #fffaf0;
   background: #24342c;
   box-shadow: 0 16px 30px rgba(36, 52, 44, 0.24);
@@ -570,16 +1020,17 @@ button:disabled {
 
 .content-grid {
   display: grid;
-  grid-template-columns: 320px minmax(420px, 1fr) 300px;
+  grid-template-columns: 340px minmax(520px, 1fr) 330px;
   gap: 18px;
   align-items: start;
 }
 
 .control-panel,
 .preview-panel,
-.palette-panel {
+.palette-panel,
+.modal-panel {
   border-radius: 28px;
-  background: rgba(255, 252, 245, 0.78);
+  background: rgba(255, 252, 245, 0.82);
 }
 
 .control-panel,
@@ -631,14 +1082,40 @@ button:disabled {
   color: #697569;
 }
 
+.compact-head {
+  margin: 12px 0 8px;
+}
+
 input[type='range'] {
   width: 100%;
   accent-color: #b45f24;
 }
 
+.number-input,
+.text-input,
+.select-input {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(36, 52, 44, 0.14);
+  border-radius: 14px;
+  color: #24342c;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.text-input {
+  resize: vertical;
+}
+
+.mono {
+  font-family: Consolas, 'SFMono-Regular', monospace;
+}
+
 .quick-sizes button,
 .segmented button,
-.tier-grid button {
+.tier-grid button,
+.mini-button {
   padding: 8px 12px;
   background: #efe6d2;
 }
@@ -666,6 +1143,36 @@ input[type='range'] {
   line-height: 1.6;
 }
 
+.prompt-preview {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: #5a645b;
+  background: rgba(239, 230, 210, 0.58);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.brush-preview {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(239, 230, 210, 0.58);
+}
+
+.brush-preview strong,
+.brush-preview small {
+  display: block;
+}
+
+.brush-preview small {
+  color: #6b746c;
+}
+
 .status-line {
   margin: 14px 4px 0;
   color: #59645a;
@@ -689,9 +1196,9 @@ input[type='range'] {
 .canvas-wrap {
   position: relative;
   display: grid;
-  min-height: 540px;
+  min-height: 600px;
   place-items: center;
-  overflow: hidden;
+  overflow: auto;
   border-radius: 24px;
   background:
     linear-gradient(45deg, rgba(36, 52, 44, 0.05) 25%, transparent 25%),
@@ -701,7 +1208,7 @@ input[type='range'] {
 }
 
 canvas {
-  width: min(100%, 640px);
+  max-width: 100%;
   height: auto;
   border-radius: 18px;
   box-shadow: 0 18px 50px rgba(39, 49, 45, 0.16);
@@ -736,7 +1243,7 @@ canvas {
 
 .color-row {
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  grid-template-columns: 36px 1fr auto auto;
   gap: 10px;
   align-items: center;
   padding: 10px;
@@ -757,7 +1264,8 @@ canvas {
 }
 
 .color-row small,
-.palette-empty {
+.palette-empty,
+.panel-title small {
   color: #6b746c;
 }
 
@@ -773,9 +1281,100 @@ canvas {
   line-height: 1.8;
 }
 
-@media (max-width: 1180px) {
+.excluded-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(239, 230, 210, 0.68);
+}
+
+.edit-palette {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.palette-groups {
+  display: grid;
+  gap: 12px;
+  max-height: 320px;
+  margin-top: 12px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.palette-group {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.palette-group strong {
+  color: #24342c;
+  line-height: 28px;
+}
+
+.palette-group > div,
+.palette-group {
+  min-width: 0;
+}
+
+.palette-swatch {
+  min-width: 42px;
+  margin: 0 6px 6px 0;
+  padding: 6px 8px;
+  border: 2px solid rgba(36, 52, 44, 0.1);
+  border-radius: 10px;
+  color: #1f2924;
+  font-size: 11px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.72);
+}
+
+.palette-swatch.active {
+  border-color: #1b6cff;
+  box-shadow: 0 0 0 2px rgba(27, 108, 255, 0.18);
+}
+
+.wide-button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(20, 25, 22, 0.42);
+}
+
+.modal-panel {
+  width: min(900px, 94vw);
+  max-height: 88vh;
+  overflow: auto;
+  padding: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.form-grid label:nth-last-child(-n + 2) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 1220px) {
   .content-grid {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 320px 1fr;
   }
 
   .palette-panel {
@@ -783,7 +1382,7 @@ canvas {
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 860px) {
   .workspace {
     width: min(100vw - 24px, 720px);
     padding-top: 14px;
@@ -794,7 +1393,8 @@ canvas {
     flex-direction: column;
   }
 
-  .content-grid {
+  .content-grid,
+  .form-grid {
     grid-template-columns: 1fr;
   }
 
