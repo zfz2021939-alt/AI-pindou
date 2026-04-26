@@ -85,29 +85,6 @@
 
         <div class="setting-card">
           <div class="setting-head">
-            <span>微调工具</span>
-            <strong>{{ editMode === 'brush' ? '画笔' : '吸管' }}</strong>
-          </div>
-          <div class="segmented">
-            <button :class="{ active: editMode === 'brush' }" :disabled="!pattern" @click="editMode = 'brush'">画笔</button>
-            <button :class="{ active: editMode === 'eyedropper' }" :disabled="!pattern" @click="editMode = 'eyedropper'">吸管</button>
-          </div>
-          <div class="setting-head compact-head">
-            <span>预览缩放</span>
-            <strong>{{ zoomPercent }}%</strong>
-          </div>
-          <input v-model.number="zoomPercent" type="range" min="50" max="400" step="25" @input="renderPattern" />
-          <div v-if="brushColor" class="brush-preview">
-            <span class="swatch" :style="{ backgroundColor: brushColor.hex }"></span>
-            <div>
-              <strong>{{ brushColor.name }}</strong>
-              <small>{{ brushColor.key }} · {{ brushColor.hex }}</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="setting-card">
-          <div class="setting-head">
             <span>水印</span>
             <strong>{{ watermarkLabel }}</strong>
           </div>
@@ -145,7 +122,7 @@
           </div>
           <div class="export-actions">
             <button :disabled="!pattern" @click="eraseBackground">擦除边界背景</button>
-            <button :disabled="!pattern" @click="downloadPng">导出 PNG</button>
+            <button :disabled="!pattern" @click="openPngExportDialog">导出 PNG</button>
             <button :disabled="!pattern" @click="downloadJson">导出 JSON</button>
             <button :disabled="!pattern" @click="downloadCsv">导出 CSV</button>
           </div>
@@ -165,20 +142,12 @@
             <span>{{ pattern.totalBeads }} 颗</span>
             <span>{{ pattern.colors.length }} 色</span>
             <span>{{ pixelationMode === 'dominant' ? '主色' : '平均' }}</span>
+            <button class="mini-button" :disabled="!pattern" @click="openEditor">微调</button>
           </div>
         </div>
 
-        <div class="canvas-wrap" @pointerup="stopPainting" @pointerleave="stopPainting">
-          <canvas
-            ref="previewCanvas"
-            width="960"
-            height="720"
-            aria-label="拼豆图预览"
-            :style="canvasDisplayStyle"
-            @pointerdown="handleCanvasPointerDown"
-            @pointermove="handleCanvasPointerMove"
-            @pointerup="stopPainting"
-          ></canvas>
+        <div class="canvas-wrap">
+          <canvas ref="previewCanvas" width="960" height="720" aria-label="拼豆图预览"></canvas>
           <div v-if="!pattern" class="empty-state">
             <span class="bead-dot"></span>
             <p>选择图片后会按开源算法生成第一版拼豆图。</p>
@@ -193,35 +162,6 @@
             <h2>用色清单</h2>
           </div>
           <small v-if="excludedColorKeys.length">已排除 {{ excludedColorKeys.length }} 色</small>
-        </div>
-        <div v-if="pattern" class="edit-palette">
-          <div class="setting-head compact-head">
-            <span>编辑色卡</span>
-            <strong>{{ editPalette.length }} 色</strong>
-          </div>
-          <div class="tier-grid">
-            <button v-for="tier in MARD_TIER_OPTIONS" :key="tier" :class="{ active: editPaletteTier === tier }" @click="setEditPaletteTier(tier)">
-              {{ tier }}色
-            </button>
-          </div>
-          <div class="palette-groups">
-            <section v-for="group in groupedEditPalette" :key="group.letter" class="palette-group">
-              <strong>{{ group.letter }}</strong>
-              <div>
-                <button
-                  v-for="color in group.colors"
-                  :key="color.key"
-                  class="palette-swatch"
-                  :class="{ active: brushColor?.key === color.key }"
-                  :title="`${color.key} ${color.name}`"
-                  :style="{ backgroundColor: color.hex }"
-                  @click="selectBrushColor(color)"
-                >
-                  {{ color.key }}
-                </button>
-              </div>
-            </section>
-          </div>
         </div>
         <div v-if="pattern" class="color-list">
           <article v-for="item in pattern.colors" :key="item.key" class="color-row">
@@ -244,6 +184,128 @@
         </div>
       </section>
     </section>
+
+    <div v-if="editorVisible" class="modal-backdrop" @click.self="closeEditor">
+      <section class="modal-panel editor-modal">
+        <div class="preview-head">
+          <div>
+            <p class="eyebrow">Fine Tune</p>
+            <h2>拼豆微调</h2>
+          </div>
+          <div class="export-actions">
+            <button class="ghost-button" @click="closeEditor">取消</button>
+            <button :disabled="!editPattern" @click="saveEditor">保存</button>
+          </div>
+        </div>
+
+        <div class="editor-layout">
+          <aside class="editor-tools">
+            <div class="setting-card">
+              <div class="setting-head">
+                <span>工具</span>
+                <strong>{{ editMode === 'brush' ? '画笔' : '吸管' }}</strong>
+              </div>
+              <div class="segmented">
+                <button :class="{ active: editMode === 'brush' }" @click="editMode = 'brush'">画笔</button>
+                <button :class="{ active: editMode === 'eyedropper' }" @click="editMode = 'eyedropper'">吸管</button>
+              </div>
+              <div class="setting-head compact-head">
+                <span>缩放</span>
+                <strong>{{ zoomPercent }}%</strong>
+              </div>
+              <input v-model.number="zoomPercent" type="range" min="50" max="500" step="25" @input="renderEditor" />
+              <div class="setting-head compact-head">
+                <span>辅助显示</span>
+                <strong>{{ editorShowGrid || editorShowColorKeys ? '已开启' : '关闭' }}</strong>
+              </div>
+              <div class="segmented">
+                <button :class="{ active: editorShowGrid }" @click="toggleEditorGrid">网格线</button>
+                <button :class="{ active: editorShowColorKeys }" @click="toggleEditorColorKeys">色号</button>
+              </div>
+              <div v-if="brushColor" class="brush-preview">
+                <span class="swatch" :style="{ backgroundColor: brushColor.hex }"></span>
+                <div>
+                  <strong>{{ brushColor.name }}</strong>
+                  <small>{{ brushColor.key }} · {{ brushColor.hex }}</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-card">
+              <div class="setting-head">
+                <span>编辑色卡</span>
+                <strong>{{ editPalette.length }} 色</strong>
+              </div>
+              <div class="tier-grid">
+                <button v-for="tier in MARD_TIER_OPTIONS" :key="tier" :class="{ active: editPaletteTier === tier }" @click="setEditPaletteTier(tier)">
+                  {{ tier }}色
+                </button>
+              </div>
+              <div class="palette-groups editor-palette-groups">
+                <section v-for="group in groupedEditPalette" :key="group.letter" class="palette-group">
+                  <strong>{{ group.letter }}</strong>
+                  <div>
+                    <button
+                      v-for="color in group.colors"
+                      :key="color.key"
+                      class="palette-swatch"
+                      :class="{ active: brushColor?.key === color.key }"
+                      :title="`${color.key} ${color.name}`"
+                      :style="{ backgroundColor: color.hex }"
+                      @click="selectBrushColor(color)"
+                    >
+                      {{ color.key }}
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </aside>
+
+          <div class="editor-canvas-wrap" @pointerup="stopPainting" @pointerleave="stopPainting">
+            <canvas
+              ref="editorCanvas"
+              width="960"
+              height="720"
+              aria-label="拼豆微调画布"
+              :style="editorCanvasDisplayStyle"
+              @pointerdown="handleEditorPointerDown"
+              @pointermove="handleEditorPointerMove"
+              @pointerup="stopPainting"
+            ></canvas>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div v-if="pngExportDialogVisible" class="modal-backdrop" @click.self="pngExportDialogVisible = false">
+      <section class="modal-panel export-modal">
+        <div class="preview-head">
+          <div>
+            <p class="eyebrow">Download</p>
+            <h2>下载设置</h2>
+          </div>
+          <button class="ghost-button" @click="pngExportDialogVisible = false">关闭</button>
+        </div>
+        <div class="export-options">
+          <label class="switch-row">
+            <span>显示网格线</span>
+            <input v-model="exportShowGrid" type="checkbox" />
+          </label>
+          <label class="switch-row">
+            <span>显示色号</span>
+            <input v-model="exportShowColorKeys" type="checkbox" />
+          </label>
+        </div>
+        <p v-if="pattern" class="setting-note export-summary">
+          PNG 尺寸 {{ Math.round(exportSheetCanvasSize.width) }} x {{ Math.round(exportSheetCanvasSize.height) }}，{{ pattern.width }} x {{ pattern.height }} 格。
+        </p>
+        <div class="export-actions dialog-actions">
+          <button class="ghost-button" @click="pngExportDialogVisible = false">取消</button>
+          <button :disabled="!pattern" @click="downloadPng">下载</button>
+        </div>
+      </section>
+    </div>
 
     <div v-if="providerDialogVisible" class="modal-backdrop" @click.self="providerDialogVisible = false">
       <section class="modal-panel">
@@ -288,9 +350,9 @@ import {
 import type { MardTier } from '@/data/mard-palette'
 import { eraseBorderBackground, remapExcludedColors, replaceCellColor, withUpdatedStats } from '@/utils/pixel-editing'
 import { createColorCsv, createPatternJsonPayload } from '@/utils/pattern-export'
-import { createPatternCanvas, hitTestPatternCell, renderPatternToCanvas } from '@/utils/pattern-render'
+import { createPatternSheetCanvas, getPatternSheetCanvasSize, hitTestPatternCell, renderPatternToCanvas } from '@/utils/pattern-render'
 import type { BeadStyle, PatternCellPosition } from '@/utils/pattern-render'
-import { buildPatternFromImage, toPaletteColor } from '@/utils/pixelation'
+import { buildPatternFromImage, cloneCells, toPaletteColor } from '@/utils/pixelation'
 import type { PaletteColor, PatternResult, PixelationMode } from '@/utils/pixelation'
 import type { WatermarkMode } from '@/utils/watermark'
 
@@ -314,7 +376,15 @@ const sourceDataUrl = ref('')
 const status = ref('')
 const sourceImage = ref<HTMLImageElement | null>(null)
 const pattern = ref<PatternResult | null>(null)
+const editPattern = ref<PatternResult | null>(null)
 const previewCanvas = ref<HTMLCanvasElement | null>(null)
+const editorCanvas = ref<HTMLCanvasElement | null>(null)
+const editorVisible = ref(false)
+const editorShowGrid = ref(false)
+const editorShowColorKeys = ref(false)
+const pngExportDialogVisible = ref(false)
+const exportShowGrid = ref(true)
+const exportShowColorKeys = ref(true)
 const excludedColorKeys = ref<string[]>([])
 const providers = ref<AiProviderConfig[]>([])
 const selectedProviderId = ref('')
@@ -323,6 +393,10 @@ const isAiProcessing = ref(false)
 const aiStartedAt = ref(0)
 const aiElapsedSeconds = ref(0)
 let aiTimer: number | undefined
+const EDITOR_GRID_CELL_SIZE = 10
+const EDITOR_COLOR_KEY_CELL_SIZE = 16
+const EXPORT_GRID_CELL_SIZE = 12
+const EXPORT_COLOR_KEY_CELL_SIZE = 18
 const AI_STYLE_PRESETS = [
   {
     id: 'chibi-pixel',
@@ -416,10 +490,44 @@ const canvasSize = computed(() => {
   const width = Math.min(maxWidth, widthByHeight)
   return { width, height: width * ratio }
 })
-const canvasDisplayStyle = computed(() => ({
-  width: `${Math.round(canvasSize.value.width * (zoomPercent.value / 100))}px`,
-  maxWidth: zoomPercent.value <= 100 ? '100%' : 'none',
-  cursor: pattern.value ? (editMode.value === 'eyedropper' ? 'copy' : 'crosshair') : 'default'
+const editorCanvasSize = computed(() => {
+  const current = editPattern.value
+  if (!current) {
+    return canvasSize.value
+  }
+
+  const minCellSize = editorShowColorKeys.value ? EDITOR_COLOR_KEY_CELL_SIZE : editorShowGrid.value ? EDITOR_GRID_CELL_SIZE : 0
+  return minCellSize > 0 ? getPatternRenderSize(current, minCellSize, canvasSize.value) : canvasSize.value
+})
+const exportCanvasSize = computed(() => {
+  const current = pattern.value
+  if (!current) {
+    return canvasSize.value
+  }
+
+  const minCellSize = exportShowColorKeys.value ? EXPORT_COLOR_KEY_CELL_SIZE : exportShowGrid.value ? EXPORT_GRID_CELL_SIZE : 0
+  return minCellSize > 0 ? getPatternRenderSize(current, minCellSize, canvasSize.value) : canvasSize.value
+})
+const exportSheetCanvasSize = computed(() => {
+  const current = pattern.value
+  if (!current) {
+    return canvasSize.value
+  }
+
+  return getPatternSheetCanvasSize(current, {
+    beadStyle: beadStyle.value,
+    width: exportCanvasSize.value.width,
+    height: exportCanvasSize.value.height,
+    watermark: { mode: watermarkMode.value, text: watermarkText.value },
+    showGrid: exportShowGrid.value,
+    showColorKeys: exportShowColorKeys.value,
+    gridStrength: 'clear'
+  })
+})
+const editorCanvasDisplayStyle = computed(() => ({
+  width: `${Math.round(editorCanvasSize.value.width * (zoomPercent.value / 100))}px`,
+  maxWidth: editorShowGrid.value || editorShowColorKeys.value || zoomPercent.value > 100 ? 'none' : '100%',
+  cursor: editPattern.value ? (editMode.value === 'eyedropper' ? 'copy' : 'crosshair') : 'default'
 }))
 const groupedEditPalette = computed(() => {
   const groups = new Map<string, PaletteColor[]>()
@@ -481,9 +589,52 @@ function setWatermarkMode(mode: WatermarkMode) {
   renderPattern()
 }
 
+function toggleEditorGrid() {
+  editorShowGrid.value = !editorShowGrid.value
+  renderEditor()
+}
+
+function toggleEditorColorKeys() {
+  editorShowColorKeys.value = !editorShowColorKeys.value
+  renderEditor()
+}
+
 function selectBrushColor(color: PaletteColor) {
   brushColor.value = color
   editMode.value = 'brush'
+}
+
+function openEditor() {
+  if (!pattern.value) {
+    return
+  }
+  editPattern.value = clonePattern(pattern.value)
+  selectedCell.value = null
+  isPainting.value = false
+  lastPaintedCell.value = ''
+  if (!brushColor.value) {
+    brushColor.value = editPalette.value.find((color) => color.key === pattern.value?.colors[0]?.key) ?? editPalette.value[0] ?? null
+  }
+  editorVisible.value = true
+  nextTick(renderEditor)
+}
+
+function closeEditor() {
+  editorVisible.value = false
+  editPattern.value = null
+  selectedCell.value = null
+  isPainting.value = false
+  lastPaintedCell.value = ''
+}
+
+function saveEditor() {
+  if (!editPattern.value) {
+    return
+  }
+  pattern.value = clonePattern(editPattern.value)
+  status.value = `已保存微调，当前共 ${pattern.value.totalBeads} 颗，${pattern.value.colors.length} 色。`
+  closeEditor()
+  nextTick(renderPattern)
 }
 
 function resetPattern() {
@@ -492,6 +643,9 @@ function resetPattern() {
   status.value = ''
   sourceImage.value = null
   pattern.value = null
+  editPattern.value = null
+  editorVisible.value = false
+  pngExportDialogVisible.value = false
   excludedColorKeys.value = []
   selectedCell.value = null
   brushColor.value = null
@@ -584,21 +738,21 @@ function restoreColor(key: string) {
   rebuildFromSource()
 }
 
-function handleCanvasPointerDown(event: PointerEvent) {
-  if (!pattern.value) {
+function handleEditorPointerDown(event: PointerEvent) {
+  if (!editPattern.value) {
     return
   }
   isPainting.value = true
   lastPaintedCell.value = ''
   ;(event.currentTarget as HTMLCanvasElement).setPointerCapture(event.pointerId)
-  applyCanvasEdit(event)
+  applyEditorEdit(event)
 }
 
-function handleCanvasPointerMove(event: PointerEvent) {
+function handleEditorPointerMove(event: PointerEvent) {
   if (!isPainting.value || editMode.value !== 'brush') {
     return
   }
-  applyCanvasEdit(event)
+  applyEditorEdit(event)
 }
 
 function stopPainting() {
@@ -606,9 +760,9 @@ function stopPainting() {
   lastPaintedCell.value = ''
 }
 
-function applyCanvasEdit(event: PointerEvent) {
-  const canvas = previewCanvas.value
-  const currentPattern = pattern.value
+function applyEditorEdit(event: PointerEvent) {
+  const canvas = editorCanvas.value
+  const currentPattern = editPattern.value
   if (!canvas || !currentPattern) {
     return
   }
@@ -635,19 +789,19 @@ function applyCanvasEdit(event: PointerEvent) {
       editMode.value = 'brush'
       status.value = `已吸取 ${cell.key}。`
     }
-    renderPattern()
+    renderEditor()
     return
   }
 
   if (!brushColor.value || lastPaintedCell.value === cellKey) {
-    renderPattern()
+    renderEditor()
     return
   }
   lastPaintedCell.value = cellKey
   const stats = withUpdatedStats(replaceCellColor(currentPattern.cells, position.row, position.col, brushColor.value))
-  pattern.value = { ...currentPattern, cells: stats.cells, colors: stats.colors, totalBeads: stats.totalBeads }
+  editPattern.value = { ...currentPattern, cells: stats.cells, colors: stats.colors, totalBeads: stats.totalBeads }
   status.value = `已将第 ${position.row + 1} 行、第 ${position.col + 1} 列改为 ${brushColor.value.key}。`
-  nextTick(renderPattern)
+  nextTick(renderEditor)
 }
 
 function renderPattern() {
@@ -662,10 +816,48 @@ function renderPattern() {
     beadStyle: beadStyle.value,
     width: canvasSize.value.width,
     height: canvasSize.value.height,
-    selectedCell: selectedCell.value,
     watermark: { mode: watermarkMode.value, text: watermarkText.value },
     showGrid: true
   })
+}
+
+function renderEditor() {
+  const canvas = editorCanvas.value
+  const currentPattern = editPattern.value
+  if (!canvas || !currentPattern) {
+    return
+  }
+
+  renderPatternToCanvas(canvas, currentPattern, {
+    beadStyle: beadStyle.value,
+    width: editorCanvasSize.value.width,
+    height: editorCanvasSize.value.height,
+    selectedCell: selectedCell.value,
+    showGrid: editorShowGrid.value,
+    showColorKeys: editorShowColorKeys.value,
+    gridStrength: 'clear'
+  })
+}
+
+function clonePattern(source: PatternResult): PatternResult {
+  return {
+    ...source,
+    colors: source.colors.map((color) => ({ ...color, rgb: { ...color.rgb } })),
+    cells: cloneCells(source.cells),
+    options: {
+      ...source.options,
+      excludedColorKeys: [...source.options.excludedColorKeys]
+    }
+  }
+}
+
+function getPatternRenderSize(currentPattern: PatternResult, minCellSize: number, baseSize: { width: number; height: number }) {
+  const baseCellSize = Math.min(baseSize.width / currentPattern.width, baseSize.height / currentPattern.height)
+  const cellSize = Math.max(baseCellSize, minCellSize)
+  return {
+    width: currentPattern.width * cellSize,
+    height: currentPattern.height * cellSize
+  }
 }
 
 function clearCanvas() {
@@ -676,18 +868,28 @@ function clearCanvas() {
   }
 }
 
+function openPngExportDialog() {
+  if (!pattern.value) {
+    return
+  }
+  pngExportDialogVisible.value = true
+}
+
 function downloadPng() {
   if (!pattern.value) {
     return
   }
-  const canvas = createPatternCanvas(pattern.value, {
+  const canvas = createPatternSheetCanvas(pattern.value, {
     beadStyle: beadStyle.value,
-    width: canvasSize.value.width,
-    height: canvasSize.value.height,
+    width: exportCanvasSize.value.width,
+    height: exportCanvasSize.value.height,
     watermark: { mode: watermarkMode.value, text: watermarkText.value },
-    showGrid: true
+    showGrid: exportShowGrid.value,
+    showColorKeys: exportShowColorKeys.value,
+    gridStrength: 'clear'
   })
   downloadUrl(canvas.toDataURL('image/png'), makeExportName('png'))
+  pngExportDialogVisible.value = false
 }
 
 function downloadJson() {
@@ -1291,13 +1493,6 @@ canvas {
   background: rgba(239, 230, 210, 0.68);
 }
 
-.edit-palette {
-  margin-bottom: 16px;
-  padding: 12px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.58);
-}
-
 .palette-groups {
   display: grid;
   gap: 12px;
@@ -1362,6 +1557,78 @@ canvas {
   padding: 24px;
 }
 
+.editor-modal {
+  width: min(1380px, 96vw);
+  max-height: 92vh;
+}
+
+.export-modal {
+  width: min(460px, 94vw);
+}
+
+.export-options {
+  display: grid;
+  gap: 12px;
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  color: #24342c;
+  background: rgba(239, 230, 210, 0.58);
+  font-weight: 800;
+}
+
+.switch-row input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: #b45f24;
+}
+
+.export-summary {
+  margin-top: 12px;
+}
+
+.dialog-actions {
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.editor-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.editor-tools {
+  max-height: calc(92vh - 116px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.editor-canvas-wrap {
+  display: grid;
+  min-height: min(70vh, 720px);
+  place-items: center;
+  overflow: auto;
+  border-radius: 22px;
+  background:
+    linear-gradient(45deg, rgba(36, 52, 44, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(36, 52, 44, 0.05) 25%, transparent 25%),
+    #fbf8ef;
+  background-size: 24px 24px;
+}
+
+.editor-palette-groups {
+  max-height: 420px;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1394,6 +1661,7 @@ canvas {
   }
 
   .content-grid,
+  .editor-layout,
   .form-grid {
     grid-template-columns: 1fr;
   }
