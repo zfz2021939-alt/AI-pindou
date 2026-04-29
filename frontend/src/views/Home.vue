@@ -57,7 +57,8 @@
             <strong>{{ similarityThreshold }}</strong>
           </div>
           <input v-model.number="similarityThreshold" type="range" min="0" max="90" step="1" @input="rebuildFromSource" />
-          <p class="setting-note">数值越大，越容易把低频近似色并入高频色；横向低于 80 时会自动保护边缘，避免线条被合并掉。</p>
+          <input v-model.number="similarityThreshold" class="number-input" type="number" min="0" max="90" step="1" @change="clampSimilarityThreshold" />
+          <p class="setting-note">数值越大，越容易把低频近似色并入高频色；当前实际生效 {{ effectiveSimilarityThreshold }}，横向低于 80 时会自动保护边缘。</p>
         </div>
 
         <div class="setting-card">
@@ -67,9 +68,20 @@
           </div>
           <div class="tier-grid">
             <button v-for="tier in MARD_TIER_OPTIONS" :key="tier" :class="{ active: selectedTier === tier }" @click="setPaletteTier(tier)">
-              {{ tier }}色
+              {{ getPaletteTierLabel(tier) }}
             </button>
           </div>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-head">
+            <span>厂商编号</span>
+            <strong>{{ selectedVendorLabel }}</strong>
+          </div>
+          <select v-model="selectedVendor" class="select-input" @change="setPaletteVendor(selectedVendor)">
+            <option v-for="vendor in BEAD_VENDOR_OPTIONS" :key="vendor.id" :value="vendor.id">{{ vendor.label }}</option>
+          </select>
+          <p class="setting-note">颜色匹配使用当前色卡 RGB；切换厂商会同步用色清单、微调色号和导出编号。</p>
         </div>
 
         <div class="setting-card">
@@ -121,7 +133,9 @@
             <strong>{{ pattern ? `${pattern.colors.length} 色` : '待生成' }}</strong>
           </div>
           <div class="export-actions">
-            <button :disabled="!pattern" @click="eraseBackground">擦除边界背景</button>
+            <button class="tune-button" :disabled="!pattern" @click="openEditor">打开微调</button>
+            <button :disabled="!canEraseBackground" @click="eraseBackground">{{ isBackgroundErasing ? 'AI 分割中...' : backgroundEraseUsed ? '背景已擦除' : 'AI 擦除背景' }}</button>
+            <button :disabled="!canEnhanceFaceContour" @click="enhanceFaceOutline">{{ isFaceEnhancing ? '识别轮廓中...' : faceContourEnhanceUsed ? '轮廓已增强' : '面部轮廓增强' }}</button>
             <button :disabled="!pattern" @click="openPngExportDialog">导出 PNG</button>
             <button :disabled="!pattern" @click="downloadJson">导出 JSON</button>
             <button :disabled="!pattern" @click="downloadCsv">导出 CSV</button>
@@ -142,7 +156,7 @@
             <span>{{ pattern.totalBeads }} 颗</span>
             <span>{{ pattern.colors.length }} 色</span>
             <span>{{ pixelationMode === 'dominant' ? '主色' : '平均' }}</span>
-            <button class="mini-button" :disabled="!pattern" @click="openEditor">微调</button>
+            <button class="mini-button tune-button" :disabled="!pattern" @click="openEditor">微调</button>
           </div>
         </div>
 
@@ -168,7 +182,7 @@
             <span class="swatch" :style="{ backgroundColor: item.hex }"></span>
             <div>
               <strong>{{ item.name }}</strong>
-              <small>{{ item.key }} · {{ item.hex }}</small>
+              <small>{{ selectedVendorLabel }} {{ item.displayCode }} · MARD {{ item.key }} · {{ item.hex }}</small>
             </div>
             <b>{{ item.count }}</b>
             <button class="mini-button" @click="excludeColor(item.key)">排除</button>
@@ -198,6 +212,14 @@
           </div>
         </div>
 
+        <div class="editor-toolbar">
+          <button :class="{ active: editMode === 'brush' }" @click="editMode = 'brush'">画笔</button>
+          <button :class="{ active: editMode === 'eyedropper' }" @click="editMode = 'eyedropper'">吸管</button>
+          <button :class="{ active: editorShowGrid }" @click="toggleEditorGrid">网格线</button>
+          <button :class="{ active: editorShowColorKeys }" @click="toggleEditorColorKeys">色号</button>
+          <span>{{ selectedVendorLabel }} 编号</span>
+        </div>
+
         <div class="editor-layout">
           <aside class="editor-tools">
             <div class="setting-card">
@@ -223,10 +245,10 @@
                 <button :class="{ active: editorShowColorKeys }" @click="toggleEditorColorKeys">色号</button>
               </div>
               <div v-if="brushColor" class="brush-preview">
-                <span class="swatch" :style="{ backgroundColor: brushColor.hex }"></span>
+                  <span class="swatch" :style="{ backgroundColor: brushColor.hex }"></span>
                 <div>
                   <strong>{{ brushColor.name }}</strong>
-                  <small>{{ brushColor.key }} · {{ brushColor.hex }}</small>
+                  <small>{{ selectedVendorLabel }} {{ brushColor.displayCode }} · MARD {{ brushColor.key }} · {{ brushColor.hex }}</small>
                 </div>
               </div>
             </div>
@@ -238,7 +260,7 @@
               </div>
               <div class="tier-grid">
                 <button v-for="tier in MARD_TIER_OPTIONS" :key="tier" :class="{ active: editPaletteTier === tier }" @click="setEditPaletteTier(tier)">
-                  {{ tier }}色
+                  {{ getPaletteTierLabel(tier) }}
                 </button>
               </div>
               <div class="palette-groups editor-palette-groups">
@@ -250,11 +272,11 @@
                       :key="color.key"
                       class="palette-swatch"
                       :class="{ active: brushColor?.key === color.key }"
-                      :title="`${color.key} ${color.name}`"
+                      :title="`${color.displayCode} · ${color.key} · ${color.hex}`"
                       :style="{ backgroundColor: color.hex }"
                       @click="selectBrushColor(color)"
                     >
-                      {{ color.key }}
+                      {{ color.displayCode }}
                     </button>
                   </div>
                 </section>
@@ -342,25 +364,31 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from 'vue'
 import {
+  BEAD_VENDOR_OPTIONS,
   MARD_TIER_OPTIONS,
   MARD_TIER_SOURCE_NOTE,
+  getPaletteTierLabel,
   getMardTierMissingCodes,
-  getMardTierPalette
+  getMardTierPalette,
+  getVendorLabel
 } from '@/data/mard-palette'
-import type { MardTier } from '@/data/mard-palette'
+import type { BeadPaletteTier, BeadVendorId } from '@/data/mard-palette'
+import { eraseBackgroundWithLocalSegmentation } from '@/utils/background-segmentation'
+import { enhanceFaceContour } from '@/utils/face-contour-enhancement'
 import { eraseBorderBackground, remapExcludedColors, replaceCellColor, withUpdatedStats } from '@/utils/pixel-editing'
 import { createColorCsv, createPatternJsonPayload } from '@/utils/pattern-export'
 import { createPatternSheetCanvas, getPatternSheetCanvasSize, hitTestPatternCell, renderPatternToCanvas } from '@/utils/pattern-render'
 import type { BeadStyle, PatternCellPosition } from '@/utils/pattern-render'
-import { buildPatternFromImage, cloneCells, toPaletteColor } from '@/utils/pixelation'
+import { buildPatternFromImage, cloneCells, getEffectiveMergeThreshold, toPaletteColor } from '@/utils/pixelation'
 import type { PaletteColor, PatternResult, PixelationMode } from '@/utils/pixelation'
 import type { WatermarkMode } from '@/utils/watermark'
 
 const columns = ref(50)
 const similarityThreshold = ref(30)
 const pixelationMode = ref<PixelationMode>('dominant')
-const selectedTier = ref<MardTier>(221)
-const editPaletteTier = ref<MardTier>(221)
+const selectedTier = ref<BeadPaletteTier>('all')
+const editPaletteTier = ref<BeadPaletteTier>('all')
+const selectedVendor = ref<BeadVendorId>('mard')
 const beadStyle = ref<BeadStyle>('round')
 const editMode = ref<'brush' | 'eyedropper'>('brush')
 const zoomPercent = ref(100)
@@ -385,6 +413,10 @@ const editorShowColorKeys = ref(false)
 const pngExportDialogVisible = ref(false)
 const exportShowGrid = ref(true)
 const exportShowColorKeys = ref(true)
+const backgroundEraseUsed = ref(false)
+const faceContourEnhanceUsed = ref(false)
+const isBackgroundErasing = ref(false)
+const isFaceEnhancing = ref(false)
 const excludedColorKeys = ref<string[]>([])
 const providers = ref<AiProviderConfig[]>([])
 const selectedProviderId = ref('')
@@ -464,11 +496,15 @@ const variablesText = ref('{\n  "API_KEY": "",\n  "MODEL": ""\n}')
 const headersText = ref('{\n  "Authorization": "Bearer {{API_KEY}}",\n  "Content-Type": "application/json"\n}')
 const providerDraft = ref<AiProviderConfig>(createEmptyProvider())
 
-const activePalette = computed(() => getMardTierPalette(selectedTier.value).map(toPaletteColor))
-const editPalette = computed(() => getMardTierPalette(editPaletteTier.value).map(toPaletteColor))
+const activePalette = computed(() => getMardTierPalette(selectedTier.value, selectedVendor.value).map((color) => toPaletteColor(color, selectedVendor.value)))
+const editPalette = computed(() => getMardTierPalette(editPaletteTier.value, selectedVendor.value).map((color) => toPaletteColor(color, selectedVendor.value)))
 const missingTierCodes = computed(() => getMardTierMissingCodes(selectedTier.value))
 const selectedAiStyle = computed(() => AI_STYLE_PRESETS.find((style) => style.id === selectedAiStyleId.value) ?? AI_STYLE_PRESETS[0])
 const aiPrompt = computed(() => selectedAiStyle.value.prompt)
+const selectedVendorLabel = computed(() => getVendorLabel(selectedVendor.value))
+const effectiveSimilarityThreshold = computed(() => getEffectiveMergeThreshold(columns.value, similarityThreshold.value))
+const canEraseBackground = computed(() => Boolean(pattern.value && sourceImage.value && !backgroundEraseUsed.value && !isBackgroundErasing.value && !isFaceEnhancing.value))
+const canEnhanceFaceContour = computed(() => Boolean(pattern.value && sourceImage.value && !faceContourEnhanceUsed.value && !isFaceEnhancing.value && !isBackgroundErasing.value))
 const watermarkLabel = computed(() => {
   if (watermarkMode.value === 'visible') {
     return '明水印'
@@ -537,7 +573,7 @@ const groupedEditPalette = computed(() => {
   }
   return [...groups.entries()].map(([letter, colors]) => ({
     letter,
-    colors: colors.sort((first, second) => first.key.localeCompare(second.key, undefined, { numeric: true }))
+    colors: colors.sort((first, second) => (first.displayCode || first.key).localeCompare(second.displayCode || second.key, undefined, { numeric: true }))
   }))
 })
 
@@ -567,21 +603,43 @@ function setColumns(size: number) {
   rebuildFromSource()
 }
 
+function clampSimilarityThreshold() {
+  similarityThreshold.value = Math.max(0, Math.min(90, Math.round(Number(similarityThreshold.value) || 0)))
+  rebuildFromSource()
+}
+
 function setPixelationMode(mode: PixelationMode) {
   pixelationMode.value = mode
   rebuildFromSource()
 }
 
-function setPaletteTier(tier: MardTier) {
+function setPaletteTier(tier: BeadPaletteTier) {
   selectedTier.value = tier
   editPaletteTier.value = tier
   excludedColorKeys.value = []
   rebuildFromSource()
 }
 
-function setEditPaletteTier(tier: MardTier) {
+function setEditPaletteTier(tier: BeadPaletteTier) {
   editPaletteTier.value = tier
   brushColor.value = editPalette.value[0] ?? null
+}
+
+function setPaletteVendor(vendor: BeadVendorId) {
+  selectedVendor.value = vendor
+  excludedColorKeys.value = []
+  editPaletteTier.value = selectedTier.value
+  if (sourceImage.value) {
+    rebuildFromSource()
+    return
+  }
+  pattern.value = pattern.value ? relabelPattern(pattern.value, vendor) : null
+  editPattern.value = editPattern.value ? relabelPattern(editPattern.value, vendor) : null
+  brushColor.value = editPalette.value[0] ?? null
+  nextTick(() => {
+    renderPattern()
+    renderEditor()
+  })
 }
 
 function setWatermarkMode(mode: WatermarkMode) {
@@ -646,6 +704,7 @@ function resetPattern() {
   editPattern.value = null
   editorVisible.value = false
   pngExportDialogVisible.value = false
+  resetAiActionUsage()
   excludedColorKeys.value = []
   selectedCell.value = null
   brushColor.value = null
@@ -672,6 +731,7 @@ async function loadImageFromDataUrl(dataUrl: string) {
   const image = new Image()
   image.onload = () => {
     sourceImage.value = image
+    resetAiActionUsage()
     rebuildFromSource()
   }
   image.onerror = () => {
@@ -689,6 +749,7 @@ function rebuildFromSource() {
     const nextPattern = buildPatternFromImage(sourceImage.value, activePalette.value, {
       columns: Math.max(1, Math.round(columns.value)),
       paletteTier: selectedTier.value,
+      paletteVendor: selectedVendor.value,
       pixelationMode: pixelationMode.value,
       similarityThreshold: similarityThreshold.value,
       excludedColorKeys: excludedColorKeys.value
@@ -704,21 +765,80 @@ function rebuildFromSource() {
   }
 }
 
-function eraseBackground() {
-  if (!pattern.value) {
+function resetAiActionUsage() {
+  backgroundEraseUsed.value = false
+  faceContourEnhanceUsed.value = false
+  isBackgroundErasing.value = false
+  isFaceEnhancing.value = false
+}
+
+async function eraseBackground() {
+  if (!pattern.value || !sourceImage.value || backgroundEraseUsed.value) {
     return
   }
-  const cells = eraseBorderBackground(pattern.value.cells)
-  const stats = withUpdatedStats(cells)
-  pattern.value = {
-    ...pattern.value,
-    cells: stats.cells,
-    colors: stats.colors,
-    totalBeads: stats.totalBeads
+
+  isBackgroundErasing.value = true
+  try {
+    const result = await eraseBackgroundWithLocalSegmentation(sourceImage.value, pattern.value)
+    pattern.value = result.pattern
+    backgroundEraseUsed.value = true
+    selectedCell.value = null
+    status.value = `AI 已擦除背景（${result.provider}），当前共 ${pattern.value.totalBeads} 颗。`
+  } catch (error) {
+    const cells = eraseBorderBackground(pattern.value.cells)
+    const stats = withUpdatedStats(cells)
+    pattern.value = {
+      ...pattern.value,
+      cells: stats.cells,
+      colors: stats.colors,
+      totalBeads: stats.totalBeads,
+      options: {
+        ...pattern.value.options,
+        backgroundErase: { mode: 'fallback', used: true }
+      }
+    }
+    backgroundEraseUsed.value = true
+    selectedCell.value = null
+    const reason = error instanceof Error ? error.message : '本地 AI 分割失败'
+    status.value = `AI 擦除失败，已回退边界背景算法：${reason}。当前共 ${stats.totalBeads} 颗。`
+  } finally {
+    isBackgroundErasing.value = false
+    nextTick(renderPattern)
   }
-  selectedCell.value = null
-  status.value = `已擦除边界背景，当前共 ${stats.totalBeads} 颗。`
-  nextTick(renderPattern)
+}
+
+async function enhanceFaceOutline() {
+  if (!pattern.value || !sourceImage.value || faceContourEnhanceUsed.value) {
+    return
+  }
+
+  isFaceEnhancing.value = true
+  try {
+    const result = await enhanceFaceContour(sourceImage.value, pattern.value, activePalette.value)
+    pattern.value = result.pattern
+    faceContourEnhanceUsed.value = true
+    selectedCell.value = null
+    status.value =
+      result.changedCells > 0
+        ? `已使用${getFaceDetectorLabel(result.detector)}增强 ${result.changedCells} 个面部轮廓格。`
+        : `未检测到可增强的脸部轮廓，本次机会已使用。`
+  } catch (error) {
+    faceContourEnhanceUsed.value = true
+    status.value = error instanceof Error ? `面部轮廓增强失败，本次机会已使用：${error.message}` : '面部轮廓增强失败，本次机会已使用。'
+  } finally {
+    isFaceEnhancing.value = false
+    nextTick(renderPattern)
+  }
+}
+
+function getFaceDetectorLabel(detector: string) {
+  if (detector === 'mediapipe') {
+    return '人脸模型'
+  }
+  if (detector === 'heuristic') {
+    return '卡通脸启发式'
+  }
+  return '本地模型'
 }
 
 function excludeColor(key: string) {
@@ -782,12 +902,15 @@ function applyEditorEdit(event: PointerEvent) {
     if (cell && !cell.isExternal) {
       brushColor.value = {
         key: cell.key,
+        displayCode: cell.displayCode,
         name: cell.name,
         hex: cell.color,
-        rgb: { ...cell.rgb }
+        rgb: { ...cell.rgb },
+        vendor: cell.vendor,
+        vendorCodes: { ...cell.vendorCodes }
       }
       editMode.value = 'brush'
-      status.value = `已吸取 ${cell.key}。`
+      status.value = `已吸取 ${cell.displayCode || cell.key}。`
     }
     renderEditor()
     return
@@ -800,7 +923,7 @@ function applyEditorEdit(event: PointerEvent) {
   lastPaintedCell.value = cellKey
   const stats = withUpdatedStats(replaceCellColor(currentPattern.cells, position.row, position.col, brushColor.value))
   editPattern.value = { ...currentPattern, cells: stats.cells, colors: stats.colors, totalBeads: stats.totalBeads }
-  status.value = `已将第 ${position.row + 1} 行、第 ${position.col + 1} 列改为 ${brushColor.value.key}。`
+  status.value = `已将第 ${position.row + 1} 行、第 ${position.col + 1} 列改为 ${brushColor.value.displayCode}。`
   nextTick(renderEditor)
 }
 
@@ -842,11 +965,34 @@ function renderEditor() {
 function clonePattern(source: PatternResult): PatternResult {
   return {
     ...source,
-    colors: source.colors.map((color) => ({ ...color, rgb: { ...color.rgb } })),
+    colors: source.colors.map((color) => ({ ...color, rgb: { ...color.rgb }, vendorCodes: { ...color.vendorCodes } })),
     cells: cloneCells(source.cells),
     options: {
       ...source.options,
       excludedColorKeys: [...source.options.excludedColorKeys]
+    }
+  }
+}
+
+function relabelPattern(source: PatternResult, vendor: BeadVendorId): PatternResult {
+  const relabeledCells = source.cells.map((row) =>
+    row.map((cell) => ({
+      ...cell,
+      displayCode: cell.vendorCodes[vendor] ?? cell.vendorCodes.mard ?? cell.key,
+      vendor,
+      rgb: { ...cell.rgb },
+      vendorCodes: { ...cell.vendorCodes }
+    }))
+  )
+  const stats = withUpdatedStats(relabeledCells)
+  return {
+    ...source,
+    cells: stats.cells,
+    colors: stats.colors,
+    totalBeads: stats.totalBeads,
+    options: {
+      ...source.options,
+      paletteVendor: vendor
     }
   }
 }
@@ -896,7 +1042,13 @@ function downloadJson() {
   if (!pattern.value) {
     return
   }
-  const payload = createPatternJsonPayload(pattern.value, sourceName.value, MARD_TIER_SOURCE_NOTE, selectedProviderId.value ? { providerId: selectedProviderId.value, prompt: aiPrompt.value } : undefined)
+  const payload = createPatternJsonPayload(
+    pattern.value,
+    sourceName.value,
+    MARD_TIER_SOURCE_NOTE,
+    selectedVendor.value,
+    selectedProviderId.value ? { providerId: selectedProviderId.value, prompt: aiPrompt.value } : undefined
+  )
   downloadBlob(JSON.stringify(payload, null, 2), 'application/json;charset=utf-8', makeExportName('json'))
 }
 
@@ -904,7 +1056,7 @@ function downloadCsv() {
   if (!pattern.value) {
     return
   }
-  downloadBlob(createColorCsv(pattern.value), 'text/csv;charset=utf-8', makeExportName('csv'))
+  downloadBlob(createColorCsv(pattern.value, selectedVendor.value), 'text/csv;charset=utf-8', makeExportName('csv'))
 }
 
 async function loadProviders() {
@@ -1323,9 +1475,16 @@ input[type='range'] {
 }
 
 .segmented button.active,
-.tier-grid button.active {
+.tier-grid button.active,
+.editor-toolbar button.active {
   color: #fffaf0;
   background: #b45f24;
+}
+
+.tune-button {
+  color: #fffaf0;
+  background: #b45f24;
+  box-shadow: 0 12px 24px rgba(180, 95, 36, 0.24);
 }
 
 .tier-grid {
@@ -1604,6 +1763,24 @@ canvas {
   grid-template-columns: 320px minmax(0, 1fr);
   gap: 18px;
   align-items: start;
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(239, 230, 210, 0.58);
+}
+
+.editor-toolbar span {
+  margin-left: auto;
+  color: #59645a;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .editor-tools {

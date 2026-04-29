@@ -23,6 +23,12 @@ AIpindou 是一个拼豆图像转换桌面软件。当前最小闭环目标是�
 - MVP 优先保持少依赖、可运行、可打包
 - 大功能先最小实现，再迭代编辑、PDF、完整 Mard 色卡等能力
 
+## 飞书文档保存规则
+- 每次输出完整 `<proposed_plan>` 后，必须询问用户是否要保存到飞书云文档
+- 用户选择更新已有文档时，使用 `lark-cli docs +update`
+- 用户选择新建文档时，使用 `newdoc-feishu` skill
+- 未经用户确认，不自动上传或新建飞书文档
+
 ## 验证命令
 - 前端构建：`cd frontend && npm.cmd run build`
 - 桌面打包：`npm.cmd run build:exe`

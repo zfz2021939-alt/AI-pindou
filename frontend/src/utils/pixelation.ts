@@ -1,4 +1,5 @@
-import type { MardColor, MardTier } from '@/data/mard-palette'
+import { getBeadDisplayCode } from '@/data/mard-palette'
+import type { BeadVendorId, MardColor, MardTier } from '@/data/mard-palette'
 
 export type PixelationMode = 'dominant' | 'average'
 
@@ -10,19 +11,25 @@ export type RgbColor = {
 
 export type PaletteColor = {
   key: string
+  displayCode: string
   name: string
   hex: string
   rgb: RgbColor
+  vendor: BeadVendorId
+  vendorCodes: Partial<Record<BeadVendorId, string>>
 }
 
 export type MappedBeadCell = {
   row: number
   col: number
   key: string
+  displayCode: string
   name: string
   color: string
   rgb: RgbColor
   isExternal: boolean
+  vendor: BeadVendorId
+  vendorCodes: Partial<Record<BeadVendorId, string>>
 }
 
 export type ColorUsage = PaletteColor & {
@@ -33,9 +40,12 @@ export type PatternOptions = {
   columns: number
   rows: number
   paletteTier: MardTier
+  paletteVendor: BeadVendorId
   pixelationMode: PixelationMode
   similarityThreshold: number
   excludedColorKeys: string[]
+  backgroundErase?: { mode: 'ai' | 'fallback'; used: boolean }
+  faceContourEnhance?: { used: boolean; detector: 'mediapipe' | 'heuristic' | 'none' }
 }
 
 export type PatternResult = {
@@ -53,22 +63,28 @@ export const transparentCell = (row: number, col: number): MappedBeadCell => ({
   row,
   col,
   key: TRANSPARENT_KEY,
+  displayCode: TRANSPARENT_KEY,
   name: '外部区域',
   color: '#FFFFFF',
   rgb: { r: 255, g: 255, b: 255 },
-  isExternal: true
+  isExternal: true,
+  vendor: 'mard',
+  vendorCodes: {}
 })
 
-export function toPaletteColor(color: MardColor): PaletteColor {
+export function toPaletteColor(color: MardColor, vendor: BeadVendorId = 'mard'): PaletteColor {
   return {
     key: color.code,
+    displayCode: getBeadDisplayCode(color, vendor),
     name: color.name,
     hex: color.hex,
     rgb: {
       r: color.rgb[0],
       g: color.rgb[1],
       b: color.rgb[2]
-    }
+    },
+    vendor,
+    vendorCodes: { ...color.vendorCodes }
   }
 }
 
@@ -130,10 +146,13 @@ export function calculatePixelGrid(
         row,
         col,
         key: matched.key,
+        displayCode: matched.displayCode,
         name: matched.name,
         color: matched.hex,
         rgb: matched.rgb,
-        isExternal: false
+        isExternal: false,
+        vendor: matched.vendor,
+        vendorCodes: { ...matched.vendorCodes }
       })
     }
     cells.push(line)
@@ -190,10 +209,13 @@ export function mergeSimilarColors(cells: MappedBeadCell[][], palette: PaletteCo
       return {
         ...cell,
         key: target.key,
+        displayCode: target.displayCode,
         name: target.name,
         color: target.hex,
         rgb: target.rgb,
-        isExternal: false
+        isExternal: false,
+        vendor: target.vendor,
+        vendorCodes: { ...target.vendorCodes }
       }
     })
   )
@@ -254,9 +276,12 @@ export function summarizeCells(cells: MappedBeadCell[][]) {
     } else {
       usage.set(cell.key, {
         key: cell.key,
+        displayCode: cell.displayCode,
         name: cell.name,
         hex: cell.color,
         rgb: cell.rgb,
+        vendor: cell.vendor,
+        vendorCodes: { ...cell.vendorCodes },
         count: 1
       })
     }
@@ -269,7 +294,7 @@ export function summarizeCells(cells: MappedBeadCell[][]) {
 }
 
 export function cloneCells(cells: MappedBeadCell[][]) {
-  return cells.map((row) => row.map((cell) => ({ ...cell, rgb: { ...cell.rgb } })))
+  return cells.map((row) => row.map((cell) => ({ ...cell, rgb: { ...cell.rgb }, vendorCodes: { ...cell.vendorCodes } })))
 }
 
 function calculateRepresentativeColor(
@@ -378,7 +403,7 @@ function calculateRepresentativeColor(
   return dominant
 }
 
-function getEffectiveMergeThreshold(columns: number, threshold: number) {
+export function getEffectiveMergeThreshold(columns: number, threshold: number) {
   if (columns >= 80) {
     return threshold
   }

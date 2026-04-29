@@ -90,10 +90,13 @@ export function remapExcludedColors(cells: MappedBeadCell[][], palette: PaletteC
       return {
         ...cell,
         key: closest.key,
+        displayCode: closest.displayCode,
         name: closest.name,
         color: closest.hex,
         rgb: closest.rgb,
-        isExternal: false
+        isExternal: false,
+        vendor: closest.vendor,
+        vendorCodes: { ...closest.vendorCodes }
       }
     })
   )
@@ -108,10 +111,13 @@ export function replaceColor(cells: MappedBeadCell[][], sourceKey: string, targe
       return {
         ...cell,
         key: target.key,
+        displayCode: target.displayCode,
         name: target.name,
         color: target.hex,
         rgb: target.rgb,
-        isExternal: false
+        isExternal: false,
+        vendor: target.vendor,
+        vendorCodes: { ...target.vendorCodes }
       }
     })
   )
@@ -126,10 +132,13 @@ export function replaceCellColor(cells: MappedBeadCell[][], row: number, col: nu
       return {
         ...cell,
         key: target.key,
+        displayCode: target.displayCode,
         name: target.name,
         color: target.hex,
         rgb: { ...target.rgb },
-        isExternal: false
+        isExternal: false,
+        vendor: target.vendor,
+        vendorCodes: { ...target.vendorCodes }
       }
     })
   )

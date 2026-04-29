@@ -202,7 +202,8 @@ function drawColorKeys(context: CanvasRenderingContext2D, pattern: PatternResult
         continue
       }
 
-      const fontSize = getColorKeyFontSize(context, cell.key, geometry.cellSize)
+      const displayCode = cell.displayCode || cell.key
+      const fontSize = getColorKeyFontSize(context, displayCode, geometry.cellSize)
       if (fontSize < 4) {
         continue
       }
@@ -214,8 +215,8 @@ function drawColorKeys(context: CanvasRenderingContext2D, pattern: PatternResult
       context.lineWidth = Math.max(1, fontSize * 0.22)
       context.strokeStyle = darkText ? 'rgba(255,255,255,0.72)' : 'rgba(0,0,0,0.48)'
       context.fillStyle = darkText ? '#101816' : '#ffffff'
-      context.strokeText(cell.key, x, y)
-      context.fillText(cell.key, x, y)
+      context.strokeText(displayCode, x, y)
+      context.fillText(displayCode, x, y)
     }
   }
 
@@ -261,7 +262,7 @@ function drawPaletteLegend(context: CanvasRenderingContext2D, pattern: PatternRe
   context.lineTo(panelX + panelWidth - layout.borderWidth, dividerY)
   context.stroke()
 
-  const sortedColors = [...pattern.colors].sort((first, second) => first.key.localeCompare(second.key, undefined, { numeric: true }))
+  const sortedColors = [...pattern.colors].sort((first, second) => (first.displayCode || first.key).localeCompare(second.displayCode || second.key, undefined, { numeric: true }))
   context.font = `800 ${layout.itemFontSize}px Arial, sans-serif`
   context.textBaseline = 'middle'
 
@@ -280,7 +281,7 @@ function drawPaletteLegend(context: CanvasRenderingContext2D, pattern: PatternRe
 
     context.fillStyle = '#101816'
     context.textAlign = 'left'
-    context.fillText(color.key, itemX + swatchSize + layout.textGap, itemY + swatchSize / 2)
+    context.fillText(color.displayCode || color.key, itemX + swatchSize + layout.textGap, itemY + swatchSize / 2)
     context.textAlign = 'right'
     context.fillText(`x${color.count}`, itemX + layout.columnWidth - layout.itemPaddingX, itemY + swatchSize / 2)
   })
