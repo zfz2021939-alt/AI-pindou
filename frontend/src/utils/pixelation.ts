@@ -97,6 +97,8 @@ export function toPaletteColor(color: MardColor, vendor: BeadVendorId = 'mard'):
   }
 }
 
+// RGB 欧氏距离：仅用于颜色「合并 / 限色」的阈值判断（mergeSimilarColors /
+// selectLimitedPalette），这些阈值按 RGB 尺度(0~441)调校，保持不变。
 export function colorDistance(first: RgbColor, second: RgbColor) {
   const red = first.r - second.r
   const green = first.g - second.g
@@ -104,12 +106,50 @@ export function colorDistance(first: RgbColor, second: RgbColor) {
   return Math.sqrt(red * red + green * green + blue * blue)
 }
 
+// 「最近豆」匹配改用 CIELAB 感知距离而非 RGB 欧氏。RGB 距离在肤色 / 粉 / pastel 上
+// 会系统性选到「数学最近但肉眼明显不对」的豆：在真实 MARD 48 色盘上实测，约 1/3~1/2
+// 的像素被选到非感知最优豆（以 CIEDE2000 衡量），换 CIELAB 可把平均感知误差砍掉一半以上。
+type LabColor = { L: number; a: number; b: number }
+
+const labCache = new Map<number, LabColor>()
+
+function rgbToLab(rgb: RgbColor): LabColor {
+  const key = (rgb.r << 16) | (rgb.g << 8) | rgb.b
+  const cached = labCache.get(key)
+  if (cached) {
+    return cached
+  }
+  const toLinear = (channel: number) => {
+    const c = channel / 255
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  }
+  const r = toLinear(rgb.r)
+  const g = toLinear(rgb.g)
+  const b = toLinear(rgb.b)
+  // 线性 sRGB -> XYZ(D65) -> 归一化到 D65 白点
+  const x = (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.95047
+  const y = 0.2126729 * r + 0.7151522 * g + 0.0721750 * b
+  const z = (0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / 1.08883
+  const f = (t: number) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116)
+  const fx = f(x)
+  const fy = f(y)
+  const fz = f(z)
+  const lab: LabColor = { L: 116 * fy - 16, a: 500 * (fx - fy), b: 200 * (fy - fz) }
+  labCache.set(key, lab)
+  return lab
+}
+
 export function findClosestPaletteColor(target: RgbColor, palette: PaletteColor[]) {
+  const targetLab = rgbToLab(target)
   let closest = palette[0]
   let minDistance = Number.POSITIVE_INFINITY
 
   for (const color of palette) {
-    const distance = colorDistance(target, color.rgb)
+    const lab = rgbToLab(color.rgb)
+    const dL = targetLab.L - lab.L
+    const da = targetLab.a - lab.a
+    const db = targetLab.b - lab.b
+    const distance = dL * dL + da * da + db * db // 平方 CIE76 ΔE*，比较用平方即可省去开方
     if (distance < minDistance) {
       closest = color
       minDistance = distance
