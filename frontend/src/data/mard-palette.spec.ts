@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { BEAD_VENDOR_OPTIONS, COCO_SPECIAL_COLORS, MARD_COLOR_BY_CODE, getBeadDisplayCode, getMardTierPalette, getPaletteTierLabel } from './mard-palette'
+import {
+  BEAD_VENDOR_OPTIONS,
+  COCO_SPECIAL_COLORS,
+  MARD_COLOR_BY_CODE,
+  MARD_TIER_CODES,
+  getBeadDisplayCode,
+  getMardTierMissingCodes,
+  getMardTierPalette,
+  getPaletteTierLabel
+} from './mard-palette'
 
 describe('bead palette data', () => {
   it('keeps manually confirmed Q color corrections', () => {
@@ -28,5 +37,14 @@ describe('bead palette data', () => {
   it('formats palette tier labels in Chinese', () => {
     expect(getPaletteTierLabel(24)).toBe('24色')
     expect(getPaletteTierLabel('all')).toBe('全量')
+  })
+
+  it('keeps tier definitions complete and resolvable', () => {
+    expect(MARD_TIER_CODES[24]).toHaveLength(24)
+    expect(MARD_TIER_CODES[48]).toHaveLength(48)
+    expect(getMardTierMissingCodes(24)).toEqual([])
+    expect(getMardTierMissingCodes(48)).toEqual([])
+    expect(getMardTierPalette(24)).toHaveLength(24)
+    expect(getMardTierPalette(48)).toHaveLength(48)
   })
 })

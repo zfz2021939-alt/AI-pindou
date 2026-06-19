@@ -1,0 +1,32 @@
+[
+  {
+    "code": "COCO_XMAS_RED",
+    "name": "COCO 圣诞红",
+    "hex": "#B83944",
+    "rgb": [
+      184,
+      57,
+      68
+    ],
+    "family": "COCO 限定色",
+    "source": "coco-special",
+    "vendorCodes": {
+      "coco": "圣诞红"
+    }
+  },
+  {
+    "code": "COCO_XMAS_GREEN",
+    "name": "COCO 圣诞绿",
+    "hex": "#008571",
+    "rgb": [
+      0,
+      133,
+      113
+    ],
+    "family": "COCO 限定色",
+    "source": "coco-special",
+    "vendorCodes": {
+      "coco": "圣诞绿"
+    }
+  }
+]

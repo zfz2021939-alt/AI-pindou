@@ -1,0 +1,42 @@
+# Allow Feishu CLI commands that were explicitly approved in the previous Claude project setup.
+prefix_rule(
+    pattern = ["lark-cli", "doctor"],
+    decision = "allow",
+    justification = "Allow Feishu CLI diagnostics for this project.",
+    match = [
+        "lark-cli doctor",
+        "lark-cli doctor --verbose",
+    ],
+    not_match = [
+        "lark-cli docs +update",
+        "lark-cli auth",
+    ],
+)
+
+prefix_rule(
+    pattern = ["lark-cli", "auth"],
+    decision = "allow",
+    justification = "Allow Feishu CLI authentication for this project.",
+    match = [
+        "lark-cli auth",
+        "lark-cli auth login",
+    ],
+    not_match = [
+        "lark-cli doctor",
+        "lark-cli docs +update",
+    ],
+)
+
+prefix_rule(
+    pattern = ["lark-cli", "docs", "+update"],
+    decision = "allow",
+    justification = "Allow updating existing Feishu documents after user confirmation.",
+    match = [
+        "lark-cli docs +update",
+        "lark-cli docs +update --help",
+    ],
+    not_match = [
+        "lark-cli docs create",
+        "lark-cli docs delete",
+    ],
+)

@@ -2,6 +2,8 @@ import { getBeadDisplayCode } from '@/data/mard-palette'
 import type { BeadVendorId, MardColor, MardTier } from '@/data/mard-palette'
 
 export type PixelationMode = 'dominant' | 'average'
+export type ConversionMode = 'clear-pixel' | PixelationMode
+export type CleanupStrength = 'soft' | 'normal' | 'strong'
 
 export type RgbColor = {
   r: number
@@ -41,10 +43,14 @@ export type PatternOptions = {
   rows: number
   paletteTier: MardTier
   paletteVendor: BeadVendorId
+  conversionMode: ConversionMode
   pixelationMode: PixelationMode
+  maxColors: number
+  autoEraseBackground: boolean
+  cleanupStrength: CleanupStrength
   similarityThreshold: number
   excludedColorKeys: string[]
-  backgroundErase?: { mode: 'ai' | 'fallback'; used: boolean }
+  backgroundErase?: { mode: 'ai' | 'fallback' | 'local'; used: boolean }
   faceContourEnhance?: { used: boolean; detector: 'mediapipe' | 'heuristic' | 'none' }
 }
 
@@ -56,6 +62,9 @@ export type PatternResult = {
   cells: MappedBeadCell[][]
   options: PatternOptions
 }
+
+type BuildPatternOptions = Omit<PatternOptions, 'rows' | 'conversionMode' | 'maxColors' | 'autoEraseBackground' | 'cleanupStrength'> &
+  Partial<Pick<PatternOptions, 'conversionMode' | 'maxColors' | 'autoEraseBackground' | 'cleanupStrength'>>
 
 export const TRANSPARENT_KEY = 'ERASE'
 
@@ -224,7 +233,7 @@ export function mergeSimilarColors(cells: MappedBeadCell[][], palette: PaletteCo
 export function buildPatternFromImage(
   image: HTMLImageElement,
   palette: PaletteColor[],
-  options: Omit<PatternOptions, 'rows'>
+  options: BuildPatternOptions
 ): PatternResult {
   const columns = options.columns
   const rows = Math.max(1, Math.round(columns * (image.height / image.width)))
@@ -244,20 +253,36 @@ export function buildPatternFromImage(
     throw new Error('当前可用色盘为空，请恢复至少一种颜色。')
   }
 
-  const initialCells = calculatePixelGrid(context, image.width, image.height, columns, rows, activePalette, options.pixelationMode)
-  const mergedCells = mergeSimilarColors(initialCells, activePalette, getEffectiveMergeThreshold(columns, options.similarityThreshold))
-  const { colors, totalBeads } = summarizeCells(mergedCells)
+  const normalizedOptions = normalizePatternOptions(options, rows)
+  const imageData = context.getImageData(0, 0, image.width, image.height)
+  let cells: MappedBeadCell[][]
+  let finalOptions = normalizedOptions
+
+  if (normalizedOptions.conversionMode === 'clear-pixel') {
+    const foregroundMask = createForegroundMask(imageData, normalizedOptions.autoEraseBackground)
+    const enhancedImageData = enhanceSourceForPattern(imageData, foregroundMask)
+    const limitedPalette = selectLimitedPalette(enhancedImageData, activePalette, foregroundMask, normalizedOptions.maxColors)
+    const gridCells = calculateClearPixelGrid(enhancedImageData, foregroundMask, columns, rows, limitedPalette)
+    const reinforced = reinforcePatternEdges(gridCells, enhancedImageData, foregroundMask, limitedPalette)
+    cells = cleanupPatternNoise(reinforced.cells, limitedPalette, normalizedOptions.cleanupStrength, reinforced.protectedCells)
+    finalOptions = {
+      ...normalizedOptions,
+      backgroundErase: normalizedOptions.autoEraseBackground ? { mode: 'local', used: true } : normalizedOptions.backgroundErase
+    }
+  } else {
+    const initialCells = calculatePixelGrid(context, image.width, image.height, columns, rows, activePalette, normalizedOptions.pixelationMode)
+    cells = mergeSimilarColors(initialCells, activePalette, getEffectiveMergeThreshold(columns, normalizedOptions.similarityThreshold))
+  }
+
+  const { colors, totalBeads } = summarizeCells(cells)
 
   return {
     width: columns,
     height: rows,
     totalBeads,
     colors,
-    cells: mergedCells,
-    options: {
-      ...options,
-      rows
-    }
+    cells,
+    options: finalOptions
   }
 }
 
@@ -295,6 +320,522 @@ export function summarizeCells(cells: MappedBeadCell[][]) {
 
 export function cloneCells(cells: MappedBeadCell[][]) {
   return cells.map((row) => row.map((cell) => ({ ...cell, rgb: { ...cell.rgb }, vendorCodes: { ...cell.vendorCodes } })))
+}
+
+function normalizePatternOptions(options: BuildPatternOptions, rows: number): PatternOptions {
+  const conversionMode = options.conversionMode ?? 'clear-pixel'
+  const pixelationMode = conversionMode === 'average' || conversionMode === 'dominant' ? conversionMode : options.pixelationMode
+
+  return {
+    ...options,
+    rows,
+    conversionMode,
+    pixelationMode,
+    maxColors: clampNumber(Math.round(options.maxColors ?? 18), 12, 24),
+    autoEraseBackground: options.autoEraseBackground ?? true,
+    cleanupStrength: options.cleanupStrength ?? 'normal'
+  }
+}
+
+export function createForegroundMask(imageData: ImageData, autoEraseBackground = true) {
+  const { width, height, data } = imageData
+  const mask = new Uint8Array(width * height)
+
+  if (!autoEraseBackground) {
+    for (let index = 0; index < mask.length; index += 1) {
+      mask[index] = data[index * 4 + 3] >= 128 ? 1 : 0
+    }
+    return mask
+  }
+
+  const borderAverage = getOpaqueBorderAverage(imageData)
+  const visited = new Uint8Array(width * height)
+  const queue: number[] = []
+
+  const pushIfBackground = (x: number, y: number) => {
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+      return
+    }
+    const index = y * width + x
+    if (visited[index] || !isLocalBackgroundPixel(imageData, x, y, borderAverage)) {
+      return
+    }
+    visited[index] = 1
+    queue.push(index)
+  }
+
+  for (let x = 0; x < width; x += 1) {
+    pushIfBackground(x, 0)
+    pushIfBackground(x, height - 1)
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    pushIfBackground(0, y)
+    pushIfBackground(width - 1, y)
+  }
+
+  for (let cursor = 0; cursor < queue.length; cursor += 1) {
+    const index = queue[cursor]
+    const x = index % width
+    const y = Math.floor(index / width)
+    pushIfBackground(x - 1, y)
+    pushIfBackground(x + 1, y)
+    pushIfBackground(x, y - 1)
+    pushIfBackground(x, y + 1)
+  }
+
+  for (let index = 0; index < mask.length; index += 1) {
+    mask[index] = data[index * 4 + 3] >= 128 && !visited[index] ? 1 : 0
+  }
+
+  return mask
+}
+
+export function enhanceSourceForPattern(imageData: ImageData, foregroundMask: Uint8Array) {
+  const { width, height, data } = imageData
+  const next = new Uint8ClampedArray(data)
+
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const pixelIndex = y * width + x
+      const dataIndex = pixelIndex * 4
+      if (!foregroundMask[pixelIndex] || data[dataIndex + 3] < 128) {
+        next[dataIndex + 3] = 0
+        continue
+      }
+
+      const source = { r: data[dataIndex], g: data[dataIndex + 1], b: data[dataIndex + 2] }
+      const edge = getLocalEdgeStrength(imageData, x, y, getLuminance(source))
+      const adjusted = adjustColorForPattern(source, edge)
+      next[dataIndex] = adjusted.r
+      next[dataIndex + 1] = adjusted.g
+      next[dataIndex + 2] = adjusted.b
+      next[dataIndex + 3] = 255
+    }
+  }
+
+  return { width, height, data: next } as ImageData
+}
+
+export function selectLimitedPalette(imageData: ImageData, palette: PaletteColor[], foregroundMask: Uint8Array, maxColors: number) {
+  const colorScores = new Map<string, { color: PaletteColor; score: number; edgeScore: number }>()
+  const stride = Math.max(1, Math.floor(Math.sqrt((imageData.width * imageData.height) / 26000)))
+
+  for (let y = 0; y < imageData.height; y += stride) {
+    for (let x = 0; x < imageData.width; x += stride) {
+      const pixelIndex = y * imageData.width + x
+      const dataIndex = pixelIndex * 4
+      if (!foregroundMask[pixelIndex] || imageData.data[dataIndex + 3] < 128) {
+        continue
+      }
+
+      const rgb = {
+        r: imageData.data[dataIndex],
+        g: imageData.data[dataIndex + 1],
+        b: imageData.data[dataIndex + 2]
+      }
+      const edge = getLocalEdgeStrength(imageData, x, y, getLuminance(rgb))
+      const matched = findClosestPaletteColor(rgb, palette)
+      const current = colorScores.get(matched.key) ?? { color: matched, score: 0, edgeScore: 0 }
+      current.score += 1 + Math.min(3, edge / 70)
+      current.edgeScore += edge
+      colorScores.set(matched.key, current)
+    }
+  }
+
+  const targetCount = Math.min(clampNumber(Math.round(maxColors), 12, 24), palette.length)
+  const sorted = [...colorScores.values()].sort((first, second) => second.score + second.edgeScore * 0.008 - (first.score + first.edgeScore * 0.008))
+  const selected: PaletteColor[] = []
+
+  for (const item of sorted) {
+    const minDistance = selected.reduce((distance, color) => Math.min(distance, colorDistance(color.rgb, item.color.rgb)), Number.POSITIVE_INFINITY)
+    if (selected.length < Math.max(4, Math.floor(targetCount * 0.65)) || minDistance > 18) {
+      selected.push(item.color)
+    }
+    if (selected.length >= targetCount) {
+      return selected
+    }
+  }
+
+  for (const item of sorted) {
+    if (!selected.some((color) => color.key === item.color.key)) {
+      selected.push(item.color)
+    }
+    if (selected.length >= targetCount) {
+      break
+    }
+  }
+
+  return selected.length > 0 ? selected : palette.slice(0, targetCount)
+}
+
+export function calculateClearPixelGrid(
+  imageData: ImageData,
+  foregroundMask: Uint8Array,
+  columns: number,
+  rows: number,
+  palette: PaletteColor[]
+) {
+  const cellWidth = imageData.width / columns
+  const cellHeight = imageData.height / rows
+  const cells: MappedBeadCell[][] = []
+
+  for (let row = 0; row < rows; row += 1) {
+    const line: MappedBeadCell[] = []
+    for (let col = 0; col < columns; col += 1) {
+      const bounds = getCellBounds(imageData.width, imageData.height, columns, rows, row, col)
+      const foregroundRatio = getAverageMaskValue(foregroundMask, imageData.width, bounds)
+      if (foregroundRatio < 0.34 || palette.length === 0) {
+        line.push(transparentCell(row, col))
+        continue
+      }
+
+      const representative = calculateStableCellColor(imageData, foregroundMask, bounds, columns)
+      if (!representative) {
+        line.push(transparentCell(row, col))
+        continue
+      }
+
+      line.push(createCellFromPalette(row, col, findClosestPaletteColor(representative, palette)))
+    }
+    cells.push(line)
+  }
+
+  return cells
+}
+
+export function cleanupPatternNoise(
+  cells: MappedBeadCell[][],
+  palette: PaletteColor[],
+  strength: CleanupStrength,
+  protectedCells = createBooleanGrid(cells.length, cells[0]?.length ?? 0)
+) {
+  const height = cells.length
+  const width = cells[0]?.length ?? 0
+  const maxSize = strength === 'soft' ? 1 : strength === 'strong' ? 4 : 2
+  const next = cloneCells(cells)
+  const visited = createBooleanGrid(height, width)
+  const paletteByKey = new Map(palette.map((color) => [color.key, color]))
+
+  for (let row = 0; row < height; row += 1) {
+    for (let col = 0; col < width; col += 1) {
+      if (visited[row][col] || next[row][col].isExternal || next[row][col].key === TRANSPARENT_KEY) {
+        continue
+      }
+
+      const component = collectComponent(next, visited, row, col)
+      const protectedCount = component.filter((point) => protectedCells[point.row]?.[point.col]).length
+      if (component.length > maxSize || protectedCount > 0) {
+        continue
+      }
+
+      const replacement = findNeighborReplacement(next, component, paletteByKey)
+      if (!replacement) {
+        continue
+      }
+      for (const point of component) {
+        next[point.row][point.col] = createCellFromPalette(point.row, point.col, replacement)
+      }
+    }
+  }
+
+  return next
+}
+
+export function reinforcePatternEdges(
+  cells: MappedBeadCell[][],
+  imageData: ImageData,
+  foregroundMask: Uint8Array,
+  palette: PaletteColor[]
+) {
+  const height = cells.length
+  const width = cells[0]?.length ?? 0
+  const next = cloneCells(cells)
+  const protectedCells = createBooleanGrid(height, width)
+  const darkPalette = palette.filter((color) => getLuminance(color.rgb) < 120)
+  const edgePalette = darkPalette.length > 0 ? darkPalette : palette
+
+  for (let row = 0; row < height; row += 1) {
+    for (let col = 0; col < width; col += 1) {
+      const cell = next[row][col]
+      if (cell.isExternal || cell.key === TRANSPARENT_KEY) {
+        continue
+      }
+      const bounds = getCellBounds(imageData.width, imageData.height, width, height, row, col)
+      const edge = getAverageEdgeStrength(imageData, foregroundMask, bounds)
+      const boundary = getCellForegroundBoundaryScore(foregroundMask, imageData.width, imageData.height, bounds)
+      const isCriticalEdge = edge > 58 || boundary > 0.24
+      if (!isCriticalEdge) {
+        continue
+      }
+
+      protectedCells[row][col] = true
+      if (getLuminance(cell.rgb) > 178 && edge > 78) {
+        const target = findClosestPaletteColor(scaleColor(cell.rgb, 0.58), edgePalette)
+        next[row][col] = createCellFromPalette(row, col, target)
+      }
+    }
+  }
+
+  return { cells: next, protectedCells }
+}
+
+function getOpaqueBorderAverage(imageData: ImageData) {
+  const { width, height, data } = imageData
+  let red = 0
+  let green = 0
+  let blue = 0
+  let count = 0
+
+  const add = (x: number, y: number) => {
+    const index = (y * width + x) * 4
+    if (data[index + 3] < 128) {
+      return
+    }
+    red += data[index]
+    green += data[index + 1]
+    blue += data[index + 2]
+    count += 1
+  }
+
+  for (let x = 0; x < width; x += 1) {
+    add(x, 0)
+    add(x, height - 1)
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    add(0, y)
+    add(width - 1, y)
+  }
+
+  if (count === 0) {
+    return null
+  }
+
+  return { r: Math.round(red / count), g: Math.round(green / count), b: Math.round(blue / count) }
+}
+
+function isLocalBackgroundPixel(imageData: ImageData, x: number, y: number, borderAverage: RgbColor | null) {
+  const index = (y * imageData.width + x) * 4
+  const alpha = imageData.data[index + 3]
+  if (alpha < 128) {
+    return true
+  }
+
+  const rgb = { r: imageData.data[index], g: imageData.data[index + 1], b: imageData.data[index + 2] }
+  const luminance = getLuminance(rgb)
+  const saturation = getSaturationRange(rgb)
+  if (luminance > 236 && saturation < 26) {
+    return true
+  }
+
+  return Boolean(borderAverage && getLuminance(borderAverage) > 205 && colorDistance(rgb, borderAverage) < 34)
+}
+
+function adjustColorForPattern(rgb: RgbColor, edge: number): RgbColor {
+  const contrast = 1.08
+  const saturation = 1.1
+  const average = (rgb.r + rgb.g + rgb.b) / 3
+  const edgeBoost = Math.min(18, edge / 6)
+  const luminance = getLuminance(rgb)
+  const darkness = luminance < 128 ? -edgeBoost : edgeBoost * 0.35
+
+  return {
+    r: clampChannel((average + (rgb.r - average) * saturation - 128) * contrast + 128 + darkness),
+    g: clampChannel((average + (rgb.g - average) * saturation - 128) * contrast + 128 + darkness),
+    b: clampChannel((average + (rgb.b - average) * saturation - 128) * contrast + 128 + darkness)
+  }
+}
+
+function getCellBounds(width: number, height: number, columns: number, rows: number, row: number, col: number) {
+  return {
+    startX: Math.floor(col * (width / columns)),
+    startY: Math.floor(row * (height / rows)),
+    endX: Math.min(width, Math.ceil((col + 1) * (width / columns))),
+    endY: Math.min(height, Math.ceil((row + 1) * (height / rows)))
+  }
+}
+
+function getAverageMaskValue(mask: Uint8Array, width: number, bounds: { startX: number; startY: number; endX: number; endY: number }) {
+  let sum = 0
+  let count = 0
+  for (let y = bounds.startY; y < bounds.endY; y += 1) {
+    for (let x = bounds.startX; x < bounds.endX; x += 1) {
+      sum += mask[y * width + x] ?? 0
+      count += 1
+    }
+  }
+  return count > 0 ? sum / count : 0
+}
+
+function calculateStableCellColor(
+  imageData: ImageData,
+  foregroundMask: Uint8Array,
+  bounds: { startX: number; startY: number; endX: number; endY: number },
+  columns: number
+) {
+  const bucketSize = columns < 80 ? 30 : 22
+  const colorCounts = new Map<string, { score: number; redSum: number; greenSum: number; blueSum: number }>()
+  let best: RgbColor | null = null
+  let bestScore = 0
+
+  for (let y = bounds.startY; y < bounds.endY; y += 1) {
+    for (let x = bounds.startX; x < bounds.endX; x += 1) {
+      const pixelIndex = y * imageData.width + x
+      const dataIndex = pixelIndex * 4
+      if (!foregroundMask[pixelIndex] || imageData.data[dataIndex + 3] < 128) {
+        continue
+      }
+
+      const rgb = { r: imageData.data[dataIndex], g: imageData.data[dataIndex + 1], b: imageData.data[dataIndex + 2] }
+      const edge = getLocalEdgeStrength(imageData, x, y, getLuminance(rgb))
+      const weight = 1 + Math.min(columns < 80 ? 4 : 2.2, edge / (columns < 80 ? 34 : 56))
+      const key = `${quantize(rgb.r, bucketSize)},${quantize(rgb.g, bucketSize)},${quantize(rgb.b, bucketSize)}`
+      const current = colorCounts.get(key) ?? { score: 0, redSum: 0, greenSum: 0, blueSum: 0 }
+      current.score += weight
+      current.redSum += rgb.r * weight
+      current.greenSum += rgb.g * weight
+      current.blueSum += rgb.b * weight
+      colorCounts.set(key, current)
+
+      if (current.score > bestScore) {
+        bestScore = current.score
+        best = {
+          r: Math.round(current.redSum / current.score),
+          g: Math.round(current.greenSum / current.score),
+          b: Math.round(current.blueSum / current.score)
+        }
+      }
+    }
+  }
+
+  return best
+}
+
+function createCellFromPalette(row: number, col: number, color: PaletteColor): MappedBeadCell {
+  return {
+    row,
+    col,
+    key: color.key,
+    displayCode: color.displayCode,
+    name: color.name,
+    color: color.hex,
+    rgb: { ...color.rgb },
+    isExternal: false,
+    vendor: color.vendor,
+    vendorCodes: { ...color.vendorCodes }
+  }
+}
+
+function createBooleanGrid(height: number, width: number) {
+  return Array.from({ length: height }, () => Array.from({ length: width }, () => false))
+}
+
+function collectComponent(cells: MappedBeadCell[][], visited: boolean[][], row: number, col: number) {
+  const targetKey = cells[row][col].key
+  const stack = [{ row, col }]
+  const component: Array<{ row: number; col: number }> = []
+  visited[row][col] = true
+
+  while (stack.length > 0) {
+    const current = stack.pop()
+    if (!current) {
+      continue
+    }
+    component.push(current)
+    for (const neighbor of getCellNeighbors(cells.length, cells[0]?.length ?? 0, current.row, current.col)) {
+      const cell = cells[neighbor.row][neighbor.col]
+      if (!visited[neighbor.row][neighbor.col] && !cell.isExternal && cell.key === targetKey) {
+        visited[neighbor.row][neighbor.col] = true
+        stack.push(neighbor)
+      }
+    }
+  }
+
+  return component
+}
+
+function findNeighborReplacement(cells: MappedBeadCell[][], component: Array<{ row: number; col: number }>, paletteByKey: Map<string, PaletteColor>) {
+  const componentKeys = new Set(component.map((point) => `${point.row},${point.col}`))
+  const counts = new Map<string, number>()
+  for (const point of component) {
+    for (const neighbor of getCellNeighbors(cells.length, cells[0]?.length ?? 0, point.row, point.col)) {
+      if (componentKeys.has(`${neighbor.row},${neighbor.col}`)) {
+        continue
+      }
+      const cell = cells[neighbor.row][neighbor.col]
+      if (!cell.isExternal && cell.key !== TRANSPARENT_KEY) {
+        counts.set(cell.key, (counts.get(cell.key) ?? 0) + 1)
+      }
+    }
+  }
+
+  const targetKey = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0]
+  return targetKey ? paletteByKey.get(targetKey) : null
+}
+
+function getCellNeighbors(height: number, width: number, row: number, col: number) {
+  return [
+    { row: row - 1, col },
+    { row: row + 1, col },
+    { row, col: col - 1 },
+    { row, col: col + 1 }
+  ].filter((point) => point.row >= 0 && point.row < height && point.col >= 0 && point.col < width)
+}
+
+function getAverageEdgeStrength(imageData: ImageData, foregroundMask: Uint8Array, bounds: { startX: number; startY: number; endX: number; endY: number }) {
+  let sum = 0
+  let count = 0
+  for (let y = bounds.startY; y < bounds.endY; y += 1) {
+    for (let x = bounds.startX; x < bounds.endX; x += 1) {
+      const pixelIndex = y * imageData.width + x
+      const dataIndex = pixelIndex * 4
+      if (!foregroundMask[pixelIndex] || imageData.data[dataIndex + 3] < 128) {
+        continue
+      }
+      const rgb = { r: imageData.data[dataIndex], g: imageData.data[dataIndex + 1], b: imageData.data[dataIndex + 2] }
+      sum += getLocalEdgeStrength(imageData, x, y, getLuminance(rgb))
+      count += 1
+    }
+  }
+  return count > 0 ? sum / count : 0
+}
+
+function getCellForegroundBoundaryScore(
+  foregroundMask: Uint8Array,
+  width: number,
+  height: number,
+  bounds: { startX: number; startY: number; endX: number; endY: number }
+) {
+  let boundary = 0
+  let count = 0
+  for (let y = bounds.startY; y < bounds.endY; y += 1) {
+    for (let x = bounds.startX; x < bounds.endX; x += 1) {
+      const index = y * width + x
+      if (!foregroundMask[index]) {
+        continue
+      }
+      count += 1
+      for (const [nextX, nextY] of [
+        [x - 1, y],
+        [x + 1, y],
+        [x, y - 1],
+        [x, y + 1]
+      ]) {
+        if (nextX < 0 || nextX >= width || nextY < 0 || nextY >= height || !foregroundMask[nextY * width + nextX]) {
+          boundary += 1
+          break
+        }
+      }
+    }
+  }
+  return count > 0 ? boundary / count : 0
+}
+
+function scaleColor(rgb: RgbColor, factor: number) {
+  return {
+    r: clampChannel(rgb.r * factor),
+    g: clampChannel(rgb.g * factor),
+    b: clampChannel(rgb.b * factor)
+  }
 }
 
 function calculateRepresentativeColor(
@@ -413,6 +954,18 @@ export function getEffectiveMergeThreshold(columns: number, threshold: number) {
 
 function quantize(value: number, bucketSize: number) {
   return Math.max(0, Math.min(255, Math.round(value / bucketSize) * bucketSize))
+}
+
+function clampNumber(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value))
+}
+
+function clampChannel(value: number) {
+  return Math.round(clampNumber(value, 0, 255))
+}
+
+function getSaturationRange(rgb: RgbColor) {
+  return Math.max(rgb.r, rgb.g, rgb.b) - Math.min(rgb.r, rgb.g, rgb.b)
 }
 
 function getLuminance(rgb: RgbColor) {

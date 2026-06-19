@@ -63,7 +63,11 @@ function createPattern(): PatternResult {
       rows: 1,
       paletteTier: 'all',
       paletteVendor: 'coco',
+      conversionMode: 'clear-pixel',
       pixelationMode: 'dominant',
+      maxColors: 18,
+      autoEraseBackground: true,
+      cleanupStrength: 'normal',
       similarityThreshold: 0,
       excludedColorKeys: []
     }

@@ -1,0 +1,6089 @@
+[
+  {
+    "code": "A1",
+    "name": "MARD A1",
+    "hex": "#FAF4C8",
+    "rgb": [
+      250,
+      244,
+      200
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A1",
+      "coco": "E2",
+      "xiaowujia": "A1",
+      "manman": "E2",
+      "panpan": "65",
+      "mixiaowo": "77",
+      "huangdoudou": "A1"
+    }
+  },
+  {
+    "code": "A2",
+    "name": "MARD A2",
+    "hex": "#FFFFD5",
+    "rgb": [
+      255,
+      255,
+      213
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A2",
+      "coco": "E1",
+      "xiaowujia": "A2",
+      "manman": "B1",
+      "panpan": "2",
+      "mixiaowo": "2",
+      "huangdoudou": "A2"
+    }
+  },
+  {
+    "code": "A3",
+    "name": "MARD A3",
+    "hex": "#FEFF8B",
+    "rgb": [
+      254,
+      255,
+      139
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A3",
+      "coco": "E5",
+      "xiaowujia": "A3",
+      "manman": "B2",
+      "panpan": "28",
+      "mixiaowo": "28",
+      "huangdoudou": "A3"
+    }
+  },
+  {
+    "code": "A4",
+    "name": "MARD A4",
+    "hex": "#FBED56",
+    "rgb": [
+      251,
+      237,
+      86
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A4",
+      "coco": "E7",
+      "xiaowujia": "A4",
+      "manman": "B3",
+      "panpan": "3",
+      "mixiaowo": "3",
+      "huangdoudou": "A4"
+    }
+  },
+  {
+    "code": "A5",
+    "name": "MARD A5",
+    "hex": "#F4D738",
+    "rgb": [
+      244,
+      215,
+      56
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A5",
+      "coco": "D3",
+      "xiaowujia": "A5",
+      "manman": "B4",
+      "panpan": "74",
+      "mixiaowo": "79",
+      "huangdoudou": "A5"
+    }
+  },
+  {
+    "code": "A6",
+    "name": "MARD A6",
+    "hex": "#FEAC4C",
+    "rgb": [
+      254,
+      172,
+      76
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A6",
+      "coco": "D5",
+      "xiaowujia": "A6",
+      "manman": "B5",
+      "panpan": "29",
+      "mixiaowo": "29",
+      "huangdoudou": "A6"
+    }
+  },
+  {
+    "code": "A7",
+    "name": "MARD A7",
+    "hex": "#FE8B4C",
+    "rgb": [
+      254,
+      139,
+      76
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A7",
+      "coco": "D8",
+      "xiaowujia": "A7",
+      "manman": "B6",
+      "panpan": "4",
+      "mixiaowo": "4",
+      "huangdoudou": "A7"
+    }
+  },
+  {
+    "code": "A8",
+    "name": "MARD A8",
+    "hex": "#FFDA45",
+    "rgb": [
+      255,
+      218,
+      69
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A8",
+      "coco": "E8",
+      "xiaowujia": "A8",
+      "manman": "B10",
+      "panpan": "88",
+      "mixiaowo": "98",
+      "huangdoudou": "A8"
+    }
+  },
+  {
+    "code": "A9",
+    "name": "MARD A9",
+    "hex": "#FF995B",
+    "rgb": [
+      255,
+      153,
+      91
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A9",
+      "coco": "D6",
+      "xiaowujia": "A9",
+      "manman": "B11",
+      "panpan": "90",
+      "mixiaowo": "97",
+      "huangdoudou": "A9"
+    }
+  },
+  {
+    "code": "A10",
+    "name": "MARD A10",
+    "hex": "#F77C31",
+    "rgb": [
+      247,
+      124,
+      49
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A10",
+      "coco": "D7",
+      "xiaowujia": "A10",
+      "manman": "B12",
+      "panpan": "89",
+      "mixiaowo": "96",
+      "huangdoudou": "A10"
+    }
+  },
+  {
+    "code": "A11",
+    "name": "MARD A11",
+    "hex": "#FFDD99",
+    "rgb": [
+      255,
+      221,
+      153
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A11",
+      "coco": "D1",
+      "xiaowujia": "A11",
+      "manman": "E11",
+      "panpan": "100",
+      "mixiaowo": "109",
+      "huangdoudou": "A11"
+    }
+  },
+  {
+    "code": "A12",
+    "name": "MARD A12",
+    "hex": "#FE9F72",
+    "rgb": [
+      254,
+      159,
+      114
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A12",
+      "coco": "K9",
+      "xiaowujia": "A12",
+      "manman": "A18",
+      "panpan": "99",
+      "mixiaowo": "110",
+      "huangdoudou": "A12"
+    }
+  },
+  {
+    "code": "A13",
+    "name": "MARD A13",
+    "hex": "#FFC365",
+    "rgb": [
+      255,
+      195,
+      101
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A13",
+      "coco": "D4",
+      "xiaowujia": "A13",
+      "manman": "B13",
+      "panpan": "131",
+      "mixiaowo": "116",
+      "huangdoudou": "A13"
+    }
+  },
+  {
+    "code": "A14",
+    "name": "MARD A14",
+    "hex": "#FD543D",
+    "rgb": [
+      253,
+      84,
+      61
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A14",
+      "coco": "C5",
+      "xiaowujia": "A14",
+      "manman": "B14",
+      "panpan": "138",
+      "mixiaowo": "135",
+      "huangdoudou": "A14"
+    }
+  },
+  {
+    "code": "A15",
+    "name": "MARD A15",
+    "hex": "#FFF365",
+    "rgb": [
+      255,
+      243,
+      101
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A15",
+      "coco": "E4",
+      "xiaowujia": "A15",
+      "manman": "B15",
+      "panpan": "150",
+      "mixiaowo": "150",
+      "huangdoudou": "A15"
+    }
+  },
+  {
+    "code": "A16",
+    "name": "MARD A16",
+    "hex": "#FFFF9F",
+    "rgb": [
+      255,
+      255,
+      159
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A16",
+      "coco": "E3",
+      "xiaowujia": "A16",
+      "manman": "IC4",
+      "panpan": "216",
+      "mixiaowo": "216",
+      "huangdoudou": "A16"
+    }
+  },
+  {
+    "code": "A17",
+    "name": "MARD A17",
+    "hex": "#FFE36E",
+    "rgb": [
+      255,
+      227,
+      110
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A17",
+      "coco": "E6",
+      "xiaowujia": "A17",
+      "manman": "IC9",
+      "panpan": "213",
+      "mixiaowo": "213",
+      "huangdoudou": "A17"
+    }
+  },
+  {
+    "code": "A18",
+    "name": "MARD A18",
+    "hex": "#FEBE7D",
+    "rgb": [
+      254,
+      190,
+      125
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A18",
+      "coco": "D2",
+      "xiaowujia": "A18",
+      "manman": "IC14",
+      "panpan": "223",
+      "mixiaowo": "208",
+      "huangdoudou": "A18"
+    }
+  },
+  {
+    "code": "A19",
+    "name": "MARD A19",
+    "hex": "#FD7C72",
+    "rgb": [
+      253,
+      124,
+      114
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A19",
+      "coco": "K10",
+      "xiaowujia": "A19",
+      "manman": "IC15",
+      "panpan": "218",
+      "mixiaowo": "218",
+      "huangdoudou": "A19"
+    }
+  },
+  {
+    "code": "A20",
+    "name": "MARD A20",
+    "hex": "#FFD568",
+    "rgb": [
+      255,
+      213,
+      104
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A20",
+      "coco": "E9",
+      "xiaowujia": "A20",
+      "manman": "Q6",
+      "panpan": "242",
+      "mixiaowo": "242",
+      "huangdoudou": "A20"
+    }
+  },
+  {
+    "code": "A21",
+    "name": "MARD A21",
+    "hex": "#FFE395",
+    "rgb": [
+      255,
+      227,
+      149
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A21",
+      "coco": "E10",
+      "xiaowujia": "A21",
+      "manman": "R7",
+      "panpan": "276",
+      "mixiaowo": "261",
+      "huangdoudou": "A21"
+    }
+  },
+  {
+    "code": "A22",
+    "name": "MARD A22",
+    "hex": "#F4F57D",
+    "rgb": [
+      244,
+      245,
+      125
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A22",
+      "coco": "E11",
+      "xiaowujia": "A22",
+      "manman": "R6",
+      "panpan": "270",
+      "mixiaowo": "255",
+      "huangdoudou": "A22"
+    }
+  },
+  {
+    "code": "A23",
+    "name": "MARD A23",
+    "hex": "#E6C9B7",
+    "rgb": [
+      230,
+      201,
+      183
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A23",
+      "coco": "E12",
+      "xiaowujia": "A23",
+      "manman": "R8",
+      "panpan": "274",
+      "mixiaowo": "259",
+      "huangdoudou": "A23"
+    }
+  },
+  {
+    "code": "A24",
+    "name": "MARD A24",
+    "hex": "#F7F8A2",
+    "rgb": [
+      247,
+      248,
+      162
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A24",
+      "coco": "E13",
+      "xiaowujia": "A24",
+      "manman": "G3",
+      "panpan": "288",
+      "mixiaowo": "273",
+      "huangdoudou": "A24"
+    }
+  },
+  {
+    "code": "A25",
+    "name": "MARD A25",
+    "hex": "#FFD67D",
+    "rgb": [
+      255,
+      214,
+      125
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A25",
+      "coco": "E14",
+      "xiaowujia": "A25",
+      "manman": "G4",
+      "panpan": "289",
+      "mixiaowo": "274",
+      "huangdoudou": "A25"
+    }
+  },
+  {
+    "code": "A26",
+    "name": "MARD A26",
+    "hex": "#FFC830",
+    "rgb": [
+      255,
+      200,
+      48
+    ],
+    "family": "黄色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "A26",
+      "coco": "E15",
+      "xiaowujia": "A26",
+      "manman": "G5",
+      "panpan": "290",
+      "mixiaowo": "275",
+      "huangdoudou": "A26"
+    }
+  },
+  {
+    "code": "B1",
+    "name": "MARD B1",
+    "hex": "#E6EE31",
+    "rgb": [
+      230,
+      238,
+      49
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B1",
+      "coco": "F5",
+      "xiaowujia": "B1",
+      "manman": "C1",
+      "panpan": "48",
+      "mixiaowo": "48",
+      "huangdoudou": "B1"
+    }
+  },
+  {
+    "code": "B2",
+    "name": "MARD B2",
+    "hex": "#63F347",
+    "rgb": [
+      99,
+      243,
+      71
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B2",
+      "coco": "F8",
+      "xiaowujia": "B2",
+      "manman": "C2",
+      "panpan": "33",
+      "mixiaowo": "33",
+      "huangdoudou": "B2"
+    }
+  },
+  {
+    "code": "B3",
+    "name": "MARD B3",
+    "hex": "#9EF780",
+    "rgb": [
+      158,
+      247,
+      128
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B3",
+      "coco": "F4",
+      "xiaowujia": "B3",
+      "manman": "C7",
+      "panpan": "26",
+      "mixiaowo": "26",
+      "huangdoudou": "B3"
+    }
+  },
+  {
+    "code": "B4",
+    "name": "MARD B4",
+    "hex": "#5DE035",
+    "rgb": [
+      93,
+      224,
+      53
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B4",
+      "coco": "F9",
+      "xiaowujia": "B4",
+      "manman": "C3",
+      "panpan": "66",
+      "mixiaowo": "78",
+      "huangdoudou": "B4"
+    }
+  },
+  {
+    "code": "B5",
+    "name": "MARD B5",
+    "hex": "#35E352",
+    "rgb": [
+      53,
+      227,
+      82
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B5",
+      "coco": "F10",
+      "xiaowujia": "B5",
+      "manman": "C4",
+      "panpan": "39",
+      "mixiaowo": "39",
+      "huangdoudou": "B5"
+    }
+  },
+  {
+    "code": "B6",
+    "name": "MARD B6",
+    "hex": "#65E2A6",
+    "rgb": [
+      101,
+      226,
+      166
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B6",
+      "coco": "G4",
+      "xiaowujia": "B6",
+      "manman": "C9",
+      "panpan": "11",
+      "mixiaowo": "11",
+      "huangdoudou": "B6"
+    }
+  },
+  {
+    "code": "B7",
+    "name": "MARD B7",
+    "hex": "#3DAF80",
+    "rgb": [
+      61,
+      175,
+      128
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B7",
+      "coco": "G5",
+      "xiaowujia": "B7",
+      "manman": "C10",
+      "panpan": "44",
+      "mixiaowo": "44",
+      "huangdoudou": "B7"
+    }
+  },
+  {
+    "code": "B8",
+    "name": "MARD B8",
+    "hex": "#1C9C4F",
+    "rgb": [
+      28,
+      156,
+      79
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B8",
+      "coco": "F11",
+      "xiaowujia": "B8",
+      "manman": "C5",
+      "panpan": "10",
+      "mixiaowo": "10",
+      "huangdoudou": "B8"
+    }
+  },
+  {
+    "code": "B9",
+    "name": "MARD B9",
+    "hex": "#27523A",
+    "rgb": [
+      39,
+      82,
+      58
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B9",
+      "coco": "F16",
+      "xiaowujia": "B9",
+      "manman": "C6",
+      "panpan": "79",
+      "mixiaowo": "84",
+      "huangdoudou": "B9"
+    }
+  },
+  {
+    "code": "B10",
+    "name": "MARD B10",
+    "hex": "#95D3C2",
+    "rgb": [
+      149,
+      211,
+      194
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B10",
+      "coco": "G3",
+      "xiaowujia": "B10",
+      "manman": "C11",
+      "panpan": "96",
+      "mixiaowo": "100",
+      "huangdoudou": "B10"
+    }
+  },
+  {
+    "code": "B11",
+    "name": "MARD B11",
+    "hex": "#5D722A",
+    "rgb": [
+      93,
+      114,
+      42
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B11",
+      "coco": "F14",
+      "xiaowujia": "B11",
+      "manman": "C12",
+      "panpan": "97",
+      "mixiaowo": "99",
+      "huangdoudou": "B11"
+    }
+  },
+  {
+    "code": "B12",
+    "name": "MARD B12",
+    "hex": "#166F41",
+    "rgb": [
+      22,
+      111,
+      65
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B12",
+      "coco": "F12",
+      "xiaowujia": "B12",
+      "manman": "C13",
+      "panpan": "106",
+      "mixiaowo": "111",
+      "huangdoudou": "B12"
+    }
+  },
+  {
+    "code": "B13",
+    "name": "MARD B13",
+    "hex": "#CAEB7B",
+    "rgb": [
+      202,
+      235,
+      123
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B13",
+      "coco": "F2",
+      "xiaowujia": "B13",
+      "manman": "C14",
+      "panpan": "128",
+      "mixiaowo": "119",
+      "huangdoudou": "B13"
+    }
+  },
+  {
+    "code": "B14",
+    "name": "MARD B14",
+    "hex": "#ADE946",
+    "rgb": [
+      173,
+      233,
+      70
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B14",
+      "coco": "F6",
+      "xiaowujia": "B14",
+      "manman": "C15",
+      "panpan": "129",
+      "mixiaowo": "117",
+      "huangdoudou": "B14"
+    }
+  },
+  {
+    "code": "B15",
+    "name": "MARD B15",
+    "hex": "#2E5132",
+    "rgb": [
+      46,
+      81,
+      50
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B15",
+      "coco": "F15",
+      "xiaowujia": "B15",
+      "manman": "C16",
+      "panpan": "130",
+      "mixiaowo": "122",
+      "huangdoudou": "B15"
+    }
+  },
+  {
+    "code": "B16",
+    "name": "MARD B16",
+    "hex": "#C5ED9C",
+    "rgb": [
+      197,
+      237,
+      156
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B16",
+      "coco": "F3",
+      "xiaowujia": "B16",
+      "manman": "C17",
+      "panpan": "141",
+      "mixiaowo": "133",
+      "huangdoudou": "B16"
+    }
+  },
+  {
+    "code": "B17",
+    "name": "MARD B17",
+    "hex": "#9BB13A",
+    "rgb": [
+      155,
+      177,
+      58
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B17",
+      "coco": "F13",
+      "xiaowujia": "B17",
+      "manman": "C18",
+      "panpan": "142",
+      "mixiaowo": "141",
+      "huangdoudou": "B17"
+    }
+  },
+  {
+    "code": "B18",
+    "name": "MARD B18",
+    "hex": "#E6EE49",
+    "rgb": [
+      230,
+      238,
+      73
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B18",
+      "coco": "F7",
+      "xiaowujia": "B18",
+      "manman": "C19",
+      "panpan": "147",
+      "mixiaowo": "147",
+      "huangdoudou": "B18"
+    }
+  },
+  {
+    "code": "B19",
+    "name": "MARD B19",
+    "hex": "#24B88C",
+    "rgb": [
+      36,
+      184,
+      140
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B19",
+      "coco": "G6",
+      "xiaowujia": "B19",
+      "manman": "DH15",
+      "panpan": "191",
+      "mixiaowo": "174",
+      "huangdoudou": "B19"
+    }
+  },
+  {
+    "code": "B20",
+    "name": "MARD B20",
+    "hex": "#C2F0CC",
+    "rgb": [
+      194,
+      240,
+      204
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B20",
+      "coco": "G2",
+      "xiaowujia": "B20",
+      "manman": "DH10",
+      "panpan": "192",
+      "mixiaowo": "175",
+      "huangdoudou": "B20"
+    }
+  },
+  {
+    "code": "B21",
+    "name": "MARD B21",
+    "hex": "#156A6B",
+    "rgb": [
+      21,
+      106,
+      107
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B21",
+      "coco": "G7",
+      "xiaowujia": "B21",
+      "manman": "DH2",
+      "panpan": "207",
+      "mixiaowo": "194",
+      "huangdoudou": "B21"
+    }
+  },
+  {
+    "code": "B22",
+    "name": "MARD B22",
+    "hex": "#0B3C43",
+    "rgb": [
+      11,
+      60,
+      67
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B22",
+      "coco": "G8",
+      "xiaowujia": "B22",
+      "manman": "DH7",
+      "panpan": "206",
+      "mixiaowo": "193",
+      "huangdoudou": "B22"
+    }
+  },
+  {
+    "code": "B23",
+    "name": "MARD B23",
+    "hex": "#303A21",
+    "rgb": [
+      48,
+      58,
+      33
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B23",
+      "coco": "F17",
+      "xiaowujia": "B23",
+      "manman": "DH12",
+      "panpan": "205",
+      "mixiaowo": "192",
+      "huangdoudou": "B23"
+    }
+  },
+  {
+    "code": "B24",
+    "name": "MARD B24",
+    "hex": "#EEFCA5",
+    "rgb": [
+      238,
+      252,
+      165
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B24",
+      "coco": "F1",
+      "xiaowujia": "B24",
+      "manman": "IC5",
+      "panpan": "222",
+      "mixiaowo": "207",
+      "huangdoudou": "B24"
+    }
+  },
+  {
+    "code": "B25",
+    "name": "MARD B25",
+    "hex": "#4E846D",
+    "rgb": [
+      78,
+      132,
+      109
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B25",
+      "coco": "F18",
+      "xiaowujia": "B25",
+      "manman": "Q13",
+      "panpan": "240",
+      "mixiaowo": "240",
+      "huangdoudou": "B25"
+    }
+  },
+  {
+    "code": "B26",
+    "name": "MARD B26",
+    "hex": "#8D7A35",
+    "rgb": [
+      141,
+      122,
+      53
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B26",
+      "coco": "F19",
+      "xiaowujia": "B26",
+      "manman": "Q7",
+      "panpan": "248",
+      "mixiaowo": "248",
+      "huangdoudou": "B26"
+    }
+  },
+  {
+    "code": "B27",
+    "name": "MARD B27",
+    "hex": "#CCE1AF",
+    "rgb": [
+      204,
+      225,
+      175
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B27",
+      "coco": "F20",
+      "xiaowujia": "B27",
+      "manman": "R10",
+      "panpan": "262",
+      "mixiaowo": "262",
+      "huangdoudou": "B27"
+    }
+  },
+  {
+    "code": "B28",
+    "name": "MARD B28",
+    "hex": "#9EE5B9",
+    "rgb": [
+      158,
+      229,
+      185
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B28",
+      "coco": "F21",
+      "xiaowujia": "B28",
+      "manman": "R11",
+      "panpan": "269",
+      "mixiaowo": "254",
+      "huangdoudou": "B28"
+    }
+  },
+  {
+    "code": "B29",
+    "name": "MARD B29",
+    "hex": "#C5E254",
+    "rgb": [
+      197,
+      226,
+      84
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B29",
+      "coco": "F22",
+      "xiaowujia": "B29",
+      "manman": "RO9",
+      "panpan": "268",
+      "mixiaowo": "253",
+      "huangdoudou": "B29"
+    }
+  },
+  {
+    "code": "B30",
+    "name": "MARD B30",
+    "hex": "#E2FCB1",
+    "rgb": [
+      226,
+      252,
+      177
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B30",
+      "coco": "F23",
+      "xiaowujia": "B30",
+      "manman": "G6",
+      "panpan": "285",
+      "mixiaowo": "270",
+      "huangdoudou": "B30"
+    }
+  },
+  {
+    "code": "B31",
+    "name": "MARD B31",
+    "hex": "#B0E792",
+    "rgb": [
+      176,
+      231,
+      146
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B31",
+      "coco": "F24",
+      "xiaowujia": "B31",
+      "manman": "G7",
+      "panpan": "286",
+      "mixiaowo": "271",
+      "huangdoudou": "B31"
+    }
+  },
+  {
+    "code": "B32",
+    "name": "MARD B32",
+    "hex": "#9CAB5A",
+    "rgb": [
+      156,
+      171,
+      90
+    ],
+    "family": "绿色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "B32",
+      "coco": "F25",
+      "xiaowujia": "B32",
+      "manman": "G12",
+      "panpan": "287",
+      "mixiaowo": "272",
+      "huangdoudou": "B32"
+    }
+  },
+  {
+    "code": "C1",
+    "name": "MARD C1",
+    "hex": "#E8FFE7",
+    "rgb": [
+      232,
+      255,
+      231
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C1",
+      "coco": "G1",
+      "xiaowujia": "C1",
+      "manman": "C8",
+      "panpan": "64",
+      "mixiaowo": "76",
+      "huangdoudou": "C1"
+    }
+  },
+  {
+    "code": "C2",
+    "name": "MARD C2",
+    "hex": "#A9F9FC",
+    "rgb": [
+      169,
+      249,
+      252
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C2",
+      "coco": "H3",
+      "xiaowujia": "C2",
+      "manman": "D1",
+      "panpan": "30",
+      "mixiaowo": "30",
+      "huangdoudou": "C2"
+    }
+  },
+  {
+    "code": "C3",
+    "name": "MARD C3",
+    "hex": "#A0E2FB",
+    "rgb": [
+      160,
+      226,
+      251
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C3",
+      "coco": "H4",
+      "xiaowujia": "C3",
+      "manman": "D2",
+      "panpan": "63",
+      "mixiaowo": "75",
+      "huangdoudou": "C3"
+    }
+  },
+  {
+    "code": "C4",
+    "name": "MARD C4",
+    "hex": "#41CCFF",
+    "rgb": [
+      65,
+      204,
+      255
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C4",
+      "coco": "H5",
+      "xiaowujia": "C4",
+      "manman": "D3",
+      "panpan": "77",
+      "mixiaowo": "82",
+      "huangdoudou": "C4"
+    }
+  },
+  {
+    "code": "C5",
+    "name": "MARD C5",
+    "hex": "#01ACEB",
+    "rgb": [
+      1,
+      172,
+      235
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C5",
+      "coco": "H7",
+      "xiaowujia": "C5",
+      "manman": "D7",
+      "panpan": "34",
+      "mixiaowo": "34",
+      "huangdoudou": "C5"
+    }
+  },
+  {
+    "code": "C6",
+    "name": "MARD C6",
+    "hex": "#50AAF0",
+    "rgb": [
+      80,
+      170,
+      240
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C6",
+      "coco": "H8",
+      "xiaowujia": "C6",
+      "manman": "D4",
+      "panpan": "25",
+      "mixiaowo": "25",
+      "huangdoudou": "C6"
+    }
+  },
+  {
+    "code": "C7",
+    "name": "MARD C7",
+    "hex": "#3677D2",
+    "rgb": [
+      54,
+      119,
+      210
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C7",
+      "coco": "H13",
+      "xiaowujia": "C7",
+      "manman": "D8",
+      "panpan": "9",
+      "mixiaowo": "9",
+      "huangdoudou": "C7"
+    }
+  },
+  {
+    "code": "C8",
+    "name": "MARD C8",
+    "hex": "#0F54C0",
+    "rgb": [
+      15,
+      84,
+      192
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C8",
+      "coco": "H14",
+      "xiaowujia": "C8",
+      "manman": "D9",
+      "panpan": "52",
+      "mixiaowo": "71",
+      "huangdoudou": "C8"
+    }
+  },
+  {
+    "code": "C9",
+    "name": "MARD C9",
+    "hex": "#324BCA",
+    "rgb": [
+      50,
+      75,
+      202
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C9",
+      "coco": "H16",
+      "xiaowujia": "C9",
+      "manman": "N5",
+      "panpan": "42",
+      "mixiaowo": "42",
+      "huangdoudou": "C9"
+    }
+  },
+  {
+    "code": "C10",
+    "name": "MARD C10",
+    "hex": "#3EBCE2",
+    "rgb": [
+      62,
+      188,
+      226
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C10",
+      "coco": "H9",
+      "xiaowujia": "C10",
+      "manman": "D25",
+      "panpan": "121",
+      "mixiaowo": "130",
+      "huangdoudou": "C10"
+    }
+  },
+  {
+    "code": "C11",
+    "name": "MARD C11",
+    "hex": "#28DDDE",
+    "rgb": [
+      40,
+      221,
+      222
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C11",
+      "coco": "H10",
+      "xiaowujia": "C11",
+      "manman": "D28",
+      "panpan": "122",
+      "mixiaowo": "113",
+      "huangdoudou": "C11"
+    }
+  },
+  {
+    "code": "C12",
+    "name": "MARD C12",
+    "hex": "#1C334D",
+    "rgb": [
+      28,
+      51,
+      77
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C12",
+      "coco": "H23",
+      "xiaowujia": "C12",
+      "manman": "D26",
+      "panpan": "120",
+      "mixiaowo": "120",
+      "huangdoudou": "C12"
+    }
+  },
+  {
+    "code": "C13",
+    "name": "MARD C13",
+    "hex": "#CDE8FF",
+    "rgb": [
+      205,
+      232,
+      255
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C13",
+      "coco": "H1",
+      "xiaowujia": "C13",
+      "manman": "D30",
+      "panpan": "140",
+      "mixiaowo": "142",
+      "huangdoudou": "C13"
+    }
+  },
+  {
+    "code": "C14",
+    "name": "MARD C14",
+    "hex": "#D5FDFF",
+    "rgb": [
+      213,
+      253,
+      255
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C14",
+      "coco": "H2",
+      "xiaowujia": "C14",
+      "manman": "D29",
+      "panpan": "139",
+      "mixiaowo": "136",
+      "huangdoudou": "C14"
+    }
+  },
+  {
+    "code": "C15",
+    "name": "MARD C15",
+    "hex": "#22C4C6",
+    "rgb": [
+      34,
+      196,
+      198
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C15",
+      "coco": "H11",
+      "xiaowujia": "C15",
+      "manman": "D31",
+      "panpan": "143",
+      "mixiaowo": "132",
+      "huangdoudou": "C15"
+    }
+  },
+  {
+    "code": "C16",
+    "name": "MARD C16",
+    "hex": "#1557A8",
+    "rgb": [
+      21,
+      87,
+      168
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C16",
+      "coco": "H18",
+      "xiaowujia": "C16",
+      "manman": "D32",
+      "panpan": "149",
+      "mixiaowo": "149",
+      "huangdoudou": "C16"
+    }
+  },
+  {
+    "code": "C17",
+    "name": "MARD C17",
+    "hex": "#04D1F6",
+    "rgb": [
+      4,
+      209,
+      246
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C17",
+      "coco": "H19",
+      "xiaowujia": "C17",
+      "manman": "D36",
+      "panpan": "163",
+      "mixiaowo": "156",
+      "huangdoudou": "C17"
+    }
+  },
+  {
+    "code": "C18",
+    "name": "MARD C18",
+    "hex": "#1D3344",
+    "rgb": [
+      29,
+      51,
+      68
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C18",
+      "coco": "H24",
+      "xiaowujia": "C18",
+      "manman": "DH6",
+      "panpan": "196",
+      "mixiaowo": "196",
+      "huangdoudou": "C18"
+    }
+  },
+  {
+    "code": "C19",
+    "name": "MARD C19",
+    "hex": "#1887A2",
+    "rgb": [
+      24,
+      135,
+      162
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C19",
+      "coco": "H12",
+      "xiaowujia": "C19",
+      "manman": "DH9",
+      "panpan": "202",
+      "mixiaowo": "202",
+      "huangdoudou": "C19"
+    }
+  },
+  {
+    "code": "C20",
+    "name": "MARD C20",
+    "hex": "#176DAF",
+    "rgb": [
+      23,
+      109,
+      175
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C20",
+      "coco": "H17",
+      "xiaowujia": "C20",
+      "manman": "DH14",
+      "panpan": "197",
+      "mixiaowo": "197",
+      "huangdoudou": "C20"
+    }
+  },
+  {
+    "code": "C21",
+    "name": "MARD C21",
+    "hex": "#BEDDFF",
+    "rgb": [
+      190,
+      221,
+      255
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C21",
+      "coco": "H6",
+      "xiaowujia": "C21",
+      "manman": "IC3",
+      "panpan": "212",
+      "mixiaowo": "212",
+      "huangdoudou": "C21"
+    }
+  },
+  {
+    "code": "C22",
+    "name": "MARD C22",
+    "hex": "#67B4BE",
+    "rgb": [
+      103,
+      180,
+      190
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C22",
+      "coco": "H25",
+      "xiaowujia": "C22",
+      "manman": "Q11",
+      "panpan": "239",
+      "mixiaowo": "239",
+      "huangdoudou": "C22"
+    }
+  },
+  {
+    "code": "C23",
+    "name": "MARD C23",
+    "hex": "#C8E2FF",
+    "rgb": [
+      200,
+      226,
+      255
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C23",
+      "coco": "H26",
+      "xiaowujia": "C23",
+      "manman": "R13",
+      "panpan": "263",
+      "mixiaowo": "263",
+      "huangdoudou": "C23"
+    }
+  },
+  {
+    "code": "C24",
+    "name": "MARD C24",
+    "hex": "#7CC4FF",
+    "rgb": [
+      124,
+      196,
+      255
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C24",
+      "coco": "H27",
+      "xiaowujia": "C24",
+      "manman": "R14",
+      "panpan": "267",
+      "mixiaowo": "252",
+      "huangdoudou": "C24"
+    }
+  },
+  {
+    "code": "C25",
+    "name": "MARD C25",
+    "hex": "#A9E5E5",
+    "rgb": [
+      169,
+      229,
+      229
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C25",
+      "coco": "H28",
+      "xiaowujia": "C25",
+      "manman": "R12",
+      "panpan": "271",
+      "mixiaowo": "256",
+      "huangdoudou": "C25"
+    }
+  },
+  {
+    "code": "C26",
+    "name": "MARD C26",
+    "hex": "#3CAED8",
+    "rgb": [
+      60,
+      174,
+      216
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C26",
+      "coco": "H29",
+      "xiaowujia": "C26",
+      "manman": "R15",
+      "panpan": "265",
+      "mixiaowo": "250",
+      "huangdoudou": "C26"
+    }
+  },
+  {
+    "code": "C27",
+    "name": "MARD C27",
+    "hex": "#D3DFFA",
+    "rgb": [
+      211,
+      223,
+      250
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C27",
+      "coco": "H30",
+      "xiaowujia": "C27",
+      "manman": "G13",
+      "panpan": "279",
+      "mixiaowo": "264",
+      "huangdoudou": "C27"
+    }
+  },
+  {
+    "code": "C28",
+    "name": "MARD C28",
+    "hex": "#BBCFED",
+    "rgb": [
+      187,
+      207,
+      237
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C28",
+      "coco": "H31",
+      "xiaowujia": "C28",
+      "manman": "G14",
+      "panpan": "280",
+      "mixiaowo": "265",
+      "huangdoudou": "C28"
+    }
+  },
+  {
+    "code": "C29",
+    "name": "MARD C29",
+    "hex": "#34488E",
+    "rgb": [
+      52,
+      72,
+      142
+    ],
+    "family": "蓝色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "C29",
+      "coco": "H32",
+      "xiaowujia": "C29",
+      "manman": "G15",
+      "panpan": "281",
+      "mixiaowo": "266",
+      "huangdoudou": "C29"
+    }
+  },
+  {
+    "code": "D1",
+    "name": "MARD D1",
+    "hex": "#AEB4F2",
+    "rgb": [
+      174,
+      180,
+      242
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D1",
+      "coco": "J7",
+      "xiaowujia": "D1",
+      "manman": "D5",
+      "panpan": "46",
+      "mixiaowo": "46",
+      "huangdoudou": "D1"
+    }
+  },
+  {
+    "code": "D2",
+    "name": "MARD D2",
+    "hex": "#858EDD",
+    "rgb": [
+      133,
+      142,
+      221
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D2",
+      "coco": "J8",
+      "xiaowujia": "D2",
+      "manman": "D6",
+      "panpan": "36",
+      "mixiaowo": "36",
+      "huangdoudou": "D2"
+    }
+  },
+  {
+    "code": "D3",
+    "name": "MARD D3",
+    "hex": "#2F54AF",
+    "rgb": [
+      47,
+      84,
+      175
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D3",
+      "coco": "H15",
+      "xiaowujia": "D3",
+      "manman": "D10",
+      "panpan": "8",
+      "mixiaowo": "8",
+      "huangdoudou": "D3"
+    }
+  },
+  {
+    "code": "D4",
+    "name": "MARD D4",
+    "hex": "#182A84",
+    "rgb": [
+      24,
+      42,
+      132
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D4",
+      "coco": "H20",
+      "xiaowujia": "D4",
+      "manman": "D11",
+      "panpan": "75",
+      "mixiaowo": "80",
+      "huangdoudou": "D4"
+    }
+  },
+  {
+    "code": "D5",
+    "name": "MARD D5",
+    "hex": "#B843C5",
+    "rgb": [
+      184,
+      67,
+      197
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D5",
+      "coco": "J12",
+      "xiaowujia": "D5",
+      "manman": "D13",
+      "panpan": "32",
+      "mixiaowo": "32",
+      "huangdoudou": "D5"
+    }
+  },
+  {
+    "code": "D6",
+    "name": "MARD D6",
+    "hex": "#AC7BDE",
+    "rgb": [
+      172,
+      123,
+      222
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D6",
+      "coco": "J11",
+      "xiaowujia": "D6",
+      "manman": "D14",
+      "panpan": "27",
+      "mixiaowo": "27",
+      "huangdoudou": "D6"
+    }
+  },
+  {
+    "code": "D7",
+    "name": "MARD D7",
+    "hex": "#8854B3",
+    "rgb": [
+      136,
+      84,
+      179
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D7",
+      "coco": "J15",
+      "xiaowujia": "D7",
+      "manman": "D12",
+      "panpan": "7",
+      "mixiaowo": "7",
+      "huangdoudou": "D7"
+    }
+  },
+  {
+    "code": "D8",
+    "name": "MARD D8",
+    "hex": "#E2D3FF",
+    "rgb": [
+      226,
+      211,
+      255
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D8",
+      "coco": "J3",
+      "xiaowujia": "D8",
+      "manman": "D16",
+      "panpan": "94",
+      "mixiaowo": "89",
+      "huangdoudou": "D8"
+    }
+  },
+  {
+    "code": "D9",
+    "name": "MARD D9",
+    "hex": "#D5B9F8",
+    "rgb": [
+      213,
+      185,
+      248
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D9",
+      "coco": "J4",
+      "xiaowujia": "D9",
+      "manman": "D17",
+      "panpan": "93",
+      "mixiaowo": "90",
+      "huangdoudou": "D9"
+    }
+  },
+  {
+    "code": "D10",
+    "name": "MARD D10",
+    "hex": "#361B51",
+    "rgb": [
+      54,
+      27,
+      81
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D10",
+      "coco": "J19",
+      "xiaowujia": "D10",
+      "manman": "D15",
+      "panpan": "92",
+      "mixiaowo": "91",
+      "huangdoudou": "D10"
+    }
+  },
+  {
+    "code": "D11",
+    "name": "MARD D11",
+    "hex": "#B9BAE1",
+    "rgb": [
+      185,
+      186,
+      225
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D11",
+      "coco": "J6",
+      "xiaowujia": "D11",
+      "manman": "D19",
+      "panpan": "105",
+      "mixiaowo": "104",
+      "huangdoudou": "D11"
+    }
+  },
+  {
+    "code": "D12",
+    "name": "MARD D12",
+    "hex": "#DE9AD4",
+    "rgb": [
+      222,
+      154,
+      212
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D12",
+      "coco": "J10",
+      "xiaowujia": "D12",
+      "manman": "D20",
+      "panpan": "104",
+      "mixiaowo": "105",
+      "huangdoudou": "D12"
+    }
+  },
+  {
+    "code": "D13",
+    "name": "MARD D13",
+    "hex": "#B90095",
+    "rgb": [
+      185,
+      0,
+      149
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D13",
+      "coco": "J14",
+      "xiaowujia": "D13",
+      "manman": "D21",
+      "panpan": "103",
+      "mixiaowo": "106",
+      "huangdoudou": "D13"
+    }
+  },
+  {
+    "code": "D14",
+    "name": "MARD D14",
+    "hex": "#8B279B",
+    "rgb": [
+      139,
+      39,
+      155
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D14",
+      "coco": "J16",
+      "xiaowujia": "D14",
+      "manman": "D22",
+      "panpan": "102",
+      "mixiaowo": "107",
+      "huangdoudou": "D14"
+    }
+  },
+  {
+    "code": "D15",
+    "name": "MARD D15",
+    "hex": "#2F1F90",
+    "rgb": [
+      47,
+      31,
+      144
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D15",
+      "coco": "H22",
+      "xiaowujia": "D15",
+      "manman": "D18",
+      "panpan": "101",
+      "mixiaowo": "108",
+      "huangdoudou": "D15"
+    }
+  },
+  {
+    "code": "D16",
+    "name": "MARD D16",
+    "hex": "#E3E1EE",
+    "rgb": [
+      227,
+      225,
+      238
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D16",
+      "coco": "J1",
+      "xiaowujia": "D16",
+      "manman": "D23",
+      "panpan": "118",
+      "mixiaowo": "126",
+      "huangdoudou": "D16"
+    }
+  },
+  {
+    "code": "D17",
+    "name": "MARD D17",
+    "hex": "#C4D4F6",
+    "rgb": [
+      196,
+      212,
+      246
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D17",
+      "coco": "J5",
+      "xiaowujia": "D17",
+      "manman": "D24",
+      "panpan": "119",
+      "mixiaowo": "128",
+      "huangdoudou": "D17"
+    }
+  },
+  {
+    "code": "D18",
+    "name": "MARD D18",
+    "hex": "#A45EC7",
+    "rgb": [
+      164,
+      94,
+      199
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D18",
+      "coco": "J13",
+      "xiaowujia": "D18",
+      "manman": "D27",
+      "panpan": "124",
+      "mixiaowo": "125",
+      "huangdoudou": "D18"
+    }
+  },
+  {
+    "code": "D19",
+    "name": "MARD D19",
+    "hex": "#D8C3D7",
+    "rgb": [
+      216,
+      195,
+      215
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D19",
+      "coco": "J9",
+      "xiaowujia": "D19",
+      "manman": "D33",
+      "panpan": "153",
+      "mixiaowo": "153",
+      "huangdoudou": "D19"
+    }
+  },
+  {
+    "code": "D20",
+    "name": "MARD D20",
+    "hex": "#9C32B2",
+    "rgb": [
+      156,
+      50,
+      178
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D20",
+      "coco": "J17",
+      "xiaowujia": "D20",
+      "manman": "D34",
+      "panpan": "161",
+      "mixiaowo": "155",
+      "huangdoudou": "D20"
+    }
+  },
+  {
+    "code": "D21",
+    "name": "MARD D21",
+    "hex": "#9A009B",
+    "rgb": [
+      154,
+      0,
+      155
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D21",
+      "coco": "J18",
+      "xiaowujia": "D21",
+      "manman": "D35",
+      "panpan": "162",
+      "mixiaowo": "158",
+      "huangdoudou": "D21"
+    }
+  },
+  {
+    "code": "D22",
+    "name": "MARD D22",
+    "hex": "#333A95",
+    "rgb": [
+      51,
+      58,
+      149
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D22",
+      "coco": "H21",
+      "xiaowujia": "D22",
+      "manman": "DH1",
+      "panpan": "198",
+      "mixiaowo": "198",
+      "huangdoudou": "D22"
+    }
+  },
+  {
+    "code": "D23",
+    "name": "MARD D23",
+    "hex": "#EBDAFC",
+    "rgb": [
+      235,
+      218,
+      252
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D23",
+      "coco": "J2",
+      "xiaowujia": "D23",
+      "manman": "IC8",
+      "panpan": "217",
+      "mixiaowo": "217",
+      "huangdoudou": "D23"
+    }
+  },
+  {
+    "code": "D24",
+    "name": "MARD D24",
+    "hex": "#7786E5",
+    "rgb": [
+      119,
+      134,
+      229
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D24",
+      "coco": "J20",
+      "xiaowujia": "D24",
+      "manman": "Q14",
+      "panpan": "244",
+      "mixiaowo": "244",
+      "huangdoudou": "D24"
+    }
+  },
+  {
+    "code": "D25",
+    "name": "MARD D25",
+    "hex": "#494FC7",
+    "rgb": [
+      73,
+      79,
+      199
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D25",
+      "coco": "J21",
+      "xiaowujia": "D25",
+      "manman": "Q15",
+      "panpan": "249",
+      "mixiaowo": "234",
+      "huangdoudou": "D25"
+    }
+  },
+  {
+    "code": "D26",
+    "name": "MARD D26",
+    "hex": "#DFC2F8",
+    "rgb": [
+      223,
+      194,
+      248
+    ],
+    "family": "紫色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "D26",
+      "coco": "J22",
+      "xiaowujia": "D26",
+      "manman": "R1",
+      "panpan": "273",
+      "mixiaowo": "258",
+      "huangdoudou": "D26"
+    }
+  },
+  {
+    "code": "E1",
+    "name": "MARD E1",
+    "hex": "#FDD3CC",
+    "rgb": [
+      253,
+      211,
+      204
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E1",
+      "coco": "K3",
+      "xiaowujia": "E1",
+      "manman": "E1",
+      "panpan": "18",
+      "mixiaowo": "18",
+      "huangdoudou": "E1"
+    }
+  },
+  {
+    "code": "E2",
+    "name": "MARD E2",
+    "hex": "#FEC0DF",
+    "rgb": [
+      254,
+      192,
+      223
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E2",
+      "coco": "K15",
+      "xiaowujia": "E2",
+      "manman": "A7",
+      "panpan": "38",
+      "mixiaowo": "38",
+      "huangdoudou": "E2"
+    }
+  },
+  {
+    "code": "E3",
+    "name": "MARD E3",
+    "hex": "#FFB7E7",
+    "rgb": [
+      255,
+      183,
+      231
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E3",
+      "coco": "K17",
+      "xiaowujia": "E3",
+      "manman": "A8",
+      "panpan": "62",
+      "mixiaowo": "74",
+      "huangdoudou": "E3"
+    }
+  },
+  {
+    "code": "E4",
+    "name": "MARD E4",
+    "hex": "#E8649E",
+    "rgb": [
+      232,
+      100,
+      158
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E4",
+      "coco": "K21",
+      "xiaowujia": "E4",
+      "manman": "A9",
+      "panpan": "6",
+      "mixiaowo": "6",
+      "huangdoudou": "E4"
+    }
+  },
+  {
+    "code": "E5",
+    "name": "MARD E5",
+    "hex": "#F551A2",
+    "rgb": [
+      245,
+      81,
+      162
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E5",
+      "coco": "K19",
+      "xiaowujia": "E5",
+      "manman": "A10",
+      "panpan": "40",
+      "mixiaowo": "40",
+      "huangdoudou": "E5"
+    }
+  },
+  {
+    "code": "E6",
+    "name": "MARD E6",
+    "hex": "#F13D74",
+    "rgb": [
+      241,
+      61,
+      116
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E6",
+      "coco": "K22",
+      "xiaowujia": "E6",
+      "manman": "A11",
+      "panpan": "20",
+      "mixiaowo": "20",
+      "huangdoudou": "E6"
+    }
+  },
+  {
+    "code": "E7",
+    "name": "MARD E7",
+    "hex": "#C63478",
+    "rgb": [
+      198,
+      52,
+      120
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E7",
+      "coco": "K25",
+      "xiaowujia": "E7",
+      "manman": "A12",
+      "panpan": "41",
+      "mixiaowo": "41",
+      "huangdoudou": "E7"
+    }
+  },
+  {
+    "code": "E8",
+    "name": "MARD E8",
+    "hex": "#FFDBE9",
+    "rgb": [
+      255,
+      219,
+      233
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E8",
+      "coco": "K12",
+      "xiaowujia": "E8",
+      "manman": "A13",
+      "panpan": "84",
+      "mixiaowo": "103",
+      "huangdoudou": "E8"
+    }
+  },
+  {
+    "code": "E9",
+    "name": "MARD E9",
+    "hex": "#E970CC",
+    "rgb": [
+      233,
+      112,
+      204
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E9",
+      "coco": "K18",
+      "xiaowujia": "E9",
+      "manman": "A14",
+      "panpan": "98",
+      "mixiaowo": "95",
+      "huangdoudou": "E9"
+    }
+  },
+  {
+    "code": "E10",
+    "name": "MARD E10",
+    "hex": "#D33793",
+    "rgb": [
+      211,
+      55,
+      147
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E10",
+      "coco": "K23",
+      "xiaowujia": "E10",
+      "manman": "A16",
+      "panpan": "83",
+      "mixiaowo": "94",
+      "huangdoudou": "E10"
+    }
+  },
+  {
+    "code": "E11",
+    "name": "MARD E11",
+    "hex": "#FCDDD2",
+    "rgb": [
+      252,
+      221,
+      210
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E11",
+      "coco": "K2",
+      "xiaowujia": "E11",
+      "manman": "A19",
+      "panpan": "125",
+      "mixiaowo": "131",
+      "huangdoudou": "E11"
+    }
+  },
+  {
+    "code": "E12",
+    "name": "MARD E12",
+    "hex": "#F78FC3",
+    "rgb": [
+      247,
+      143,
+      195
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E12",
+      "coco": "K16",
+      "xiaowujia": "E12",
+      "manman": "A20",
+      "panpan": "126",
+      "mixiaowo": "112",
+      "huangdoudou": "E12"
+    }
+  },
+  {
+    "code": "E13",
+    "name": "MARD E13",
+    "hex": "#B5006D",
+    "rgb": [
+      181,
+      0,
+      109
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E13",
+      "coco": "K24",
+      "xiaowujia": "E13",
+      "manman": "A21",
+      "panpan": "127",
+      "mixiaowo": "124",
+      "huangdoudou": "E13"
+    }
+  },
+  {
+    "code": "E14",
+    "name": "MARD E14",
+    "hex": "#FFD1BA",
+    "rgb": [
+      255,
+      209,
+      186
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E14",
+      "coco": "K5",
+      "xiaowujia": "E14",
+      "manman": "E21",
+      "panpan": "137",
+      "mixiaowo": "140",
+      "huangdoudou": "E14"
+    }
+  },
+  {
+    "code": "E15",
+    "name": "MARD E15",
+    "hex": "#F8C7C9",
+    "rgb": [
+      248,
+      199,
+      201
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E15",
+      "coco": "K4",
+      "xiaowujia": "E15",
+      "manman": "A23",
+      "panpan": "135",
+      "mixiaowo": "139",
+      "huangdoudou": "E15"
+    }
+  },
+  {
+    "code": "E16",
+    "name": "MARD E16",
+    "hex": "#FFF3EB",
+    "rgb": [
+      255,
+      243,
+      235
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E16",
+      "coco": "K1",
+      "xiaowujia": "E16",
+      "manman": "IC2",
+      "panpan": "221",
+      "mixiaowo": "206",
+      "huangdoudou": "E16"
+    }
+  },
+  {
+    "code": "E17",
+    "name": "MARD E17",
+    "hex": "#FFE2EA",
+    "rgb": [
+      255,
+      226,
+      234
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E17",
+      "coco": "K11",
+      "xiaowujia": "E17",
+      "manman": "IC7",
+      "panpan": "220",
+      "mixiaowo": "205",
+      "huangdoudou": "E17"
+    }
+  },
+  {
+    "code": "E18",
+    "name": "MARD E18",
+    "hex": "#FFC7DB",
+    "rgb": [
+      255,
+      199,
+      219
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E18",
+      "coco": "K13",
+      "xiaowujia": "E18",
+      "manman": "C13",
+      "panpan": "210",
+      "mixiaowo": "210",
+      "huangdoudou": "E18"
+    }
+  },
+  {
+    "code": "E19",
+    "name": "MARD E19",
+    "hex": "#FEBAD5",
+    "rgb": [
+      254,
+      186,
+      213
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E19",
+      "coco": "K14",
+      "xiaowujia": "E19",
+      "manman": "IC12",
+      "panpan": "215",
+      "mixiaowo": "215",
+      "huangdoudou": "E19"
+    }
+  },
+  {
+    "code": "E20",
+    "name": "MARD E20",
+    "hex": "#D8C7D1",
+    "rgb": [
+      216,
+      199,
+      209
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E20",
+      "coco": "K26",
+      "xiaowujia": "E20",
+      "manman": "Q1",
+      "panpan": "241",
+      "mixiaowo": "241",
+      "huangdoudou": "E20"
+    }
+  },
+  {
+    "code": "E21",
+    "name": "MARD E21",
+    "hex": "#BD9DA1",
+    "rgb": [
+      189,
+      157,
+      161
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E21",
+      "coco": "K27",
+      "xiaowujia": "E21",
+      "manman": "Q2",
+      "panpan": "253",
+      "mixiaowo": "238",
+      "huangdoudou": "E21"
+    }
+  },
+  {
+    "code": "E22",
+    "name": "MARD E22",
+    "hex": "#B785A1",
+    "rgb": [
+      183,
+      133,
+      161
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E22",
+      "coco": "K28",
+      "xiaowujia": "E22",
+      "manman": "Q4",
+      "panpan": "252",
+      "mixiaowo": "237",
+      "huangdoudou": "E22"
+    }
+  },
+  {
+    "code": "E23",
+    "name": "MARD E23",
+    "hex": "#937A8D",
+    "rgb": [
+      147,
+      122,
+      141
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E23",
+      "coco": "K29",
+      "xiaowujia": "E23",
+      "manman": "Q3",
+      "panpan": "250",
+      "mixiaowo": "235",
+      "huangdoudou": "E23"
+    }
+  },
+  {
+    "code": "E24",
+    "name": "MARD E24",
+    "hex": "#E1BCE8",
+    "rgb": [
+      225,
+      188,
+      232
+    ],
+    "family": "粉色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "E24",
+      "coco": "K30",
+      "xiaowujia": "E24",
+      "manman": "G8",
+      "panpan": "282",
+      "mixiaowo": "267",
+      "huangdoudou": "E24"
+    }
+  },
+  {
+    "code": "F1",
+    "name": "MARD F1",
+    "hex": "#FD957B",
+    "rgb": [
+      253,
+      149,
+      123
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F1",
+      "coco": "K8",
+      "xiaowujia": "F1",
+      "manman": "A1",
+      "panpan": "35",
+      "mixiaowo": "35",
+      "huangdoudou": "F1"
+    }
+  },
+  {
+    "code": "F2",
+    "name": "MARD F2",
+    "hex": "#FC3D46",
+    "rgb": [
+      252,
+      61,
+      70
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F2",
+      "coco": "C2",
+      "xiaowujia": "F2",
+      "manman": "A2",
+      "panpan": "31",
+      "mixiaowo": "31",
+      "huangdoudou": "F2"
+    }
+  },
+  {
+    "code": "F3",
+    "name": "MARD F3",
+    "hex": "#F74941",
+    "rgb": [
+      247,
+      73,
+      65
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F3",
+      "coco": "C3",
+      "xiaowujia": "F3",
+      "manman": "A3",
+      "panpan": "53",
+      "mixiaowo": "72",
+      "huangdoudou": "F3"
+    }
+  },
+  {
+    "code": "F4",
+    "name": "MARD F4",
+    "hex": "#FC283C",
+    "rgb": [
+      252,
+      40,
+      60
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F4",
+      "coco": "C6",
+      "xiaowujia": "F4",
+      "manman": "A4",
+      "panpan": "54",
+      "mixiaowo": "73",
+      "huangdoudou": "F4"
+    }
+  },
+  {
+    "code": "F5",
+    "name": "MARD F5",
+    "hex": "#E7002F",
+    "rgb": [
+      231,
+      0,
+      47
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F5",
+      "coco": "C7",
+      "xiaowujia": "F5",
+      "manman": "A5",
+      "panpan": "5",
+      "mixiaowo": "5",
+      "huangdoudou": "F5"
+    }
+  },
+  {
+    "code": "F6",
+    "name": "MARD F6",
+    "hex": "#943630",
+    "rgb": [
+      148,
+      54,
+      48
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F6",
+      "coco": "Z21",
+      "xiaowujia": "F6",
+      "manman": "E9",
+      "panpan": "16",
+      "mixiaowo": "16",
+      "huangdoudou": "F6"
+    }
+  },
+  {
+    "code": "F7",
+    "name": "MARD F7",
+    "hex": "#971937",
+    "rgb": [
+      151,
+      25,
+      55
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F7",
+      "coco": "C10",
+      "xiaowujia": "F7",
+      "manman": "A6",
+      "panpan": "47",
+      "mixiaowo": "47",
+      "huangdoudou": "F7"
+    }
+  },
+  {
+    "code": "F8",
+    "name": "MARD F8",
+    "hex": "#BC0028",
+    "rgb": [
+      188,
+      0,
+      40
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F8",
+      "coco": "C9",
+      "xiaowujia": "F8",
+      "manman": "A17",
+      "panpan": "81",
+      "mixiaowo": "92",
+      "huangdoudou": "F8"
+    }
+  },
+  {
+    "code": "F9",
+    "name": "MARD F9",
+    "hex": "#E2677A",
+    "rgb": [
+      226,
+      103,
+      122
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F9",
+      "coco": "K20",
+      "xiaowujia": "F9",
+      "manman": "A15",
+      "panpan": "82",
+      "mixiaowo": "93",
+      "huangdoudou": "F9"
+    }
+  },
+  {
+    "code": "F10",
+    "name": "MARD F10",
+    "hex": "#8A4526",
+    "rgb": [
+      138,
+      69,
+      38
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F10",
+      "coco": "Z20",
+      "xiaowujia": "F10",
+      "manman": "E15",
+      "panpan": "116",
+      "mixiaowo": "115",
+      "huangdoudou": "F10"
+    }
+  },
+  {
+    "code": "F11",
+    "name": "MARD F11",
+    "hex": "#5A2121",
+    "rgb": [
+      90,
+      33,
+      33
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F11",
+      "coco": "Z23",
+      "xiaowujia": "F11",
+      "manman": "E16",
+      "panpan": "117",
+      "mixiaowo": "129",
+      "huangdoudou": "F11"
+    }
+  },
+  {
+    "code": "F12",
+    "name": "MARD F12",
+    "hex": "#FD4E6A",
+    "rgb": [
+      253,
+      78,
+      106
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F12",
+      "coco": "C1",
+      "xiaowujia": "F12",
+      "manman": "A22",
+      "panpan": "136",
+      "mixiaowo": "134",
+      "huangdoudou": "F12"
+    }
+  },
+  {
+    "code": "F13",
+    "name": "MARD F13",
+    "hex": "#F35744",
+    "rgb": [
+      243,
+      87,
+      68
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F13",
+      "coco": "C4",
+      "xiaowujia": "F13",
+      "manman": "A24",
+      "panpan": "148",
+      "mixiaowo": "148",
+      "huangdoudou": "F13"
+    }
+  },
+  {
+    "code": "F14",
+    "name": "MARD F14",
+    "hex": "#FFA9AD",
+    "rgb": [
+      255,
+      169,
+      173
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F14",
+      "coco": "K7",
+      "xiaowujia": "F14",
+      "manman": "A25",
+      "panpan": "154",
+      "mixiaowo": "154",
+      "huangdoudou": "F14"
+    }
+  },
+  {
+    "code": "F15",
+    "name": "MARD F15",
+    "hex": "#D30022",
+    "rgb": [
+      211,
+      0,
+      34
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F15",
+      "coco": "C8",
+      "xiaowujia": "F15",
+      "manman": "DH8",
+      "panpan": "204",
+      "mixiaowo": "191",
+      "huangdoudou": "F15"
+    }
+  },
+  {
+    "code": "F16",
+    "name": "MARD F16",
+    "hex": "#FEC2A6",
+    "rgb": [
+      254,
+      194,
+      166
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F16",
+      "coco": "K6",
+      "xiaowujia": "F16",
+      "manman": "IC10",
+      "panpan": "211",
+      "mixiaowo": "211",
+      "huangdoudou": "F16"
+    }
+  },
+  {
+    "code": "F17",
+    "name": "MARD F17",
+    "hex": "#E69C79",
+    "rgb": [
+      230,
+      156,
+      121
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F17",
+      "coco": "K31",
+      "xiaowujia": "F17",
+      "manman": "Q9",
+      "panpan": "245",
+      "mixiaowo": "245",
+      "huangdoudou": "F17"
+    }
+  },
+  {
+    "code": "F18",
+    "name": "MARD F18",
+    "hex": "#D37C46",
+    "rgb": [
+      211,
+      124,
+      70
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F18",
+      "coco": "K32",
+      "xiaowujia": "F18",
+      "manman": "Q10",
+      "panpan": "246",
+      "mixiaowo": "246",
+      "huangdoudou": "F18"
+    }
+  },
+  {
+    "code": "F19",
+    "name": "MARD F19",
+    "hex": "#C1444A",
+    "rgb": [
+      193,
+      68,
+      74
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F19",
+      "coco": "K33",
+      "xiaowujia": "F19",
+      "manman": "Q5",
+      "panpan": "243",
+      "mixiaowo": "243",
+      "huangdoudou": "F19"
+    }
+  },
+  {
+    "code": "F20",
+    "name": "MARD F20",
+    "hex": "#CD9391",
+    "rgb": [
+      205,
+      147,
+      145
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F20",
+      "coco": "K34",
+      "xiaowujia": "F20",
+      "manman": "R4",
+      "panpan": "275",
+      "mixiaowo": "260",
+      "huangdoudou": "F20"
+    }
+  },
+  {
+    "code": "F21",
+    "name": "MARD F21",
+    "hex": "#F7B4C6",
+    "rgb": [
+      247,
+      180,
+      198
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F21",
+      "coco": "K35",
+      "xiaowujia": "F21",
+      "manman": "R3",
+      "panpan": "266",
+      "mixiaowo": "251",
+      "huangdoudou": "F21"
+    }
+  },
+  {
+    "code": "F22",
+    "name": "MARD F22",
+    "hex": "#FDC0D0",
+    "rgb": [
+      253,
+      192,
+      208
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F22",
+      "coco": "K36",
+      "xiaowujia": "F22",
+      "manman": "R2",
+      "panpan": "272",
+      "mixiaowo": "257",
+      "huangdoudou": "F22"
+    }
+  },
+  {
+    "code": "F23",
+    "name": "MARD F23",
+    "hex": "#F67E66",
+    "rgb": [
+      246,
+      126,
+      102
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F23",
+      "coco": "K37",
+      "xiaowujia": "F23",
+      "manman": "R5",
+      "panpan": "264",
+      "mixiaowo": "249",
+      "huangdoudou": "F23"
+    }
+  },
+  {
+    "code": "F24",
+    "name": "MARD F24",
+    "hex": "#E698AA",
+    "rgb": [
+      230,
+      152,
+      170
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F24",
+      "coco": "K38",
+      "xiaowujia": "F24",
+      "manman": "G9",
+      "panpan": "283",
+      "mixiaowo": "268",
+      "huangdoudou": "F24"
+    }
+  },
+  {
+    "code": "F25",
+    "name": "MARD F25",
+    "hex": "#E54B4F",
+    "rgb": [
+      229,
+      75,
+      79
+    ],
+    "family": "红色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "F25",
+      "coco": "K39",
+      "xiaowujia": "F25",
+      "manman": "G10",
+      "panpan": "284",
+      "mixiaowo": "269",
+      "huangdoudou": "F25"
+    }
+  },
+  {
+    "code": "G1",
+    "name": "MARD G1",
+    "hex": "#FFE2CE",
+    "rgb": [
+      255,
+      226,
+      206
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G1",
+      "coco": "Z2",
+      "xiaowujia": "G1",
+      "manman": "E3",
+      "panpan": "76",
+      "mixiaowo": "81",
+      "huangdoudou": "G1"
+    }
+  },
+  {
+    "code": "G2",
+    "name": "MARD G2",
+    "hex": "#FFC4AA",
+    "rgb": [
+      255,
+      196,
+      170
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G2",
+      "coco": "Z5",
+      "xiaowujia": "G2",
+      "manman": "E4",
+      "panpan": "49",
+      "mixiaowo": "49",
+      "huangdoudou": "G2"
+    }
+  },
+  {
+    "code": "G3",
+    "name": "MARD G3",
+    "hex": "#F4C3A5",
+    "rgb": [
+      244,
+      195,
+      165
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G3",
+      "coco": "Z6",
+      "xiaowujia": "G3",
+      "manman": "E5",
+      "panpan": "80",
+      "mixiaowo": "85",
+      "huangdoudou": "G3"
+    }
+  },
+  {
+    "code": "G4",
+    "name": "MARD G4",
+    "hex": "#E1B383",
+    "rgb": [
+      225,
+      179,
+      131
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G4",
+      "coco": "Z8",
+      "xiaowujia": "G4",
+      "manman": "E6",
+      "panpan": "19",
+      "mixiaowo": "19",
+      "huangdoudou": "G4"
+    }
+  },
+  {
+    "code": "G5",
+    "name": "MARD G5",
+    "hex": "#EDB045",
+    "rgb": [
+      237,
+      176,
+      69
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G5",
+      "coco": "Z10",
+      "xiaowujia": "G5",
+      "manman": "B7",
+      "panpan": "43",
+      "mixiaowo": "43",
+      "huangdoudou": "G5"
+    }
+  },
+  {
+    "code": "G6",
+    "name": "MARD G6",
+    "hex": "#E99C17",
+    "rgb": [
+      233,
+      156,
+      23
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G6",
+      "coco": "Z11",
+      "xiaowujia": "G6",
+      "manman": "B8",
+      "panpan": "50",
+      "mixiaowo": "50",
+      "huangdoudou": "G6"
+    }
+  },
+  {
+    "code": "G7",
+    "name": "MARD G7",
+    "hex": "#9D5B3E",
+    "rgb": [
+      157,
+      91,
+      62
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G7",
+      "coco": "Z18",
+      "xiaowujia": "G7",
+      "manman": "E7",
+      "panpan": "17",
+      "mixiaowo": "17",
+      "huangdoudou": "G7"
+    }
+  },
+  {
+    "code": "G8",
+    "name": "MARD G8",
+    "hex": "#753B32",
+    "rgb": [
+      117,
+      59,
+      50
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G8",
+      "coco": "Z22",
+      "xiaowujia": "G8",
+      "manman": "E8",
+      "panpan": "12",
+      "mixiaowo": "12",
+      "huangdoudou": "G8"
+    }
+  },
+  {
+    "code": "G9",
+    "name": "MARD G9",
+    "hex": "#E6B483",
+    "rgb": [
+      230,
+      180,
+      131
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G9",
+      "coco": "Z9",
+      "xiaowujia": "G9",
+      "manman": "E10",
+      "panpan": "91",
+      "mixiaowo": "102",
+      "huangdoudou": "G9"
+    }
+  },
+  {
+    "code": "G10",
+    "name": "MARD G10",
+    "hex": "#D98C39",
+    "rgb": [
+      217,
+      140,
+      57
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G10",
+      "coco": "Z15",
+      "xiaowujia": "G10",
+      "manman": "B9",
+      "panpan": "87",
+      "mixiaowo": "101",
+      "huangdoudou": "G10"
+    }
+  },
+  {
+    "code": "G11",
+    "name": "MARD G11",
+    "hex": "#E0C593",
+    "rgb": [
+      224,
+      197,
+      147
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G11",
+      "coco": "Z7",
+      "xiaowujia": "G11",
+      "manman": "E12",
+      "panpan": "112",
+      "mixiaowo": "118",
+      "huangdoudou": "G11"
+    }
+  },
+  {
+    "code": "G12",
+    "name": "MARD G12",
+    "hex": "#FFC890",
+    "rgb": [
+      255,
+      200,
+      144
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G12",
+      "coco": "Z13",
+      "xiaowujia": "G12",
+      "manman": "E13",
+      "panpan": "113",
+      "mixiaowo": "127",
+      "huangdoudou": "G12"
+    }
+  },
+  {
+    "code": "G13",
+    "name": "MARD G13",
+    "hex": "#B7714A",
+    "rgb": [
+      183,
+      113,
+      74
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G13",
+      "coco": "Z14",
+      "xiaowujia": "G13",
+      "manman": "E17",
+      "panpan": "115",
+      "mixiaowo": "114",
+      "huangdoudou": "G13"
+    }
+  },
+  {
+    "code": "G14",
+    "name": "MARD G14",
+    "hex": "#8D614C",
+    "rgb": [
+      141,
+      97,
+      76
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G14",
+      "coco": "Z17",
+      "xiaowujia": "G14",
+      "manman": "E14",
+      "panpan": "114",
+      "mixiaowo": "123",
+      "huangdoudou": "G14"
+    }
+  },
+  {
+    "code": "G15",
+    "name": "MARD G15",
+    "hex": "#FCF9E0",
+    "rgb": [
+      252,
+      249,
+      224
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G15",
+      "coco": "Z3",
+      "xiaowujia": "G15",
+      "manman": "E19",
+      "panpan": "133",
+      "mixiaowo": "143",
+      "huangdoudou": "G15"
+    }
+  },
+  {
+    "code": "G16",
+    "name": "MARD G16",
+    "hex": "#F2D9BA",
+    "rgb": [
+      242,
+      217,
+      186
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G16",
+      "coco": "Z4",
+      "xiaowujia": "G16",
+      "manman": "E20",
+      "panpan": "134",
+      "mixiaowo": "138",
+      "huangdoudou": "G16"
+    }
+  },
+  {
+    "code": "G17",
+    "name": "MARD G17",
+    "hex": "#7B524B",
+    "rgb": [
+      123,
+      82,
+      75
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G17",
+      "coco": "Z16",
+      "xiaowujia": "G17",
+      "manman": "E22",
+      "panpan": "144",
+      "mixiaowo": "137",
+      "huangdoudou": "G17"
+    }
+  },
+  {
+    "code": "G18",
+    "name": "MARD G18",
+    "hex": "#FFE4CC",
+    "rgb": [
+      255,
+      228,
+      204
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G18",
+      "coco": "Z1",
+      "xiaowujia": "G18",
+      "manman": "DH5",
+      "panpan": "203",
+      "mixiaowo": "203",
+      "huangdoudou": "G18"
+    }
+  },
+  {
+    "code": "G19",
+    "name": "MARD G19",
+    "hex": "#E07935",
+    "rgb": [
+      224,
+      121,
+      53
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G19",
+      "coco": "Z12",
+      "xiaowujia": "G19",
+      "manman": "DH3",
+      "panpan": "208",
+      "mixiaowo": "195",
+      "huangdoudou": "G19"
+    }
+  },
+  {
+    "code": "G20",
+    "name": "MARD G20",
+    "hex": "#A94023",
+    "rgb": [
+      169,
+      64,
+      35
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G20",
+      "coco": "Z19",
+      "xiaowujia": "G20",
+      "manman": "DH13",
+      "panpan": "199",
+      "mixiaowo": "199",
+      "huangdoudou": "G20"
+    }
+  },
+  {
+    "code": "G21",
+    "name": "MARD G21",
+    "hex": "#B88558",
+    "rgb": [
+      184,
+      133,
+      88
+    ],
+    "family": "棕色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "G21",
+      "coco": "Z24",
+      "xiaowujia": "G21",
+      "manman": "Q8",
+      "panpan": "247",
+      "mixiaowo": "247",
+      "huangdoudou": "G21"
+    }
+  },
+  {
+    "code": "H1",
+    "name": "MARD H1",
+    "hex": "#FDFBFF",
+    "rgb": [
+      253,
+      251,
+      255
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H1",
+      "coco": "A2",
+      "xiaowujia": "H1",
+      "manman": "F1",
+      "panpan": "15",
+      "mixiaowo": "15",
+      "huangdoudou": "H1"
+    }
+  },
+  {
+    "code": "H2",
+    "name": "MARD H2",
+    "hex": "#FEFFFF",
+    "rgb": [
+      254,
+      255,
+      255
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H2",
+      "coco": "A1",
+      "xiaowujia": "H2",
+      "manman": "F2",
+      "panpan": "1",
+      "mixiaowo": "1",
+      "huangdoudou": "H2"
+    }
+  },
+  {
+    "code": "H3",
+    "name": "MARD H3",
+    "hex": "#B6B1BA",
+    "rgb": [
+      182,
+      177,
+      186
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H3",
+      "coco": "B3",
+      "xiaowujia": "H3",
+      "manman": "F3",
+      "panpan": "13",
+      "mixiaowo": "13",
+      "huangdoudou": "H3"
+    }
+  },
+  {
+    "code": "H4",
+    "name": "MARD H4",
+    "hex": "#89858C",
+    "rgb": [
+      137,
+      133,
+      140
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H4",
+      "coco": "B5",
+      "xiaowujia": "H4",
+      "manman": "F4",
+      "panpan": "78",
+      "mixiaowo": "83",
+      "huangdoudou": "H4"
+    }
+  },
+  {
+    "code": "H5",
+    "name": "MARD H5",
+    "hex": "#48464E",
+    "rgb": [
+      72,
+      70,
+      78
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H5",
+      "coco": "B6",
+      "xiaowujia": "H5",
+      "manman": "F5",
+      "panpan": "45",
+      "mixiaowo": "45",
+      "huangdoudou": "H5"
+    }
+  },
+  {
+    "code": "H6",
+    "name": "MARD H6",
+    "hex": "#2F2B2F",
+    "rgb": [
+      47,
+      43,
+      47
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H6",
+      "coco": "B7",
+      "xiaowujia": "H6",
+      "manman": "F6",
+      "panpan": "51",
+      "mixiaowo": "70",
+      "huangdoudou": "H6"
+    }
+  },
+  {
+    "code": "H7",
+    "name": "MARD H7",
+    "hex": "#000000",
+    "rgb": [
+      0,
+      0,
+      0
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H7",
+      "coco": "B9",
+      "xiaowujia": "H7",
+      "manman": "F7",
+      "panpan": "14",
+      "mixiaowo": "14",
+      "huangdoudou": "H7"
+    }
+  },
+  {
+    "code": "H8",
+    "name": "MARD H8",
+    "hex": "#E7D6DB",
+    "rgb": [
+      231,
+      214,
+      219
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H8",
+      "coco": "A9",
+      "xiaowujia": "H8",
+      "manman": "F8",
+      "panpan": "85",
+      "mixiaowo": "86",
+      "huangdoudou": "H8"
+    }
+  },
+  {
+    "code": "H9",
+    "name": "MARD H9",
+    "hex": "#EDEDED",
+    "rgb": [
+      237,
+      237,
+      237
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H9",
+      "coco": "A8",
+      "xiaowujia": "H9",
+      "manman": "F10",
+      "panpan": "95",
+      "mixiaowo": "87",
+      "huangdoudou": "H9"
+    }
+  },
+  {
+    "code": "H10",
+    "name": "MARD H10",
+    "hex": "#EEE9EA",
+    "rgb": [
+      238,
+      233,
+      234
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H10",
+      "coco": "A10",
+      "xiaowujia": "H10",
+      "manman": "F9",
+      "panpan": "86",
+      "mixiaowo": "88",
+      "huangdoudou": "H10"
+    }
+  },
+  {
+    "code": "H11",
+    "name": "MARD H11",
+    "hex": "#CECDD5",
+    "rgb": [
+      206,
+      205,
+      213
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H11",
+      "coco": "B1",
+      "xiaowujia": "H11",
+      "manman": "F11",
+      "panpan": "123",
+      "mixiaowo": "121",
+      "huangdoudou": "H11"
+    }
+  },
+  {
+    "code": "H12",
+    "name": "MARD H12",
+    "hex": "#FFF5ED",
+    "rgb": [
+      255,
+      245,
+      237
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H12",
+      "coco": "A4",
+      "xiaowujia": "H12",
+      "manman": "E18",
+      "panpan": "132",
+      "mixiaowo": "144",
+      "huangdoudou": "H12"
+    }
+  },
+  {
+    "code": "H13",
+    "name": "MARD H13",
+    "hex": "#F5ECD2",
+    "rgb": [
+      245,
+      236,
+      210
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H13",
+      "coco": "A6",
+      "xiaowujia": "H13",
+      "manman": "E23",
+      "panpan": "145",
+      "mixiaowo": "146",
+      "huangdoudou": "H13"
+    }
+  },
+  {
+    "code": "H14",
+    "name": "MARD H14",
+    "hex": "#CFD7D3",
+    "rgb": [
+      207,
+      215,
+      211
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H14",
+      "coco": "B2",
+      "xiaowujia": "H14",
+      "manman": "F12",
+      "panpan": "146",
+      "mixiaowo": "145",
+      "huangdoudou": "H14"
+    }
+  },
+  {
+    "code": "H15",
+    "name": "MARD H15",
+    "hex": "#98A6A8",
+    "rgb": [
+      152,
+      166,
+      168
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H15",
+      "coco": "B4",
+      "xiaowujia": "H15",
+      "manman": "DH4",
+      "panpan": "201",
+      "mixiaowo": "201",
+      "huangdoudou": "H15"
+    }
+  },
+  {
+    "code": "H16",
+    "name": "MARD H16",
+    "hex": "#1D1414",
+    "rgb": [
+      29,
+      20,
+      20
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H16",
+      "coco": "B8",
+      "xiaowujia": "H16",
+      "manman": "DH11",
+      "panpan": "200",
+      "mixiaowo": "200",
+      "huangdoudou": "H16"
+    }
+  },
+  {
+    "code": "H17",
+    "name": "MARD H17",
+    "hex": "#F1EDED",
+    "rgb": [
+      241,
+      237,
+      237
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H17",
+      "coco": "A7",
+      "xiaowujia": "H17",
+      "manman": "IC6",
+      "panpan": "214",
+      "mixiaowo": "214",
+      "huangdoudou": "H17"
+    }
+  },
+  {
+    "code": "H18",
+    "name": "MARD H18",
+    "hex": "#FFFDF0",
+    "rgb": [
+      255,
+      253,
+      240
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H18",
+      "coco": "A3",
+      "xiaowujia": "H18",
+      "manman": "IC1",
+      "panpan": "219",
+      "mixiaowo": "204",
+      "huangdoudou": "H18"
+    }
+  },
+  {
+    "code": "H19",
+    "name": "MARD H19",
+    "hex": "#F6EFE2",
+    "rgb": [
+      246,
+      239,
+      226
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H19",
+      "coco": "A5",
+      "xiaowujia": "H19",
+      "manman": "IC11",
+      "panpan": "209",
+      "mixiaowo": "209",
+      "huangdoudou": "H19"
+    }
+  },
+  {
+    "code": "H20",
+    "name": "MARD H20",
+    "hex": "#949FA3",
+    "rgb": [
+      148,
+      159,
+      163
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H20",
+      "coco": "B10",
+      "xiaowujia": "H20",
+      "manman": "Q12",
+      "panpan": "251",
+      "mixiaowo": "236",
+      "huangdoudou": "H20"
+    }
+  },
+  {
+    "code": "H21",
+    "name": "MARD H21",
+    "hex": "#FFFBE1",
+    "rgb": [
+      255,
+      251,
+      225
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H21",
+      "coco": "A11",
+      "xiaowujia": "H21",
+      "manman": "G1",
+      "panpan": "291",
+      "mixiaowo": "276",
+      "huangdoudou": "H21"
+    }
+  },
+  {
+    "code": "H22",
+    "name": "MARD H22",
+    "hex": "#CACAD4",
+    "rgb": [
+      202,
+      202,
+      212
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H22",
+      "coco": "A12",
+      "xiaowujia": "H22",
+      "manman": "G2",
+      "panpan": "277",
+      "mixiaowo": "277",
+      "huangdoudou": "H22"
+    }
+  },
+  {
+    "code": "H23",
+    "name": "MARD H23",
+    "hex": "#9A9D94",
+    "rgb": [
+      154,
+      157,
+      148
+    ],
+    "family": "黑白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "H23",
+      "coco": "B11",
+      "xiaowujia": "H23",
+      "manman": "G11",
+      "panpan": "278",
+      "mixiaowo": "278",
+      "huangdoudou": "H23"
+    }
+  },
+  {
+    "code": "M1",
+    "name": "MARD M1",
+    "hex": "#BCC6B8",
+    "rgb": [
+      188,
+      198,
+      184
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M1",
+      "coco": "Y1",
+      "xiaowujia": "M1",
+      "manman": "YX11",
+      "panpan": "168",
+      "mixiaowo": "168",
+      "huangdoudou": "M1"
+    }
+  },
+  {
+    "code": "M2",
+    "name": "MARD M2",
+    "hex": "#8AA386",
+    "rgb": [
+      138,
+      163,
+      134
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M2",
+      "coco": "Y2",
+      "xiaowujia": "M2",
+      "manman": "YX12",
+      "panpan": "172",
+      "mixiaowo": "172",
+      "huangdoudou": "M2"
+    }
+  },
+  {
+    "code": "M3",
+    "name": "MARD M3",
+    "hex": "#697D80",
+    "rgb": [
+      105,
+      125,
+      128
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M3",
+      "coco": "Y3",
+      "xiaowujia": "M3",
+      "manman": "YX2",
+      "panpan": "166",
+      "mixiaowo": "166",
+      "huangdoudou": "M3"
+    }
+  },
+  {
+    "code": "M4",
+    "name": "MARD M4",
+    "hex": "#E3D2BC",
+    "rgb": [
+      227,
+      210,
+      188
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M4",
+      "coco": "Y4",
+      "xiaowujia": "M4",
+      "manman": "YX15",
+      "panpan": "167",
+      "mixiaowo": "167",
+      "huangdoudou": "M4"
+    }
+  },
+  {
+    "code": "M5",
+    "name": "MARD M5",
+    "hex": "#D0CCAA",
+    "rgb": [
+      208,
+      204,
+      170
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M5",
+      "coco": "Y5",
+      "xiaowujia": "M5",
+      "manman": "YX6",
+      "panpan": "174",
+      "mixiaowo": "159",
+      "huangdoudou": "M5"
+    }
+  },
+  {
+    "code": "M6",
+    "name": "MARD M6",
+    "hex": "#B0A782",
+    "rgb": [
+      176,
+      167,
+      130
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M6",
+      "coco": "Y6",
+      "xiaowujia": "M6",
+      "manman": "YX1",
+      "panpan": "169",
+      "mixiaowo": "169",
+      "huangdoudou": "M6"
+    }
+  },
+  {
+    "code": "M7",
+    "name": "MARD M7",
+    "hex": "#B4A497",
+    "rgb": [
+      180,
+      164,
+      151
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M7",
+      "coco": "Y7",
+      "xiaowujia": "M7",
+      "manman": "YX13",
+      "panpan": "171",
+      "mixiaowo": "171",
+      "huangdoudou": "M7"
+    }
+  },
+  {
+    "code": "M8",
+    "name": "MARD M8",
+    "hex": "#B38281",
+    "rgb": [
+      179,
+      130,
+      129
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M8",
+      "coco": "Y8",
+      "xiaowujia": "M8",
+      "manman": "YX14",
+      "panpan": "177",
+      "mixiaowo": "162",
+      "huangdoudou": "M8"
+    }
+  },
+  {
+    "code": "M9",
+    "name": "MARD M9",
+    "hex": "#A58767",
+    "rgb": [
+      165,
+      135,
+      103
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M9",
+      "coco": "Y9",
+      "xiaowujia": "M9",
+      "manman": "YX10",
+      "panpan": "170",
+      "mixiaowo": "170",
+      "huangdoudou": "M9"
+    }
+  },
+  {
+    "code": "M10",
+    "name": "MARD M10",
+    "hex": "#C5B2BC",
+    "rgb": [
+      197,
+      178,
+      188
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M10",
+      "coco": "Y10",
+      "xiaowujia": "M10",
+      "manman": "YX9",
+      "panpan": "164",
+      "mixiaowo": "164",
+      "huangdoudou": "M10"
+    }
+  },
+  {
+    "code": "M11",
+    "name": "MARD M11",
+    "hex": "#9F7594",
+    "rgb": [
+      159,
+      117,
+      148
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M11",
+      "coco": "Y11",
+      "xiaowujia": "M11",
+      "manman": "YX4",
+      "panpan": "176",
+      "mixiaowo": "161",
+      "huangdoudou": "M11"
+    }
+  },
+  {
+    "code": "M12",
+    "name": "MARD M12",
+    "hex": "#644749",
+    "rgb": [
+      100,
+      71,
+      73
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M12",
+      "coco": "Y12",
+      "xiaowujia": "M12",
+      "manman": "YX5",
+      "panpan": "173",
+      "mixiaowo": "173",
+      "huangdoudou": "M12"
+    }
+  },
+  {
+    "code": "M13",
+    "name": "MARD M13",
+    "hex": "#D19066",
+    "rgb": [
+      209,
+      144,
+      102
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M13",
+      "coco": "Y13",
+      "xiaowujia": "M13",
+      "manman": "YX8",
+      "panpan": "175",
+      "mixiaowo": "160",
+      "huangdoudou": "M13"
+    }
+  },
+  {
+    "code": "M14",
+    "name": "MARD M14",
+    "hex": "#C77362",
+    "rgb": [
+      199,
+      115,
+      98
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M14",
+      "coco": "Y14",
+      "xiaowujia": "M14",
+      "manman": "YX3",
+      "panpan": "165",
+      "mixiaowo": "165",
+      "huangdoudou": "M14"
+    }
+  },
+  {
+    "code": "M15",
+    "name": "MARD M15",
+    "hex": "#757D7B",
+    "rgb": [
+      117,
+      125,
+      123
+    ],
+    "family": "大地色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "M15",
+      "coco": "Y15",
+      "xiaowujia": "M15",
+      "manman": "YX7",
+      "panpan": "178",
+      "mixiaowo": "163",
+      "huangdoudou": "M15"
+    }
+  },
+  {
+    "code": "P1",
+    "name": "MARD P1",
+    "hex": "#FCF7F8",
+    "rgb": [
+      252,
+      247,
+      248
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P1",
+      "coco": "M1",
+      "xiaowujia": "P1",
+      "manman": "P1",
+      "panpan": "71",
+      "mixiaowo": "62",
+      "huangdoudou": "P1"
+    }
+  },
+  {
+    "code": "P2",
+    "name": "MARD P2",
+    "hex": "#B0A9AC",
+    "rgb": [
+      176,
+      169,
+      172
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P2",
+      "coco": "M2",
+      "xiaowujia": "P2",
+      "manman": "P2",
+      "panpan": "55",
+      "mixiaowo": "69",
+      "huangdoudou": "P2"
+    }
+  },
+  {
+    "code": "P3",
+    "name": "MARD P3",
+    "hex": "#AFDCAB",
+    "rgb": [
+      175,
+      220,
+      171
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P3",
+      "coco": "M3",
+      "xiaowujia": "P3",
+      "manman": "P4",
+      "panpan": "73",
+      "mixiaowo": "66",
+      "huangdoudou": "P3"
+    }
+  },
+  {
+    "code": "P4",
+    "name": "MARD P4",
+    "hex": "#FEA49F",
+    "rgb": [
+      254,
+      164,
+      159
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P4",
+      "coco": "M4",
+      "xiaowujia": "P4",
+      "manman": "P5",
+      "panpan": "72",
+      "mixiaowo": "64",
+      "huangdoudou": "P4"
+    }
+  },
+  {
+    "code": "P5",
+    "name": "MARD P5",
+    "hex": "#EE8C3E",
+    "rgb": [
+      238,
+      140,
+      62
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P5",
+      "coco": "M5",
+      "xiaowujia": "P5",
+      "manman": "P3",
+      "panpan": "56",
+      "mixiaowo": "63",
+      "huangdoudou": "P5"
+    }
+  },
+  {
+    "code": "P6",
+    "name": "MARD P6",
+    "hex": "#5FD0A7",
+    "rgb": [
+      95,
+      208,
+      167
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P6",
+      "coco": "M6",
+      "xiaowujia": "P6",
+      "manman": "P8",
+      "panpan": "157",
+      "mixiaowo": "65",
+      "huangdoudou": "P6"
+    }
+  },
+  {
+    "code": "P7",
+    "name": "MARD P7",
+    "hex": "#EB9270",
+    "rgb": [
+      235,
+      146,
+      112
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P7",
+      "coco": "M7",
+      "xiaowujia": "P7",
+      "manman": "P6",
+      "panpan": "159",
+      "mixiaowo": "68",
+      "huangdoudou": "P7"
+    }
+  },
+  {
+    "code": "P8",
+    "name": "MARD P8",
+    "hex": "#F0D958",
+    "rgb": [
+      240,
+      217,
+      88
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P8",
+      "coco": "M8",
+      "xiaowujia": "P8",
+      "manman": "P7",
+      "panpan": "158",
+      "mixiaowo": "67",
+      "huangdoudou": "P8"
+    }
+  },
+  {
+    "code": "P9",
+    "name": "MARD P9",
+    "hex": "#D9D9D9",
+    "rgb": [
+      217,
+      217,
+      217
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P9",
+      "coco": "M9",
+      "xiaowujia": "P9",
+      "manman": "P13",
+      "panpan": "195",
+      "mixiaowo": "178",
+      "huangdoudou": "P9"
+    }
+  },
+  {
+    "code": "P10",
+    "name": "MARD P10",
+    "hex": "#D9C7EA",
+    "rgb": [
+      217,
+      199,
+      234
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P10",
+      "coco": "M10",
+      "xiaowujia": "P10",
+      "manman": "P18",
+      "panpan": "187",
+      "mixiaowo": "187",
+      "huangdoudou": "P10"
+    }
+  },
+  {
+    "code": "P11",
+    "name": "MARD P11",
+    "hex": "#F3ECC9",
+    "rgb": [
+      243,
+      236,
+      201
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P11",
+      "coco": "M11",
+      "xiaowujia": "P11",
+      "manman": "P9",
+      "panpan": "185",
+      "mixiaowo": "185",
+      "huangdoudou": "P11"
+    }
+  },
+  {
+    "code": "P12",
+    "name": "MARD P12",
+    "hex": "#E6EEF2",
+    "rgb": [
+      230,
+      238,
+      242
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P12",
+      "coco": "M12",
+      "xiaowujia": "P12",
+      "manman": "P12",
+      "panpan": "190",
+      "mixiaowo": "190",
+      "huangdoudou": "P12"
+    }
+  },
+  {
+    "code": "P13",
+    "name": "MARD P13",
+    "hex": "#AACBEF",
+    "rgb": [
+      170,
+      203,
+      239
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P13",
+      "coco": "M13",
+      "xiaowujia": "P13",
+      "manman": "P17",
+      "panpan": "193",
+      "mixiaowo": "176",
+      "huangdoudou": "P13"
+    }
+  },
+  {
+    "code": "P14",
+    "name": "MARD P14",
+    "hex": "#3376B0",
+    "rgb": [
+      51,
+      118,
+      176
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P14",
+      "coco": "M14",
+      "xiaowujia": "P14",
+      "manman": "P22",
+      "panpan": "183",
+      "mixiaowo": "183",
+      "huangdoudou": "P14"
+    }
+  },
+  {
+    "code": "P15",
+    "name": "MARD P15",
+    "hex": "#668575",
+    "rgb": [
+      102,
+      133,
+      117
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P15",
+      "coco": "M15",
+      "xiaowujia": "P15",
+      "manman": "P23",
+      "panpan": "184",
+      "mixiaowo": "184",
+      "huangdoudou": "P15"
+    }
+  },
+  {
+    "code": "P16",
+    "name": "MARD P16",
+    "hex": "#FEBF45",
+    "rgb": [
+      254,
+      191,
+      69
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P16",
+      "coco": "M16",
+      "xiaowujia": "P16",
+      "manman": "P14",
+      "panpan": "182",
+      "mixiaowo": "182",
+      "huangdoudou": "P16"
+    }
+  },
+  {
+    "code": "P17",
+    "name": "MARD P17",
+    "hex": "#FEA324",
+    "rgb": [
+      254,
+      163,
+      36
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P17",
+      "coco": "M17",
+      "xiaowujia": "P17",
+      "manman": "P19",
+      "panpan": "179",
+      "mixiaowo": "179",
+      "huangdoudou": "P17"
+    }
+  },
+  {
+    "code": "P18",
+    "name": "MARD P18",
+    "hex": "#FEB89F",
+    "rgb": [
+      254,
+      184,
+      159
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P18",
+      "coco": "M18",
+      "xiaowujia": "P18",
+      "manman": "P11",
+      "panpan": "194",
+      "mixiaowo": "177",
+      "huangdoudou": "P18"
+    }
+  },
+  {
+    "code": "P19",
+    "name": "MARD P19",
+    "hex": "#FFE0E9",
+    "rgb": [
+      255,
+      224,
+      233
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P19",
+      "coco": "M19",
+      "xiaowujia": "P19",
+      "manman": "P10",
+      "panpan": "186",
+      "mixiaowo": "186",
+      "huangdoudou": "P19"
+    }
+  },
+  {
+    "code": "P20",
+    "name": "MARD P20",
+    "hex": "#FEBECF",
+    "rgb": [
+      254,
+      190,
+      207
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P20",
+      "coco": "M21",
+      "xiaowujia": "P20",
+      "manman": "P15",
+      "panpan": "188",
+      "mixiaowo": "180",
+      "huangdoudou": "P20"
+    }
+  },
+  {
+    "code": "P21",
+    "name": "MARD P21",
+    "hex": "#ECBEBF",
+    "rgb": [
+      236,
+      190,
+      191
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P21",
+      "coco": "M20",
+      "xiaowujia": "P21",
+      "manman": "P20",
+      "panpan": "180",
+      "mixiaowo": "188",
+      "huangdoudou": "P21"
+    }
+  },
+  {
+    "code": "P22",
+    "name": "MARD P22",
+    "hex": "#E4A89F",
+    "rgb": [
+      228,
+      168,
+      159
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P22",
+      "coco": "M22",
+      "xiaowujia": "P22",
+      "manman": "P16",
+      "panpan": "189",
+      "mixiaowo": "189",
+      "huangdoudou": "P22"
+    }
+  },
+  {
+    "code": "P23",
+    "name": "MARD P23",
+    "hex": "#A56268",
+    "rgb": [
+      165,
+      98,
+      104
+    ],
+    "family": "柔和色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "P23",
+      "coco": "M23",
+      "xiaowujia": "P23",
+      "manman": "P21",
+      "panpan": "181",
+      "mixiaowo": "181",
+      "huangdoudou": "P23"
+    }
+  },
+  {
+    "code": "Q1",
+    "name": "MARD Q1",
+    "hex": "#F2A5E8",
+    "rgb": [
+      242,
+      165,
+      232
+    ],
+    "family": "特殊色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Q1",
+      "coco": "W3",
+      "xiaowujia": "Q1",
+      "manman": "W3",
+      "panpan": "109",
+      "mixiaowo": "W3",
+      "huangdoudou": "无"
+    }
+  },
+  {
+    "code": "Q2",
+    "name": "MARD Q2",
+    "hex": "#E9EC91",
+    "rgb": [
+      233,
+      236,
+      145
+    ],
+    "family": "特殊色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Q2",
+      "coco": "W4",
+      "xiaowujia": "Q2",
+      "manman": "W4",
+      "panpan": "111",
+      "mixiaowo": "W4",
+      "huangdoudou": "无"
+    }
+  },
+  {
+    "code": "Q3",
+    "name": "MARD Q3",
+    "hex": "#FFFF00",
+    "rgb": [
+      255,
+      255,
+      0
+    ],
+    "family": "特殊色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Q3",
+      "coco": "W1",
+      "xiaowujia": "Q3",
+      "manman": "W1",
+      "panpan": "107",
+      "mixiaowo": "W1",
+      "huangdoudou": "无"
+    }
+  },
+  {
+    "code": "Q4",
+    "name": "MARD Q4",
+    "hex": "#FFEBFA",
+    "rgb": [
+      255,
+      235,
+      250
+    ],
+    "family": "特殊色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Q4",
+      "coco": "W2",
+      "xiaowujia": "Q4",
+      "manman": "W2",
+      "panpan": "110",
+      "mixiaowo": "W2",
+      "huangdoudou": "无"
+    }
+  },
+  {
+    "code": "Q5",
+    "name": "MARD Q5",
+    "hex": "#76CEDE",
+    "rgb": [
+      118,
+      206,
+      222
+    ],
+    "family": "特殊色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Q5",
+      "coco": "W5",
+      "xiaowujia": "Q5",
+      "manman": "W5",
+      "panpan": "108",
+      "mixiaowo": "W5",
+      "huangdoudou": "无"
+    }
+  },
+  {
+    "code": "R1",
+    "name": "MARD R1",
+    "hex": "#D50D21",
+    "rgb": [
+      213,
+      13,
+      33
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R1",
+      "coco": "L1",
+      "xiaowujia": "R1",
+      "manman": "T1",
+      "panpan": "67",
+      "mixiaowo": "52",
+      "huangdoudou": "R1"
+    }
+  },
+  {
+    "code": "R2",
+    "name": "MARD R2",
+    "hex": "#F92F83",
+    "rgb": [
+      249,
+      47,
+      131
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R2",
+      "coco": "L2",
+      "xiaowujia": "R2",
+      "manman": "N1",
+      "panpan": "24",
+      "mixiaowo": "24",
+      "huangdoudou": "R2"
+    }
+  },
+  {
+    "code": "R3",
+    "name": "MARD R3",
+    "hex": "#FD8324",
+    "rgb": [
+      253,
+      131,
+      36
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R3",
+      "coco": "L3",
+      "xiaowujia": "R3",
+      "manman": "N2",
+      "panpan": "22",
+      "mixiaowo": "22",
+      "huangdoudou": "R3"
+    }
+  },
+  {
+    "code": "R4",
+    "name": "MARD R4",
+    "hex": "#F8EC31",
+    "rgb": [
+      248,
+      236,
+      49
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R4",
+      "coco": "L4",
+      "xiaowujia": "R4",
+      "manman": "N3",
+      "panpan": "21",
+      "mixiaowo": "21",
+      "huangdoudou": "R4"
+    }
+  },
+  {
+    "code": "R5",
+    "name": "MARD R5",
+    "hex": "#35C75B",
+    "rgb": [
+      53,
+      199,
+      91
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R5",
+      "coco": "L5",
+      "xiaowujia": "R5",
+      "manman": "N4",
+      "panpan": "23",
+      "mixiaowo": "23",
+      "huangdoudou": "R5"
+    }
+  },
+  {
+    "code": "R6",
+    "name": "MARD R6",
+    "hex": "#23B891",
+    "rgb": [
+      35,
+      184,
+      145
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R6",
+      "coco": "L6",
+      "xiaowujia": "R6",
+      "manman": "T4",
+      "panpan": "69",
+      "mixiaowo": "55",
+      "huangdoudou": "R6"
+    }
+  },
+  {
+    "code": "R7",
+    "name": "MARD R7",
+    "hex": "#19779D",
+    "rgb": [
+      25,
+      119,
+      157
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R7",
+      "coco": "L7",
+      "xiaowujia": "R7",
+      "manman": "T5",
+      "panpan": "37",
+      "mixiaowo": "37",
+      "huangdoudou": "R7"
+    }
+  },
+  {
+    "code": "R8",
+    "name": "MARD R8",
+    "hex": "#1A60C3",
+    "rgb": [
+      26,
+      96,
+      195
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R8",
+      "coco": "L8",
+      "xiaowujia": "R8",
+      "manman": "T3",
+      "panpan": "68",
+      "mixiaowo": "54",
+      "huangdoudou": "R8"
+    }
+  },
+  {
+    "code": "R9",
+    "name": "MARD R9",
+    "hex": "#9A56B4",
+    "rgb": [
+      154,
+      86,
+      180
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R9",
+      "coco": "L9",
+      "xiaowujia": "R9",
+      "manman": "T2",
+      "panpan": "70",
+      "mixiaowo": "56",
+      "huangdoudou": "R9"
+    }
+  },
+  {
+    "code": "R10",
+    "name": "MARD R10",
+    "hex": "#FFDB4C",
+    "rgb": [
+      255,
+      219,
+      76
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R10",
+      "coco": "L10",
+      "xiaowujia": "R10",
+      "manman": "L2",
+      "panpan": "156",
+      "mixiaowo": "53",
+      "huangdoudou": "R10"
+    }
+  },
+  {
+    "code": "R11",
+    "name": "MARD R11",
+    "hex": "#FFEBFA",
+    "rgb": [
+      255,
+      235,
+      250
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R11",
+      "coco": "L11",
+      "xiaowujia": "R11",
+      "manman": "T6",
+      "panpan": "151",
+      "mixiaowo": "151",
+      "huangdoudou": "R11"
+    }
+  },
+  {
+    "code": "R12",
+    "name": "MARD R12",
+    "hex": "#D8D5CE",
+    "rgb": [
+      216,
+      213,
+      206
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R12",
+      "coco": "L12",
+      "xiaowujia": "R12",
+      "manman": "T7",
+      "panpan": "160",
+      "mixiaowo": "157",
+      "huangdoudou": "R12"
+    }
+  },
+  {
+    "code": "R13",
+    "name": "MARD R13",
+    "hex": "#55514C",
+    "rgb": [
+      85,
+      81,
+      76
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R13",
+      "coco": "L13",
+      "xiaowujia": "R13",
+      "manman": "L7",
+      "panpan": "152",
+      "mixiaowo": "152",
+      "huangdoudou": "R13"
+    }
+  },
+  {
+    "code": "R14",
+    "name": "MARD R14",
+    "hex": "#9FE4DF",
+    "rgb": [
+      159,
+      228,
+      223
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R14",
+      "coco": "S1",
+      "xiaowujia": "R14",
+      "manman": "S1",
+      "panpan": "231",
+      "mixiaowo": "231",
+      "huangdoudou": "R14"
+    }
+  },
+  {
+    "code": "R15",
+    "name": "MARD R15",
+    "hex": "#77CEE9",
+    "rgb": [
+      119,
+      206,
+      233
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R15",
+      "coco": "S2",
+      "xiaowujia": "R15",
+      "manman": "S2",
+      "panpan": "237",
+      "mixiaowo": "224",
+      "huangdoudou": "R15"
+    }
+  },
+  {
+    "code": "R16",
+    "name": "MARD R16",
+    "hex": "#3ECFCA",
+    "rgb": [
+      62,
+      207,
+      202
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R16",
+      "coco": "S3",
+      "xiaowujia": "R16",
+      "manman": "S3",
+      "panpan": "238",
+      "mixiaowo": "225",
+      "huangdoudou": "R16"
+    }
+  },
+  {
+    "code": "R17",
+    "name": "MARD R17",
+    "hex": "#4A867A",
+    "rgb": [
+      74,
+      134,
+      122
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R17",
+      "coco": "S4",
+      "xiaowujia": "R17",
+      "manman": "S5",
+      "panpan": "233",
+      "mixiaowo": "233",
+      "huangdoudou": "R17"
+    }
+  },
+  {
+    "code": "R18",
+    "name": "MARD R18",
+    "hex": "#7FCD9D",
+    "rgb": [
+      127,
+      205,
+      157
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R18",
+      "coco": "S5",
+      "xiaowujia": "R18",
+      "manman": "S4",
+      "panpan": "235",
+      "mixiaowo": "222",
+      "huangdoudou": "R18"
+    }
+  },
+  {
+    "code": "R19",
+    "name": "MARD R19",
+    "hex": "#CDE55D",
+    "rgb": [
+      205,
+      229,
+      93
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R19",
+      "coco": "S6",
+      "xiaowujia": "R19",
+      "manman": "S11",
+      "panpan": "227",
+      "mixiaowo": "227",
+      "huangdoudou": "R19"
+    }
+  },
+  {
+    "code": "R20",
+    "name": "MARD R20",
+    "hex": "#E8C7B4",
+    "rgb": [
+      232,
+      199,
+      180
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R20",
+      "coco": "S7",
+      "xiaowujia": "R20",
+      "manman": "S6",
+      "panpan": "230",
+      "mixiaowo": "230",
+      "huangdoudou": "R20"
+    }
+  },
+  {
+    "code": "R21",
+    "name": "MARD R21",
+    "hex": "#AD6F3C",
+    "rgb": [
+      173,
+      111,
+      60
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R21",
+      "coco": "S8",
+      "xiaowujia": "R21",
+      "manman": "S13",
+      "panpan": "234",
+      "mixiaowo": "221",
+      "huangdoudou": "R21"
+    }
+  },
+  {
+    "code": "R22",
+    "name": "MARD R22",
+    "hex": "#6C372F",
+    "rgb": [
+      108,
+      55,
+      47
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R22",
+      "coco": "S9",
+      "xiaowujia": "R22",
+      "manman": "S15",
+      "panpan": "226",
+      "mixiaowo": "226",
+      "huangdoudou": "R22"
+    }
+  },
+  {
+    "code": "R23",
+    "name": "MARD R23",
+    "hex": "#FEB872",
+    "rgb": [
+      254,
+      184,
+      114
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R23",
+      "coco": "S10",
+      "xiaowujia": "R23",
+      "manman": "S12",
+      "panpan": "224",
+      "mixiaowo": "219",
+      "huangdoudou": "R23"
+    }
+  },
+  {
+    "code": "R24",
+    "name": "MARD R24",
+    "hex": "#F3C1C0",
+    "rgb": [
+      243,
+      193,
+      192
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R24",
+      "coco": "S11",
+      "xiaowujia": "R24",
+      "manman": "S4",
+      "panpan": "228",
+      "mixiaowo": "228",
+      "huangdoudou": "R24"
+    }
+  },
+  {
+    "code": "R25",
+    "name": "MARD R25",
+    "hex": "#C9675E",
+    "rgb": [
+      201,
+      103,
+      94
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R25",
+      "coco": "S12",
+      "xiaowujia": "R25",
+      "manman": "S14",
+      "panpan": "225",
+      "mixiaowo": "220",
+      "huangdoudou": "R25"
+    }
+  },
+  {
+    "code": "R26",
+    "name": "MARD R26",
+    "hex": "#D293BE",
+    "rgb": [
+      210,
+      147,
+      190
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R26",
+      "coco": "S13",
+      "xiaowujia": "R26",
+      "manman": "S9",
+      "panpan": "229",
+      "mixiaowo": "229",
+      "huangdoudou": "R26"
+    }
+  },
+  {
+    "code": "R27",
+    "name": "MARD R27",
+    "hex": "#EA8CB1",
+    "rgb": [
+      234,
+      140,
+      177
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R27",
+      "coco": "S14",
+      "xiaowujia": "R27",
+      "manman": "S8",
+      "panpan": "232",
+      "mixiaowo": "232",
+      "huangdoudou": "R27"
+    }
+  },
+  {
+    "code": "R28",
+    "name": "MARD R28",
+    "hex": "#9C87D6",
+    "rgb": [
+      156,
+      135,
+      214
+    ],
+    "family": "鲜艳色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "R28",
+      "coco": "S15",
+      "xiaowujia": "R28",
+      "manman": "S10",
+      "panpan": "236",
+      "mixiaowo": "223",
+      "huangdoudou": "R28"
+    }
+  },
+  {
+    "code": "T1",
+    "name": "MARD T1",
+    "hex": "#FFFFFF",
+    "rgb": [
+      255,
+      255,
+      255
+    ],
+    "family": "纯白色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "T1",
+      "coco": "L14",
+      "manman": "L6",
+      "panpan": "155",
+      "mixiaowo": "51"
+    }
+  },
+  {
+    "code": "Y1",
+    "name": "MARD Y1",
+    "hex": "#FD6FB4",
+    "rgb": [
+      253,
+      111,
+      180
+    ],
+    "family": "荧光色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Y1"
+    }
+  },
+  {
+    "code": "Y2",
+    "name": "MARD Y2",
+    "hex": "#FEB481",
+    "rgb": [
+      254,
+      180,
+      129
+    ],
+    "family": "荧光色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Y2",
+      "coco": "N2",
+      "xiaowujia": "Y2",
+      "manman": "Y2",
+      "panpan": "60",
+      "mixiaowo": "60",
+      "huangdoudou": "Y2"
+    }
+  },
+  {
+    "code": "Y3",
+    "name": "MARD Y3",
+    "hex": "#D7FAA0",
+    "rgb": [
+      215,
+      250,
+      160
+    ],
+    "family": "荧光色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Y3",
+      "coco": "N3",
+      "xiaowujia": "Y3",
+      "manman": "Y3",
+      "panpan": "57",
+      "mixiaowo": "57",
+      "huangdoudou": "Y3"
+    }
+  },
+  {
+    "code": "Y4",
+    "name": "MARD Y4",
+    "hex": "#8BDBFA",
+    "rgb": [
+      139,
+      219,
+      250
+    ],
+    "family": "荧光色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Y4",
+      "coco": "N4",
+      "xiaowujia": "Y4",
+      "manman": "Y4",
+      "panpan": "58",
+      "mixiaowo": "58",
+      "huangdoudou": "Y4"
+    }
+  },
+  {
+    "code": "Y5",
+    "name": "MARD Y5",
+    "hex": "#E987EA",
+    "rgb": [
+      233,
+      135,
+      234
+    ],
+    "family": "荧光色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "Y5",
+      "coco": "N5",
+      "xiaowujia": "Y5",
+      "manman": "Y5",
+      "panpan": "61",
+      "mixiaowo": "61",
+      "huangdoudou": "Y5"
+    }
+  },
+  {
+    "code": "ZG1",
+    "name": "MARD ZG1",
+    "hex": "#DAABB3",
+    "rgb": [
+      218,
+      171,
+      179
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG1",
+      "coco": "GB1",
+      "manman": "ZG1",
+      "panpan": "254",
+      "mixiaowo": "ZG1"
+    }
+  },
+  {
+    "code": "ZG2",
+    "name": "MARD ZG2",
+    "hex": "#D6AA87",
+    "rgb": [
+      214,
+      170,
+      135
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG2",
+      "coco": "GB2",
+      "manman": "ZG2",
+      "panpan": "255",
+      "mixiaowo": "ZG2"
+    }
+  },
+  {
+    "code": "ZG3",
+    "name": "MARD ZG3",
+    "hex": "#C1BD8D",
+    "rgb": [
+      193,
+      189,
+      141
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG3",
+      "coco": "GB3",
+      "manman": "ZG3",
+      "panpan": "256",
+      "mixiaowo": "ZG3"
+    }
+  },
+  {
+    "code": "ZG4",
+    "name": "MARD ZG4",
+    "hex": "#96B69F",
+    "rgb": [
+      150,
+      182,
+      159
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG4",
+      "coco": "GB4",
+      "manman": "ZG4",
+      "panpan": "257",
+      "mixiaowo": "ZG4"
+    }
+  },
+  {
+    "code": "ZG5",
+    "name": "MARD ZG5",
+    "hex": "#849DC6",
+    "rgb": [
+      132,
+      157,
+      198
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG5",
+      "coco": "GB5",
+      "manman": "ZG5",
+      "panpan": "258",
+      "mixiaowo": "ZG5"
+    }
+  },
+  {
+    "code": "ZG6",
+    "name": "MARD ZG6",
+    "hex": "#94BFE2",
+    "rgb": [
+      148,
+      191,
+      226
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG6",
+      "coco": "GB6",
+      "manman": "ZG6",
+      "panpan": "259",
+      "mixiaowo": "ZG6"
+    }
+  },
+  {
+    "code": "ZG7",
+    "name": "MARD ZG7",
+    "hex": "#E2A9D2",
+    "rgb": [
+      226,
+      169,
+      210
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG7",
+      "coco": "GB7",
+      "manman": "ZG7",
+      "panpan": "260",
+      "mixiaowo": "ZG7"
+    }
+  },
+  {
+    "code": "ZG8",
+    "name": "MARD ZG8",
+    "hex": "#AB91C0",
+    "rgb": [
+      171,
+      145,
+      192
+    ],
+    "family": "莫兰迪色系",
+    "source": "xlsx-mard",
+    "vendorCodes": {
+      "mard": "ZG8",
+      "coco": "GB8",
+      "manman": "ZG8",
+      "panpan": "261",
+      "mixiaowo": "ZG8"
+    }
+  }
+]

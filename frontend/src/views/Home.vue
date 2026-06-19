@@ -4,7 +4,7 @@
       <div>
         <p class="eyebrow">AIpindou Algorithm Upgrade</p>
         <h1>拼豆图像转换器</h1>
-        <p class="hero-copy">使用开源拼豆算法：按原图比例分格、主色/平均色采样、近似色合并、背景擦除，并支持自定义 AI 图像模型。</p>
+        <p class="hero-copy">使用清晰优先的本地拼豆算法：先抽象主体、清理背景和纹理噪声，再映射到 MARD 色卡，并支持自定义 AI 图像模型。</p>
       </div>
       <div class="hero-actions">
         <label class="primary-upload" for="image-input">选择图片</label>
@@ -42,16 +42,36 @@
         <div class="setting-card">
           <div class="setting-head">
             <span>算法模式</span>
-            <strong>{{ pixelationMode === 'dominant' ? '主色' : '平均' }}</strong>
+            <strong>{{ conversionModeLabel }}</strong>
           </div>
           <div class="segmented">
-            <button :class="{ active: pixelationMode === 'dominant' }" @click="setPixelationMode('dominant')">主色模式</button>
-            <button :class="{ active: pixelationMode === 'average' }" @click="setPixelationMode('average')">平均模式</button>
+            <button :class="{ active: conversionMode === 'clear-pixel' }" @click="setConversionMode('clear-pixel')">清晰拼豆</button>
+            <button :class="{ active: conversionMode === 'dominant' }" @click="setConversionMode('dominant')">主色模式</button>
+            <button :class="{ active: conversionMode === 'average' }" @click="setConversionMode('average')">平均模式</button>
           </div>
-          <p class="setting-note">主色适合头像/卡通/像素风；平均适合照片和渐变。</p>
+          <p class="setting-note">清晰拼豆会自动清背景、限色、去噪和增强轮廓；主色/平均保留为高级采样模式。</p>
         </div>
 
-        <div class="setting-card">
+        <div v-if="conversionMode === 'clear-pixel'" class="setting-card">
+          <div class="setting-head">
+            <span>颜色上限</span>
+            <strong>{{ maxColors }} 色</strong>
+          </div>
+          <input v-model.number="maxColors" type="range" min="12" max="24" step="1" @input="rebuildFromSource" />
+          <input v-model.number="maxColors" class="number-input" type="number" min="12" max="24" step="1" @change="clampMaxColors" />
+          <label class="switch-row compact-switch">
+            <span>自动清背景</span>
+            <input v-model="autoEraseBackground" type="checkbox" @change="rebuildFromSource" />
+          </label>
+          <select v-model="cleanupStrength" class="select-input" @change="rebuildFromSource">
+            <option value="soft">柔和清理</option>
+            <option value="normal">标准清理</option>
+            <option value="strong">强力清理</option>
+          </select>
+          <p class="setting-note">颜色越少越像真实拼豆图纸；标准清理会合并孤立色点并保留关键轮廓。</p>
+        </div>
+
+        <div v-else class="setting-card">
           <div class="setting-head">
             <span>近似色合并</span>
             <strong>{{ similarityThreshold }}</strong>
@@ -155,7 +175,7 @@
             <span>{{ pattern.width }} x {{ pattern.height }}</span>
             <span>{{ pattern.totalBeads }} 颗</span>
             <span>{{ pattern.colors.length }} 色</span>
-            <span>{{ pixelationMode === 'dominant' ? '主色' : '平均' }}</span>
+            <span>{{ conversionModeLabel }}</span>
             <button class="mini-button tune-button" :disabled="!pattern" @click="openEditor">微调</button>
           </div>
         </div>
@@ -380,12 +400,16 @@ import { createColorCsv, createPatternJsonPayload } from '@/utils/pattern-export
 import { createPatternSheetCanvas, getPatternSheetCanvasSize, hitTestPatternCell, renderPatternToCanvas } from '@/utils/pattern-render'
 import type { BeadStyle, PatternCellPosition } from '@/utils/pattern-render'
 import { buildPatternFromImage, cloneCells, getEffectiveMergeThreshold, toPaletteColor } from '@/utils/pixelation'
-import type { PaletteColor, PatternResult, PixelationMode } from '@/utils/pixelation'
+import type { CleanupStrength, ConversionMode, PaletteColor, PatternResult, PixelationMode } from '@/utils/pixelation'
 import type { WatermarkMode } from '@/utils/watermark'
 
 const columns = ref(50)
 const similarityThreshold = ref(30)
+const conversionMode = ref<ConversionMode>('clear-pixel')
 const pixelationMode = ref<PixelationMode>('dominant')
+const maxColors = ref(18)
+const autoEraseBackground = ref(true)
+const cleanupStrength = ref<CleanupStrength>('normal')
 const selectedTier = ref<BeadPaletteTier>('all')
 const editPaletteTier = ref<BeadPaletteTier>('all')
 const selectedVendor = ref<BeadVendorId>('mard')
@@ -502,8 +526,16 @@ const missingTierCodes = computed(() => getMardTierMissingCodes(selectedTier.val
 const selectedAiStyle = computed(() => AI_STYLE_PRESETS.find((style) => style.id === selectedAiStyleId.value) ?? AI_STYLE_PRESETS[0])
 const aiPrompt = computed(() => selectedAiStyle.value.prompt)
 const selectedVendorLabel = computed(() => getVendorLabel(selectedVendor.value))
+const conversionModeLabel = computed(() => {
+  if (conversionMode.value === 'clear-pixel') {
+    return '清晰拼豆'
+  }
+  return conversionMode.value === 'dominant' ? '主色' : '平均'
+})
 const effectiveSimilarityThreshold = computed(() => getEffectiveMergeThreshold(columns.value, similarityThreshold.value))
-const canEraseBackground = computed(() => Boolean(pattern.value && sourceImage.value && !backgroundEraseUsed.value && !isBackgroundErasing.value && !isFaceEnhancing.value))
+const canEraseBackground = computed(() =>
+  Boolean(pattern.value && sourceImage.value && !pattern.value.options.backgroundErase?.used && !backgroundEraseUsed.value && !isBackgroundErasing.value && !isFaceEnhancing.value)
+)
 const canEnhanceFaceContour = computed(() => Boolean(pattern.value && sourceImage.value && !faceContourEnhanceUsed.value && !isFaceEnhancing.value && !isBackgroundErasing.value))
 const watermarkLabel = computed(() => {
   if (watermarkMode.value === 'visible') {
@@ -608,8 +640,16 @@ function clampSimilarityThreshold() {
   rebuildFromSource()
 }
 
-function setPixelationMode(mode: PixelationMode) {
-  pixelationMode.value = mode
+function clampMaxColors() {
+  maxColors.value = Math.max(12, Math.min(24, Math.round(Number(maxColors.value) || 18)))
+  rebuildFromSource()
+}
+
+function setConversionMode(mode: ConversionMode) {
+  conversionMode.value = mode
+  if (mode === 'dominant' || mode === 'average') {
+    pixelationMode.value = mode
+  }
   rebuildFromSource()
 }
 
@@ -750,15 +790,20 @@ function rebuildFromSource() {
       columns: Math.max(1, Math.round(columns.value)),
       paletteTier: selectedTier.value,
       paletteVendor: selectedVendor.value,
+      conversionMode: conversionMode.value,
       pixelationMode: pixelationMode.value,
+      maxColors: maxColors.value,
+      autoEraseBackground: autoEraseBackground.value,
+      cleanupStrength: cleanupStrength.value,
       similarityThreshold: similarityThreshold.value,
       excludedColorKeys: excludedColorKeys.value
     })
     pattern.value = nextPattern
+    backgroundEraseUsed.value = Boolean(nextPattern.options.backgroundErase?.used)
     selectedCell.value = null
     brushColor.value = editPalette.value.find((color) => color.key === nextPattern.colors[0]?.key) ?? editPalette.value[0] ?? null
     const missingText = missingTierCodes.value.length ? `；缺少 ${missingTierCodes.value.join(', ')} 的可验证色值` : ''
-    status.value = `已生成 ${nextPattern.width}x${nextPattern.height} 拼豆图，共 ${nextPattern.totalBeads} 颗，${nextPattern.colors.length} 色${missingText}。`
+    status.value = `已用${conversionModeLabel.value}生成 ${nextPattern.width}x${nextPattern.height} 拼豆图，共 ${nextPattern.totalBeads} 颗，${nextPattern.colors.length} 色${missingText}。`
     nextTick(renderPattern)
   } catch (error) {
     status.value = error instanceof Error ? error.message : '转换失败。'
@@ -1747,6 +1792,10 @@ canvas {
   height: 22px;
   margin: 0;
   accent-color: #b45f24;
+}
+
+.compact-switch {
+  margin-top: 12px;
 }
 
 .export-summary {

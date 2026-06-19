@@ -6,6 +6,7 @@
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tsbuildinfo/frontend-tsbuildinfo",
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./src/*"]
     },

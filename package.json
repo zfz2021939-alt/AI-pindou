@@ -10,6 +10,7 @@
     "build": "npm.cmd run build:frontend",
     "build:frontend": "cd frontend && npm.cmd run build",
     "build:exe": "npm.cmd run build && electron-builder --win portable",
+    "validate:palette": "node scripts/run_validate_palette_data.cjs",
     "test": "cd frontend && npm.cmd run test -- --run",
     "lint": "cd frontend && npm.cmd run lint"
   },
