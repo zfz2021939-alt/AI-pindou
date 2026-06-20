@@ -52,6 +52,7 @@ export type PatternOptions = {
   excludedColorKeys: string[]
   backgroundErase?: { mode: 'ai' | 'fallback' | 'local'; used: boolean }
   faceContourEnhance?: { used: boolean; detector: 'mediapipe' | 'heuristic' | 'none' }
+  silhouetteOutline?: 'off' | 'dark'
 }
 
 export type PatternResult = {
@@ -305,6 +306,9 @@ export function buildPatternFromImage(
     const gridCells = calculateClearPixelGrid(enhancedImageData, foregroundMask, columns, rows, limitedPalette)
     const reinforced = reinforcePatternEdges(gridCells, enhancedImageData, foregroundMask, limitedPalette)
     cells = cleanupPatternNoise(reinforced.cells, limitedPalette, normalizedOptions.cleanupStrength, reinforced.protectedCells)
+    if (normalizedOptions.silhouetteOutline === 'dark') {
+      cells = reinforceSilhouetteOutline(cells, limitedPalette)
+    }
     finalOptions = {
       ...normalizedOptions,
       backgroundErase: normalizedOptions.autoEraseBackground ? { mode: 'local', used: true } : normalizedOptions.backgroundErase
@@ -373,7 +377,8 @@ function normalizePatternOptions(options: BuildPatternOptions, rows: number): Pa
     pixelationMode,
     maxColors: clampNumber(Math.round(options.maxColors ?? 18), 12, 24),
     autoEraseBackground: options.autoEraseBackground ?? true,
-    cleanupStrength: options.cleanupStrength ?? 'normal'
+    cleanupStrength: options.cleanupStrength ?? 'normal',
+    silhouetteOutline: options.silhouetteOutline ?? 'off'
   }
 }
 
@@ -541,6 +546,39 @@ export function calculateClearPixelGrid(
   }
 
   return cells
+}
+
+// 对前景主体强制一圈 silhouette 描边豆 —— 解决「水彩软边 / 无描边线源图」轮廓不清的问题。
+// 与 reinforcePatternEdges 不同:不依赖边缘对比度阈值,只看前景/背景边界,因此对低对比
+// 软边主体(如纯白脸)也能勾出清晰轮廓。opt-in(silhouetteOutline:'dark'),默认关以保留原作风格。
+export function reinforceSilhouetteOutline(cells: MappedBeadCell[][], palette: PaletteColor[]) {
+  const height = cells.length
+  const width = cells[0]?.length ?? 0
+  if (height === 0 || width === 0 || palette.length === 0) {
+    return cells
+  }
+  const lum = (c: RgbColor) => 0.299 * c.r + 0.587 * c.g + 0.114 * c.b
+  const outlineColor = palette.reduce((darkest, color) => (lum(color.rgb) < lum(darkest.rgb) ? color : darkest), palette[0])
+  const isForeground = (row: number, col: number) =>
+    row >= 0 && row < height && col >= 0 && col < width &&
+    !cells[row][col].isExternal && cells[row][col].key !== TRANSPARENT_KEY
+  const next = cloneCells(cells)
+  for (let row = 0; row < height; row += 1) {
+    for (let col = 0; col < width; col += 1) {
+      if (!isForeground(row, col)) {
+        continue
+      }
+      const onBoundary =
+        !isForeground(row - 1, col) ||
+        !isForeground(row + 1, col) ||
+        !isForeground(row, col - 1) ||
+        !isForeground(row, col + 1)
+      if (onBoundary) {
+        next[row][col] = createCellFromPalette(row, col, outlineColor)
+      }
+    }
+  }
+  return next
 }
 
 export function cleanupPatternNoise(
